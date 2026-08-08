@@ -34,27 +34,15 @@ const ActionBar = ({
                     gap-1
                     rounded-[18px]
                     border
-                    border-[#E5E5E5]
+                    border-red-600
                     bg-white
                     px-2
                     py-2
-                    shadow-[0_10px_35px_rgba(0,0,0,0.14)]
+                    shadow-[0_10px_35px_rgba(0,0,0,0.5)]
                     sm:gap-2
                     sm:px-3
                 "
             >
-                <div
-                    className="
-                        absolute
-                        left-0
-                        right-0
-                        top-0
-                        h-[3px]
-                        rounded-t-[18px]
-                        bg-[#ED1C24]
-                    "
-                />
-
                 {items.map((item) => (
                     <Action
                         key={item.id}

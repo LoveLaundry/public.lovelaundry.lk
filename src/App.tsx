@@ -9,6 +9,7 @@ import {
 
 import type { ActionType } from "./types/action";
 import ActionBar from "./components/ActionBar";
+import LandingPage from "./pages/LandingPage";
 
 const actions: ActionType[] = [
     {
@@ -44,6 +45,7 @@ const App = () => {
 
     return (
         <div className="min-h-screen">
+          <LandingPage/>
             <ActionBar
                 items={actions}
                 selectedItem={selectedItem}
