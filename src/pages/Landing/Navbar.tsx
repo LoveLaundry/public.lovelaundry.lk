@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
     RiMenuLine,
     RiCloseLine,
+    RiArrowRightLine,
 } from "react-icons/ri";
 import type { ActionType } from "../../types/action";
 
@@ -12,54 +13,205 @@ interface NavbarProps {
 
 const Navbar = ({ actions }: NavbarProps) => {
     const [open, setOpen] = useState(false);
+    const [activeSection, setActiveSection] = useState(
+        actions[0]?.id ?? "home"
+    );
 
     const scrollTo = (id: string) => {
-        document.getElementById(id)?.scrollIntoView({
-            behavior: "smooth",
-        });
+        const section = document.getElementById(id);
 
+        if (section) {
+            const navbarOffset = 90;
+
+            const top =
+                section.getBoundingClientRect().top +
+                window.scrollY -
+                navbarOffset;
+
+            window.scrollTo({
+                top,
+                behavior: "smooth",
+            });
+        }
+
+        setActiveSection(id);
         setOpen(false);
     };
 
+    useEffect(() => {
+        const sections = actions
+            .map((action) => document.getElementById(action.id))
+            .filter((section): section is HTMLElement => section !== null);
+
+        if (!sections.length) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const visibleSections = entries
+                    .filter((entry) => entry.isIntersecting)
+                    .sort(
+                        (a, b) =>
+                            b.intersectionRatio -
+                            a.intersectionRatio
+                    );
+
+                if (visibleSections.length > 0) {
+                    setActiveSection(
+                        visibleSections[0].target.id
+                    );
+                }
+            },
+            {
+                root: null,
+                rootMargin: "-25% 0px -55% 0px",
+                threshold: [0.1, 0.25, 0.5, 0.75],
+            }
+        );
+
+        sections.forEach((section) => observer.observe(section));
+
+        return () => {
+            observer.disconnect();
+        };
+    }, [actions]);
+
     return (
-        <header className="fixed left-0 top-0 z-50 w-full">
-            <div className="mx-auto max-w-7xl px-5 pt-5 sm:px-8">
-                <div className="flex h-16 items-center justify-between rounded-2xl border border-black/5 bg-white/80 px-5 shadow-lg shadow-black/5 backdrop-blur-xl">
+        <header className="fixed inset-x-0 top-0 z-50">
+            <div className="mx-auto w-full max-w-[1440px] px-3 pt-3 sm:px-4 sm:pt-4 lg:px-6">
+                <div className="relative flex min-h-[60px] items-center justify-between rounded-xl border border-neutral-200 bg-white px-3 shadow-[0_4px_20px_rgba(0,0,0,0.06)] sm:min-h-[64px] sm:px-4 md:px-5 lg:min-h-[68px]">
 
                     <button
+                        type="button"
                         onClick={() => scrollTo("home")}
-                        className="flex items-center gap-3"
+                        className="flex min-w-0 items-center gap-2.5 sm:gap-3"
                     >
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-500 text-lg font-black text-white shadow-lg shadow-green-500/25">
-                            L
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg sm:h-10 sm:w-10 md:h-11 md:w-11">
+                            <img
+                                src="../../src/assets/icon.png"
+                                alt="Love Laundry"
+                                className="h-full w-full object-contain"
+                            />
                         </div>
 
-                        <div className="text-left">
-                            <div className="text-base font-black tracking-tight">
+                        <div className="min-w-0 text-left">
+                            <div className="truncate text-[14px] font-bold leading-tight tracking-tight text-neutral-900 sm:text-[15px]">
                                 Love Laundry
                             </div>
 
-                            <div className="text-[9px] font-semibold uppercase tracking-[0.2em] text-neutral-400">
-                                Fresh. Clean. Delivered.
+                            <div className="hidden text-[8px] font-semibold uppercase tracking-[0.15em] text-neutral-400 min-[400px]:block sm:text-[9px] sm:tracking-[0.18em]">
+                                Professional Laundry Service
                             </div>
                         </div>
                     </button>
 
-                    <nav className="hidden items-center gap-7 md:flex">
-                        {actions.map((action) => (
-                            <button
-                                key={action.id}
-                                onClick={() => scrollTo(action.id)}
-                                className="text-sm font-semibold text-neutral-500 transition hover:text-green-600"
-                            >
-                                {action.label}
-                            </button>
-                        ))}
+                    <nav className="hidden items-center md:flex">
+                        <div className="flex items-center gap-0.5 lg:gap-1">
+                            {actions.map((action) => {
+                                const isActive =
+                                    activeSection === action.id;
+
+                                return (
+                                    <button
+                                        key={action.id}
+                                        type="button"
+                                        onClick={() =>
+                                            scrollTo(action.id)
+                                        }
+                                        className={`
+                                            relative
+                                            rounded-lg
+                                            px-2.5
+                                            py-2
+                                            text-[12px]
+                                            font-semibold
+                                            transition-all
+                                            duration-200
+                                            lg:px-3.5
+                                            lg:text-[13px]
+                                            ${
+                                                isActive
+                                                    ? "bg-red-50 text-[#e50914]"
+                                                    : "text-neutral-500 hover:bg-red-50 hover:text-[#e50914]"
+                                            }
+                                        `}
+                                    >
+                                        {action.label}
+
+                                        {isActive && (
+                                            <motion.span
+                                                layoutId="activeNav"
+                                                className="absolute bottom-0.5 left-1/2 h-0.5 w-5 -translate-x-1/2 rounded-full bg-[#e50914]"
+                                                transition={{
+                                                    type: "spring",
+                                                    stiffness: 400,
+                                                    damping: 30,
+                                                }}
+                                            />
+                                        )}
+                                    </button>
+                                );
+                            })}
+                        </div>
+
+                        <button
+                            type="button"
+                            onClick={() => scrollTo("contact")}
+                            className="
+                                ml-2
+                                flex
+                                items-center
+                                gap-1.5
+                                rounded-lg
+                                bg-[#e50914]
+                                px-3.5
+                                py-2
+                                text-[12px]
+                                font-bold
+                                text-white
+                                shadow-[0_4px_12px_rgba(229,9,20,0.18)]
+                                transition-all
+                                duration-200
+                                hover:bg-[#c90812]
+                                hover:shadow-[0_6px_18px_rgba(229,9,20,0.25)]
+                                lg:ml-3
+                                lg:px-5
+                                lg:py-2.5
+                                lg:text-[13px]
+                            "
+                        >
+                            Book Now
+
+                            <RiArrowRightLine className="h-3.5 w-3.5 lg:h-4 lg:w-4" />
+                        </button>
                     </nav>
 
                     <button
-                        onClick={() => setOpen(!open)}
-                        className="flex h-10 w-10 items-center justify-center rounded-xl bg-neutral-100 md:hidden"
+                        type="button"
+                        onClick={() => setOpen((value) => !value)}
+                        aria-label={
+                            open ? "Close menu" : "Open menu"
+                        }
+                        aria-expanded={open}
+                        className="
+                            flex
+                            h-9
+                            w-9
+                            shrink-0
+                            items-center
+                            justify-center
+                            rounded-lg
+                            border
+                            border-neutral-200
+                            bg-neutral-50
+                            text-neutral-700
+                            transition
+                            hover:border-red-200
+                            hover:bg-red-50
+                            hover:text-[#e50914]
+                            sm:h-10
+                            sm:w-10
+                            md:hidden
+                        "
                     >
                         {open ? (
                             <RiCloseLine className="h-5 w-5" />
@@ -67,30 +219,160 @@ const Navbar = ({ actions }: NavbarProps) => {
                             <RiMenuLine className="h-5 w-5" />
                         )}
                     </button>
-                </div>
 
-                {open && (
-                    <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="mt-2 rounded-2xl border border-black/5 bg-white p-3 shadow-xl md:hidden"
-                    >
-                        {actions.map((action) => {
-                            const Icon = action.icon;
+                    <AnimatePresence>
+                        {open && (
+                            <>
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    onClick={() => setOpen(false)}
+                                    className="fixed inset-0 top-0 -z-10 bg-black/20 backdrop-blur-[2px] md:hidden"
+                                />
 
-                            return (
-                                <button
-                                    key={action.id}
-                                    onClick={() => scrollTo(action.id)}
-                                    className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-semibold text-neutral-600 transition hover:bg-green-50 hover:text-green-600"
+                                <motion.div
+                                    initial={{
+                                        opacity: 0,
+                                        y: -10,
+                                        scale: 0.98,
+                                    }}
+                                    animate={{
+                                        opacity: 1,
+                                        y: 0,
+                                        scale: 1,
+                                    }}
+                                    exit={{
+                                        opacity: 0,
+                                        y: -10,
+                                        scale: 0.98,
+                                    }}
+                                    transition={{
+                                        duration: 0.18,
+                                    }}
+                                    className="
+                                        absolute
+                                        left-0
+                                        right-0
+                                        top-[calc(100%+8px)]
+                                        max-h-[calc(100vh-90px)]
+                                        overflow-y-auto
+                                        rounded-xl
+                                        border
+                                        border-neutral-200
+                                        bg-white
+                                        p-2
+                                        shadow-[0_15px_40px_rgba(0,0,0,0.12)]
+                                        md:hidden
+                                    "
                                 >
-                                    <Icon className="h-5 w-5" />
-                                    {action.label}
-                                </button>
-                            );
-                        })}
-                    </motion.div>
-                )}
+                                    <div className="p-1">
+                                        {actions.map((action) => {
+                                            const Icon = action.icon;
+                                            const isActive =
+                                                activeSection ===
+                                                action.id;
+
+                                            return (
+                                                <button
+                                                    key={action.id}
+                                                    type="button"
+                                                    onClick={() =>
+                                                        scrollTo(
+                                                            action.id
+                                                        )
+                                                    }
+                                                    className={`
+                                                        flex
+                                                        w-full
+                                                        items-center
+                                                        gap-3
+                                                        rounded-lg
+                                                        px-3
+                                                        py-3
+                                                        text-left
+                                                        text-sm
+                                                        font-semibold
+                                                        transition
+                                                        sm:px-4
+                                                        sm:py-3.5
+                                                        ${
+                                                            isActive
+                                                                ? "bg-red-50 text-[#e50914]"
+                                                                : "text-neutral-600 hover:bg-red-50 hover:text-[#e50914]"
+                                                        }
+                                                    `}
+                                                >
+                                                    <span
+                                                        className={`
+                                                            flex
+                                                            h-9
+                                                            w-9
+                                                            shrink-0
+                                                            items-center
+                                                            justify-center
+                                                            rounded-lg
+                                                            ${
+                                                                isActive
+                                                                    ? "bg-[#e50914] text-white"
+                                                                    : "bg-neutral-100 text-neutral-500"
+                                                            }
+                                                        `}
+                                                    >
+                                                        <Icon className="h-4 w-4" />
+                                                    </span>
+
+                                                    <span className="flex-1">
+                                                        {action.label}
+                                                    </span>
+
+                                                    {isActive ? (
+                                                        <span className="h-2 w-2 rounded-full bg-[#e50914]" />
+                                                    ) : (
+                                                        <RiArrowRightLine className="h-4 w-4 text-neutral-300" />
+                                                    )}
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+
+                                    <div className="my-1 h-px bg-neutral-100" />
+
+                                    <div className="p-1">
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                scrollTo("contact")
+                                            }
+                                            className="
+                                                flex
+                                                w-full
+                                                items-center
+                                                justify-center
+                                                gap-2
+                                                rounded-lg
+                                                bg-[#e50914]
+                                                px-4
+                                                py-3
+                                                text-sm
+                                                font-bold
+                                                text-white
+                                                shadow-[0_4px_12px_rgba(229,9,20,0.18)]
+                                                transition
+                                                hover:bg-[#c90812]
+                                                sm:py-3.5
+                                            "
+                                        >
+                                            Book a Pickup
+
+                                            <RiArrowRightLine className="h-4 w-4" />
+                                        </button>
+                                    </div>
+                                </motion.div>
+                            </>
+                        )}
+                    </AnimatePresence>
+                </div>
             </div>
         </header>
     );
