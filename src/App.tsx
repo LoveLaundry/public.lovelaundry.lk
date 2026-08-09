@@ -49,7 +49,7 @@ const App = () => {
             <div className="pointer-events-none fixed inset-0 z-20 overflow-hidden h-screen">
                 <WaterBlob
                     size="clamp(250px, 30vw, 500px)"
-                    color="#e50914"
+                    color="#00e1ff"
                     opacity={0.3}
                     blur={25}
                     giggle={100}
@@ -59,7 +59,7 @@ const App = () => {
 
                 <WaterBlob
                     size="clamp(200px, 25vw, 400px)"
-                    color="#ff5a64"
+                    color="#00e1ff"
                     opacity={0.3}
                     blur={30}
                     giggle={100}
@@ -70,7 +70,7 @@ const App = () => {
 
                 <WaterBlob
                     size="clamp(150px, 20vw, 300px)"
-                    color="#e50914"
+                    color="#00e1ff"
                     opacity={0.3}
                     blur={10}
                     giggle={100}
