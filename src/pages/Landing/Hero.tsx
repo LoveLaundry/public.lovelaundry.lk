@@ -489,7 +489,7 @@ const Hero = () => {
                             "
                         >
                             <img
-                                src="../../src/assets/images/love-laundry-hero.png"
+                                src="./assets/images/love-laundry-hero.png"
                                 alt="Love Laundry pickup and laundry service"
                                 className="
                                     absolute

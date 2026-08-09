@@ -87,7 +87,7 @@ const Navbar = ({ actions }: NavbarProps) => {
                     >
                         <div className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg sm:h-10 sm:w-10 md:h-11 md:w-11">
                             <img
-                                src="../../src/assets/icon.png"
+                                src="./assets/icon.png"
                                 alt="Love Laundry"
                                 className="h-full w-full object-contain"
                             />

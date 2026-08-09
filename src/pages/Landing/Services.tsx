@@ -7,28 +7,28 @@ const services = [
         subtitle: "Everyday Laundry",
         description:
             "Professional washing, drying and folding for your everyday clothes.",
-        image: "../../src/assets/images/services/wash-fold.jpg",
+        image: "./assets/images/services/wash-fold.jpg",
     },
     {
         title: "Ironing",
         subtitle: "Crisp & Perfect",
         description:
             "Freshly pressed clothes that look clean, sharp and ready to wear.",
-        image: "../../src/assets/images/services/ironing.jpg",
+        image: "./assets/images/services/ironing.jpg",
     },
     {
         title: "Dry Cleaning",
         subtitle: "Special Care",
         description:
             "Specialized cleaning for suits, dresses and delicate garments.",
-        image: "../../src/assets/images/services/dry-cleaning.jpg",
+        image: "./assets/images/services/dry-cleaning.jpg",
     },
     {
         title: "Pickup & Delivery",
         subtitle: "At Your Door",
         description:
             "We collect your laundry and return it fresh and ready to wear.",
-        image: "../../src/assets/images/services/pickup-delivery.jpg",
+        image: "./assets/images/services/pickup-delivery.jpg",
     },
 ];
 
