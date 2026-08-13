@@ -5,12 +5,14 @@ import {
     RiListCheck3,
     RiInformationLine,
     RiPhoneLine,
+    RiBuildingLine,
 } from "react-icons/ri";
 
 import type { ActionType } from "../types/action";
 import Navbar from "./Landing/Navbar";
 import Hero from "./Landing/Hero";
 import Services from "./Landing/Services";
+import Commercial from "./Landing/Commercial";
 import Process from "./Landing/Process";
 import WhyLoveLaundry from "./Landing/WhyLoveLaundry";
 import Contact from "./Landing/Contact";
@@ -28,6 +30,11 @@ const actions: ActionType[] = [
         id: "services",
         label: "Services",
         icon: RiServiceLine,
+    },
+    {
+        id: "commercial",
+        label: "Commercial",
+        icon: RiBuildingLine,
     },
     {
         id: "process",
@@ -82,6 +89,7 @@ const LandingPage = () => {
             <Navbar actions={actions}/>
             <Hero />
             <Services />
+            <Commercial />
             <Process />
             <WhyLoveLaundry />
             <Contact />

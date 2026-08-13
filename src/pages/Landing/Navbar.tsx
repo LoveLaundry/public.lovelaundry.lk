@@ -6,6 +6,7 @@ import {
     RiArrowRightLine,
 } from "react-icons/ri";
 import type { ActionType } from "../../types/action";
+import { companyInfo } from "../../data/siteData";
 
 interface NavbarProps {
     actions: ActionType[];
@@ -95,11 +96,11 @@ const Navbar = ({ actions }: NavbarProps) => {
 
                         <div className="min-w-0 text-left">
                             <div className="truncate text-[14px] font-bold leading-tight tracking-tight text-neutral-900 sm:text-[15px]">
-                                Love Laundry
+                                {companyInfo.name}
                             </div>
 
                             <div className="hidden text-[8px] font-semibold uppercase tracking-[0.15em] text-neutral-400 min-[400px]:block sm:text-[9px] sm:tracking-[0.18em]">
-                                Professional Laundry Service
+                                {companyInfo.description}
                             </div>
                         </div>
                     </button>
@@ -128,10 +129,9 @@ const Navbar = ({ actions }: NavbarProps) => {
                                             duration-200
                                             lg:px-3.5
                                             lg:text-[13px]
-                                            ${
-                                                isActive
-                                                    ? "bg-red-50 text-[#e50914]"
-                                                    : "text-neutral-500 hover:bg-red-50 hover:text-[#e50914]"
+                                            ${isActive
+                                                ? "bg-red-50 text-[#DC2626]"
+                                                : "text-neutral-500 hover:bg-red-50 hover:text-[#DC2626]"
                                             }
                                         `}
                                     >
@@ -140,7 +140,7 @@ const Navbar = ({ actions }: NavbarProps) => {
                                         {isActive && (
                                             <motion.span
                                                 layoutId="activeNav"
-                                                className="absolute bottom-0.5 left-1/2 h-0.5 w-5 -translate-x-1/2 rounded-full bg-[#e50914]"
+                                                className="absolute bottom-0.5 left-1/2 h-0.5 w-5 -translate-x-1/2 rounded-full bg-[#DC2626]"
                                                 transition={{
                                                     type: "spring",
                                                     stiffness: 400,
@@ -162,7 +162,7 @@ const Navbar = ({ actions }: NavbarProps) => {
                                 items-center
                                 gap-1.5
                                 rounded-lg
-                                bg-[#e50914]
+                                bg-[#DC2626]
                                 px-3.5
                                 py-2
                                 text-[12px]
@@ -171,7 +171,7 @@ const Navbar = ({ actions }: NavbarProps) => {
                                 shadow-[0_4px_12px_rgba(229,9,20,0.18)]
                                 transition-all
                                 duration-200
-                                hover:bg-[#c90812]
+                                hover:bg-[#B91C1C]
                                 hover:shadow-[0_6px_18px_rgba(229,9,20,0.25)]
                                 lg:ml-3
                                 lg:px-5
@@ -207,7 +207,7 @@ const Navbar = ({ actions }: NavbarProps) => {
                             transition
                             hover:border-red-200
                             hover:bg-red-50
-                            hover:text-[#e50914]
+                            hover:text-[#DC2626]
                             sm:h-10
                             sm:w-10
                             md:hidden
@@ -296,10 +296,9 @@ const Navbar = ({ actions }: NavbarProps) => {
                                                         transition
                                                         sm:px-4
                                                         sm:py-3.5
-                                                        ${
-                                                            isActive
-                                                                ? "bg-red-50 text-[#e50914]"
-                                                                : "text-neutral-600 hover:bg-red-50 hover:text-[#e50914]"
+                                                        ${isActive
+                                                            ? "bg-red-50 text-[#DC2626]"
+                                                            : "text-neutral-600 hover:bg-red-50 hover:text-[#DC2626]"
                                                         }
                                                     `}
                                                 >
@@ -312,10 +311,9 @@ const Navbar = ({ actions }: NavbarProps) => {
                                                             items-center
                                                             justify-center
                                                             rounded-lg
-                                                            ${
-                                                                isActive
-                                                                    ? "bg-[#e50914] text-white"
-                                                                    : "bg-neutral-100 text-neutral-500"
+                                                            ${isActive
+                                                                ? "bg-[#DC2626] text-white"
+                                                                : "bg-neutral-100 text-neutral-500"
                                                             }
                                                         `}
                                                     >
@@ -327,7 +325,7 @@ const Navbar = ({ actions }: NavbarProps) => {
                                                     </span>
 
                                                     {isActive ? (
-                                                        <span className="h-2 w-2 rounded-full bg-[#e50914]" />
+                                                        <span className="h-2 w-2 rounded-full bg-[#DC2626]" />
                                                     ) : (
                                                         <RiArrowRightLine className="h-4 w-4 text-neutral-300" />
                                                     )}
@@ -351,7 +349,7 @@ const Navbar = ({ actions }: NavbarProps) => {
                                                 justify-center
                                                 gap-2
                                                 rounded-lg
-                                                bg-[#e50914]
+                                                bg-[#DC2626]
                                                 px-4
                                                 py-3
                                                 text-sm
@@ -359,7 +357,7 @@ const Navbar = ({ actions }: NavbarProps) => {
                                                 text-white
                                                 shadow-[0_4px_12px_rgba(229,9,20,0.18)]
                                                 transition
-                                                hover:bg-[#c90812]
+                                                hover:bg-[#B91C1C]
                                                 sm:py-3.5
                                             "
                                         >

@@ -1,37 +1,6 @@
 import { motion } from "framer-motion";
-import {
-    RiCalendarCheckLine,
-    RiTruckLine,
-    RiSparklingLine,
-    RiHomeSmileLine,
-} from "react-icons/ri";
-
-const steps = [
-    {
-        number: "01",
-        title: "Book a pickup",
-        text: "Contact us and tell us what you need cleaned.",
-        icon: RiCalendarCheckLine,
-    },
-    {
-        number: "02",
-        title: "We collect",
-        text: "Our delivery team picks up your laundry from your location.",
-        icon: RiTruckLine,
-    },
-    {
-        number: "03",
-        title: "We clean",
-        text: "Your clothes are washed, dried, ironed or dry cleaned as required.",
-        icon: RiSparklingLine,
-    },
-    {
-        number: "04",
-        title: "We deliver",
-        text: "Fresh, clean and neatly prepared clothes come back to your doorstep.",
-        icon: RiHomeSmileLine,
-    },
-];
+import { RiSparklingLine } from "react-icons/ri";
+import { processSteps, processSection } from "../../data/siteData";
 
 const Process = () => {
     return (
@@ -121,13 +90,13 @@ const Process = () => {
                             font-bold
                             uppercase
                             tracking-[0.2em]
-                            text-[#e50914]
+                            text-[#DC2626]
                             sm:px-4
                             sm:py-2
                             sm:text-xs
                         "
                     >
-                        How It Works
+                        {processSection.badge}
                     </span>
 
                     <h2
@@ -142,10 +111,10 @@ const Process = () => {
                             lg:text-6xl
                         "
                     >
-                        Laundry day,
+                        {processSection.title.main}
                         <br />
-                        <span className="text-[#e50914]">
-                            without the laundry.
+                        <span className="text-[#DC2626]">
+                            {processSection.title.highlight}
                         </span>
                     </h2>
 
@@ -159,9 +128,7 @@ const Process = () => {
                             sm:text-base
                         "
                     >
-                        Getting professionally cleaned clothes has
-                        never been easier. We handle the entire
-                        process from pickup to delivery.
+                        {processSection.description}
                     </p>
 
                     <div
@@ -186,7 +153,7 @@ const Process = () => {
                                     items-center
                                     justify-center
                                     rounded-full
-                                    bg-[#e50914]
+                                    bg-[#DC2626]
                                     text-white
                                 "
                             >
@@ -195,11 +162,11 @@ const Process = () => {
 
                             <div>
                                 <p className="text-sm font-bold text-neutral-900">
-                                    Simple. Professional. Convenient.
+                                    {processSection.info.title}
                                 </p>
 
                                 <p className="mt-0.5 text-xs text-neutral-400">
-                                    We take care of your clothes.
+                                    {processSection.info.subtitle}
                                 </p>
                             </div>
                         </div>
@@ -224,7 +191,7 @@ const Process = () => {
                     />
 
                     <div className="space-y-4 sm:space-y-5">
-                        {steps.map((step, index) => {
+                        {processSteps.map((step, index) => {
                             const Icon = step.icon;
 
                             return (
@@ -278,7 +245,7 @@ const Process = () => {
                                             items-center
                                             justify-center
                                             rounded-xl
-                                            bg-[#e50914]
+                                            bg-[#DC2626]
                                             text-white
                                             shadow-[0_5px_15px_rgba(229,9,20,0.18)]
                                             transition-transform
@@ -301,7 +268,7 @@ const Process = () => {
                                                         font-black
                                                         uppercase
                                                         tracking-[0.16em]
-                                                        text-[#e50914]
+                                                        text-[#DC2626]
                                                     "
                                                 >
                                                     Step {step.number}

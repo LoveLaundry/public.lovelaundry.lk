@@ -2,10 +2,8 @@ import { motion } from "framer-motion";
 import {
     RiArrowRightLine,
     RiHeart3Fill,
-    RiShoppingBasket2Line,
-    RiStarFill,
-    RiTimeLine,
 } from "react-icons/ri";
+import { heroData, companyInfo } from "../../data/siteData";
 
 const Hero = () => {
     const scrollTo = (id: string) => {
@@ -143,7 +141,7 @@ const Hero = () => {
                             font-bold
                             uppercase
                             tracking-[0.12em]
-                            text-[#e50914]
+                            text-[#DC2626]
                             sm:mb-6
                             sm:px-4
                             sm:text-xs
@@ -151,7 +149,7 @@ const Hero = () => {
                     >
                         <RiHeart3Fill className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
 
-                        Professional Laundry Service
+                        {heroData.badge.text}
                     </div>
 
                     <h1
@@ -167,11 +165,11 @@ const Hero = () => {
                             xl:text-[78px]
                         "
                     >
-                        Fresh clothes.
+                        {heroData.title.main}
                         <br />
 
-                        <span className="text-[#e50914]">
-                            More free time.
+                        <span className="text-[#DC2626]">
+                            {heroData.title.highlight}
                         </span>
                     </h1>
 
@@ -190,10 +188,7 @@ const Hero = () => {
                             lg:text-lg
                         "
                     >
-                        Professional laundry care, ironing and dry
-                        cleaning with convenient pickup and delivery.
-                        We take care of your clothes, so you can take
-                        care of what matters.
+                        {heroData.description}
                     </p>
 
                     <div
@@ -220,7 +215,7 @@ const Hero = () => {
                                 justify-center
                                 gap-3
                                 rounded-xl
-                                bg-[#e50914]
+                                bg-[#DC2626]
                                 px-7
                                 text-sm
                                 font-bold
@@ -228,12 +223,12 @@ const Hero = () => {
                                 shadow-[0_8px_25px_rgba(229,9,20,0.22)]
                                 transition-all
                                 duration-200
-                                hover:bg-[#c90812]
+                                hover:bg-[#B91C1C]
                                 hover:shadow-[0_10px_30px_rgba(229,9,20,0.28)]
                                 sm:w-auto
                             "
                         >
-                            Book a Pickup
+                            {heroData.buttons.primary.text}
 
                             <RiArrowRightLine
                                 className="
@@ -269,11 +264,11 @@ const Hero = () => {
                                 duration-200
                                 hover:border-red-400
                                 hover:bg-red-50
-                                hover:text-[#e50914]
+                                hover:text-[#DC2626]
                                 sm:w-auto
                             "
                         >
-                            Explore Services
+                            {heroData.buttons.secondary.text}
 
                             <RiArrowRightLine
                                 className="
@@ -299,89 +294,41 @@ const Hero = () => {
                             lg:mx-0
                         "
                     >
-                        <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-center lg:justify-start">
-                            <span
-                                className="
-                                    flex
-                                    h-10
-                                    w-10
-                                    shrink-0
-                                    items-center
-                                    justify-center
-                                    rounded-full
-                                    bg-red-50
-                                    text-[#e50914]
-                                "
-                            >
-                                <RiShoppingBasket2Line className="h-5 w-5" />
-                            </span>
+                        {heroData.stats.map((stat, index) => {
+                            const Icon = stat.icon;
+                            return (
+                                <div
+                                    key={index}
+                                    className="flex flex-col items-center gap-2 sm:flex-row sm:justify-center lg:justify-start"
+                                >
+                                    <span
+                                        className="
+                                            flex
+                                            h-10
+                                            w-10
+                                            shrink-0
+                                            items-center
+                                            justify-center
+                                            rounded-full
+                                            bg-red-50
+                                            text-[#DC2626]
+                                        "
+                                    >
+                                        <Icon className="h-5 w-5" />
+                                    </span>
 
-                            <div className="text-center sm:text-left">
-                                <div className="text-xl font-black text-neutral-950 sm:text-2xl">
-                                    10+
+                                    <div className="text-center sm:text-left">
+                                        <div className="text-xl font-black text-neutral-950 sm:text-2xl">
+                                            {stat.value}
+                                        </div>
+
+                                        <div className="text-[10px] text-neutral-400 sm:text-xs">
+                                            {stat.label}
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div className="text-[10px] text-neutral-400 sm:text-xs">
-                                    Services
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-center">
-                            <span
-                                className="
-                                    flex
-                                    h-10
-                                    w-10
-                                    shrink-0
-                                    items-center
-                                    justify-center
-                                    rounded-full
-                                    bg-red-50
-                                    text-[#e50914]
-                                "
-                            >
-                                <RiStarFill className="h-5 w-5" />
-                            </span>
-
-                            <div className="text-center sm:text-left">
-                                <div className="flex items-center justify-center gap-1 text-xl font-black text-neutral-950 sm:justify-start sm:text-2xl">
-                                    4.9
-                                </div>
-
-                                <div className="text-[10px] text-neutral-400 sm:text-xs">
-                                    Customer rating
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-center lg:justify-start">
-                            <span
-                                className="
-                                    flex
-                                    h-10
-                                    w-10
-                                    shrink-0
-                                    items-center
-                                    justify-center
-                                    rounded-full
-                                    bg-red-50
-                                    text-[#e50914]
-                                "
-                            >
-                                <RiTimeLine className="h-5 w-5" />
-                            </span>
-
-                            <div className="text-center sm:text-left">
-                                <div className="text-xl font-black text-neutral-950 sm:text-2xl">
-                                    24/7
-                                </div>
-
-                                <div className="text-[10px] text-neutral-400 sm:text-xs">
-                                    Convenience
-                                </div>
-                            </div>
-                        </div>
+                            );
+                        })}
                     </div>
                 </motion.div>
 
@@ -489,8 +436,8 @@ const Hero = () => {
                             "
                         >
                             <img
-                                src="./assets/images/love-laundry-hero.png"
-                                alt="Love Laundry pickup and laundry service"
+                                src={heroData.image.src}
+                                alt={heroData.image.alt}
                                 className="
                                     absolute
                                     inset-0
@@ -516,7 +463,7 @@ const Hero = () => {
                                     font-bold
                                     uppercase
                                     tracking-[0.12em]
-                                    text-[#e50914]
+                                    text-[#DC2626]
                                     shadow-lg
                                     backdrop-blur
                                     sm:left-6
@@ -525,7 +472,7 @@ const Hero = () => {
                                     sm:text-[10px]
                                 "
                             >
-                                Love Laundry
+                                {heroData.badge_text.primary}
                             </div>
 
                             <div
@@ -554,7 +501,7 @@ const Hero = () => {
                                         </div>
 
                                         <div className="mt-1 truncate text-xs font-bold text-neutral-900 sm:text-sm">
-                                            Schedule yours today
+                                            {heroData.badge_text.secondary}
                                         </div>
                                     </div>
 
@@ -567,7 +514,7 @@ const Hero = () => {
                                             items-center
                                             justify-center
                                             rounded-full
-                                            bg-[#e50914]
+                                            bg-[#DC2626]
                                             text-white
                                             sm:h-10
                                             sm:w-10
@@ -619,7 +566,7 @@ const Hero = () => {
 
                         <div>
                             <div className="text-xs font-black text-neutral-900">
-                                200+
+                                {companyInfo.customerCount}
                             </div>
 
                             <div className="text-[9px] text-neutral-400">
@@ -628,7 +575,7 @@ const Hero = () => {
                         </div>
                     </motion.div>
 
-                    <div className="absolute -right-2 top-8 hidden h-10 w-10 items-center justify-center rounded-full bg-[#e50914] text-white shadow-lg sm:flex lg:-right-5">
+                    <div className="absolute -right-2 top-8 hidden h-10 w-10 items-center justify-center rounded-full bg-[#DC2626] text-white shadow-lg sm:flex lg:-right-5">
                         <RiHeart3Fill className="h-4 w-4" />
                     </div>
                 </motion.div>

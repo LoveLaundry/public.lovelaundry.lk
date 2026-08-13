@@ -2,45 +2,9 @@ import { motion } from "framer-motion";
 import {
     RiCheckLine,
     RiSparklingLine,
-    RiTruckLine,
-    RiTimeLine,
-    RiShieldCheckLine,
     RiHeart3Fill,
 } from "react-icons/ri";
-
-const features = [
-    {
-        icon: RiTruckLine,
-        title: "Doorstep Service",
-        description:
-            "We collect and deliver your laundry right to your doorstep.",
-    },
-    {
-        icon: RiSparklingLine,
-        title: "Professional Care",
-        description:
-            "Your clothes are handled with professional equipment and care.",
-    },
-    {
-        icon: RiTimeLine,
-        title: "Save Your Time",
-        description:
-            "Spend your time on what matters while we take care of your laundry.",
-    },
-    {
-        icon: RiShieldCheckLine,
-        title: "Trusted Service",
-        description:
-            "We treat every garment with the attention and care it deserves.",
-    },
-];
-
-const benefits = [
-    "Professional cleaning",
-    "Careful garment handling",
-    "Convenient pickup & delivery",
-    "Reliable customer service",
-];
+import { features, benefits, whyLoveLaundrySection, companyInfo } from "../../data/siteData";
 
 const WhyLoveLaundry = () => {
     return (
@@ -123,7 +87,7 @@ const WhyLoveLaundry = () => {
                             relative
                             overflow-hidden
                             rounded-[28px]
-                            bg-[#e50914]
+                            bg-[#DC2626]
                             p-4
                             shadow-[0_20px_50px_rgba(229,9,20,0.16)]
                             sm:rounded-[36px]
@@ -180,7 +144,7 @@ const WhyLoveLaundry = () => {
                                         justify-center
                                         rounded-xl
                                         bg-red-50
-                                        text-[#e50914]
+                                        text-[#DC2626]
                                     "
                                 >
                                     <RiHeart3Fill className="h-6 w-6" />
@@ -196,10 +160,10 @@ const WhyLoveLaundry = () => {
                                         font-bold
                                         uppercase
                                         tracking-[0.15em]
-                                        text-[#e50914]
+                                        text-[#DC2626]
                                     "
                                 >
-                                    Love Laundry
+                                    {companyInfo.name}
                                 </span>
                             </div>
 
@@ -215,9 +179,7 @@ const WhyLoveLaundry = () => {
                                     sm:text-4xl
                                 "
                             >
-                                We care about
-                                <br />
-                                every garment.
+                                {whyLoveLaundrySection.card.title}
                             </h3>
 
                             <p
@@ -230,10 +192,7 @@ const WhyLoveLaundry = () => {
                                     sm:text-base
                                 "
                             >
-                                Love Laundry is built around one simple
-                                idea: professional laundry should be
-                                convenient, reliable and genuinely cared
-                                for.
+                                {whyLoveLaundrySection.card.description}
                             </p>
 
                             <div className="mt-8 space-y-3">
@@ -275,7 +234,7 @@ const WhyLoveLaundry = () => {
                                                 justify-center
                                                 rounded-full
                                                 bg-red-50
-                                                text-[#e50914]
+                                                text-[#DC2626]
                                             "
                                         >
                                             <RiCheckLine className="h-4 w-4" />
@@ -304,7 +263,7 @@ const WhyLoveLaundry = () => {
                                             items-center
                                             justify-center
                                             rounded-full
-                                            bg-[#e50914]
+                                            bg-[#DC2626]
                                             text-white
                                         "
                                     >
@@ -313,12 +272,11 @@ const WhyLoveLaundry = () => {
 
                                     <div>
                                         <p className="text-xs font-bold text-neutral-900">
-                                            Freshness you can trust
+                                            {whyLoveLaundrySection.card.info.title}
                                         </p>
 
                                         <p className="mt-0.5 text-[10px] text-neutral-400">
-                                            Every order receives professional
-                                            care.
+                                            {whyLoveLaundrySection.card.info.subtitle}
                                         </p>
                                     </div>
                                 </div>
@@ -357,13 +315,13 @@ const WhyLoveLaundry = () => {
                             font-bold
                             uppercase
                             tracking-[0.2em]
-                            text-[#e50914]
+                            text-[#DC2626]
                             sm:px-4
                             sm:py-2
                             sm:text-xs
                         "
                     >
-                        Why Love Laundry
+                        {whyLoveLaundrySection.badge}
                     </span>
 
                     <h2
@@ -378,11 +336,11 @@ const WhyLoveLaundry = () => {
                             lg:text-6xl
                         "
                     >
-                        More than clean.
+                        {whyLoveLaundrySection.title.main}
                         <br />
 
-                        <span className="text-[#e50914]">
-                            It's care.
+                        <span className="text-[#DC2626]">
+                            {whyLoveLaundrySection.title.highlight}
                         </span>
                     </h2>
 
@@ -396,10 +354,7 @@ const WhyLoveLaundry = () => {
                             sm:text-base
                         "
                     >
-                        We combine professional laundry care with
-                        modern convenience, making it easier for busy
-                        families, professionals and businesses to keep
-                        everything fresh.
+                        {whyLoveLaundrySection.description}
                     </p>
 
                     <div
@@ -458,10 +413,10 @@ const WhyLoveLaundry = () => {
                                             justify-center
                                             rounded-xl
                                             bg-red-50
-                                            text-[#e50914]
+                                            text-[#DC2626]
                                             transition-all
                                             duration-300
-                                            group-hover:bg-[#e50914]
+                                            group-hover:bg-[#DC2626]
                                             group-hover:text-white
                                         "
                                     >

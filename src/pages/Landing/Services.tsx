@@ -1,36 +1,6 @@
 import { motion } from "framer-motion";
 import { RiArrowRightLine } from "react-icons/ri";
-
-const services = [
-    {
-        title: "Wash & Fold",
-        subtitle: "Everyday Laundry",
-        description:
-            "Professional washing, drying and folding for your everyday clothes.",
-        image: "./assets/images/services/wash-fold.jpg",
-    },
-    {
-        title: "Ironing",
-        subtitle: "Crisp & Perfect",
-        description:
-            "Freshly pressed clothes that look clean, sharp and ready to wear.",
-        image: "./assets/images/services/ironing.jpg",
-    },
-    {
-        title: "Dry Cleaning",
-        subtitle: "Special Care",
-        description:
-            "Specialized cleaning for suits, dresses and delicate garments.",
-        image: "./assets/images/services/dry-cleaning.jpg",
-    },
-    {
-        title: "Pickup & Delivery",
-        subtitle: "At Your Door",
-        description:
-            "We collect your laundry and return it fresh and ready to wear.",
-        image: "./assets/images/services/pickup-delivery.jpg",
-    },
-];
+import { services, servicesSection, companyInfo } from "../../data/siteData";
 
 const Services = () => {
     return (
@@ -114,13 +84,13 @@ const Services = () => {
                             font-bold
                             uppercase
                             tracking-[0.2em]
-                            text-[#e50914]
+                            text-[#DC2626]
                             sm:px-4
                             sm:py-2
                             sm:text-xs
                         "
                     >
-                        Our Services
+                        {servicesSection.badge}
                     </span>
 
                     <h2
@@ -135,10 +105,10 @@ const Services = () => {
                             lg:text-6xl
                         "
                     >
-                        Everything your
+                        {servicesSection.title.main}
                         <br className="hidden sm:block" />
-                        <span className="text-[#e50914]">
-                            clothes need.
+                        <span className="text-[#DC2626]">
+                            {servicesSection.title.highlight}
                         </span>
                     </h2>
 
@@ -153,9 +123,7 @@ const Services = () => {
                             sm:leading-7
                         "
                     >
-                        From everyday washing to delicate dry cleaning,
-                        our professional team keeps your wardrobe fresh,
-                        clean and ready.
+                        {servicesSection.description}
                     </p>
                 </motion.div>
 
@@ -254,12 +222,12 @@ const Services = () => {
                                         font-bold
                                         uppercase
                                         tracking-wider
-                                        text-[#e50914]
+                                        text-[#DC2626]
                                         shadow-sm
                                         backdrop-blur
                                     "
                                 >
-                                    Love Laundry
+                                    {companyInfo.name}
                                 </div>
                             </div>
 
@@ -270,7 +238,7 @@ const Services = () => {
                                         font-bold
                                         uppercase
                                         tracking-[0.16em]
-                                        text-[#e50914]
+                                        text-[#DC2626]
                                     "
                                 >
                                     {service.subtitle}
@@ -308,7 +276,7 @@ const Services = () => {
                                         gap-2
                                         text-xs
                                         font-bold
-                                        text-[#e50914]
+                                        text-[#DC2626]
                                         transition-all
                                         duration-200
                                         group-hover:gap-3
@@ -358,11 +326,11 @@ const Services = () => {
                 >
                     <div className="text-center sm:text-left">
                         <p className="text-sm font-bold text-neutral-900">
-                            Not sure which service you need?
+                            {servicesSection.cta.text}
                         </p>
 
                         <p className="mt-1 text-xs text-neutral-500">
-                            Talk to our team and we'll help you choose.
+                            {servicesSection.cta.subtext}
                         </p>
                     </div>
 
@@ -383,17 +351,17 @@ const Services = () => {
                             justify-center
                             gap-2
                             rounded-lg
-                            bg-[#e50914]
+                            bg-[#DC2626]
                             px-5
                             text-xs
                             font-bold
                             text-white
                             shadow-[0_5px_15px_rgba(229,9,20,0.18)]
                             transition
-                            hover:bg-[#c90812]
+                            hover:bg-[#B91C1C]
                         "
                     >
-                        Contact Us
+                        {servicesSection.cta.buttonText}
                         <RiArrowRightLine className="h-4 w-4" />
                     </button>
                 </motion.div>

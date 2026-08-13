@@ -1,3 +1,5 @@
+import { companyInfo } from "../../data/siteData";
+
 const Footer = () => {
     const scrollTo = (id: string) => {
         document.getElementById(id)?.scrollIntoView({
@@ -34,7 +36,7 @@ const Footer = () => {
                                     items-center
                                     justify-center
                                     rounded-xl
-                                    bg-[#e50914]
+                                    bg-[#DC2626]
                                     text-lg
                                     font-black
                                     text-white
@@ -49,7 +51,7 @@ const Footer = () => {
 
                             <div>
                                 <div className="text-base font-black tracking-tight text-neutral-950">
-                                    Love Laundry
+                                    {companyInfo.name}
                                 </div>
 
                                 <div
@@ -62,7 +64,7 @@ const Footer = () => {
                                         text-neutral-400
                                     "
                                 >
-                                    Fresh. Clean. Delivered with love.
+                                    {companyInfo.tagline}
                                 </div>
                             </div>
                         </div>
@@ -83,7 +85,7 @@ const Footer = () => {
                         <button
                             type="button"
                             onClick={() => scrollTo("home")}
-                            className="transition hover:text-[#e50914]"
+                            className="transition hover:text-[#DC2626]"
                         >
                             Home
                         </button>
@@ -91,15 +93,23 @@ const Footer = () => {
                         <button
                             type="button"
                             onClick={() => scrollTo("services")}
-                            className="transition hover:text-[#e50914]"
+                            className="transition hover:text-[#DC2626]"
                         >
                             Services
                         </button>
 
                         <button
                             type="button"
+                            onClick={() => scrollTo("commercial")}
+                            className="transition hover:text-[#DC2626]"
+                        >
+                            Commercial
+                        </button>
+
+                        <button
+                            type="button"
                             onClick={() => scrollTo("process")}
-                            className="transition hover:text-[#e50914]"
+                            className="transition hover:text-[#DC2626]"
                         >
                             How It Works
                         </button>
@@ -107,7 +117,7 @@ const Footer = () => {
                         <button
                             type="button"
                             onClick={() => scrollTo("about")}
-                            className="transition hover:text-[#e50914]"
+                            className="transition hover:text-[#DC2626]"
                         >
                             Why Us
                         </button>
@@ -115,7 +125,7 @@ const Footer = () => {
                         <button
                             type="button"
                             onClick={() => scrollTo("contact")}
-                            className="transition hover:text-[#e50914]"
+                            className="transition hover:text-[#DC2626]"
                         >
                             Contact
                         </button>
@@ -138,12 +148,12 @@ const Footer = () => {
                     "
                 >
                     <p>
-                        © {new Date().getFullYear()} Love Laundry. All rights
+                        © {new Date().getFullYear()} {companyInfo.name}. All rights
                         reserved.
                     </p>
 
                     <p className="text-neutral-300">
-                        Fresh. Clean. Delivered with love.
+                        {companyInfo.tagline}
                     </p>
                 </div>
             </div>

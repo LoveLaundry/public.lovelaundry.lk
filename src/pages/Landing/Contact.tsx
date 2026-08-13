@@ -4,6 +4,7 @@ import {
     RiWhatsappLine,
     RiSparklingLine,
 } from "react-icons/ri";
+import { contactSection } from "../../data/siteData";
 
 const Contact = () => {
     return (
@@ -27,7 +28,7 @@ const Contact = () => {
                         relative
                         overflow-hidden
                         rounded-[28px]
-                        bg-[#e50914]
+                        bg-[#DC2626]
                         px-5
                         py-12
                         shadow-[0_25px_60px_rgba(229,9,20,0.18)]
@@ -103,7 +104,7 @@ const Contact = () => {
                                 "
                             >
                                 <RiSparklingLine className="h-3.5 w-3.5" />
-                                Ready when you are
+                                {contactSection.badge.text}
                             </div>
 
                             <h2
@@ -119,9 +120,7 @@ const Contact = () => {
                                     lg:text-6xl
                                 "
                             >
-                                Give your laundry day
-                                <br className="hidden sm:block" />
-                                back to yourself.
+                                {contactSection.title}
                             </h2>
 
                             <p
@@ -134,32 +133,25 @@ const Contact = () => {
                                     sm:text-base
                                 "
                             >
-                                Book your next pickup and let Love Laundry
-                                handle the rest. Fresh clothes, professional
-                                care and convenient delivery.
+                                {contactSection.description}
                             </p>
 
                             <div className="mt-7 flex flex-wrap gap-4">
-                                <div className="flex items-center gap-2 text-xs font-semibold text-white/70">
-                                    <span className="h-1.5 w-1.5 rounded-full bg-white" />
-                                    Professional care
-                                </div>
-
-                                <div className="flex items-center gap-2 text-xs font-semibold text-white/70">
-                                    <span className="h-1.5 w-1.5 rounded-full bg-white" />
-                                    Doorstep pickup
-                                </div>
-
-                                <div className="flex items-center gap-2 text-xs font-semibold text-white/70">
-                                    <span className="h-1.5 w-1.5 rounded-full bg-white" />
-                                    Easy delivery
-                                </div>
+                                {contactSection.features.map((feature, index) => (
+                                    <div
+                                        key={index}
+                                        className="flex items-center gap-2 text-xs font-semibold text-white/70"
+                                    >
+                                        <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                                        {feature}
+                                    </div>
+                                ))}
                             </div>
                         </div>
 
                         <div className="flex flex-col gap-3 sm:flex-row lg:min-w-[190px] lg:flex-col">
                             <a
-                                href="tel:+94700000000"
+                                href={contactSection.buttons.phone.href}
                                 className="
                                     flex
                                     h-14
@@ -171,7 +163,7 @@ const Contact = () => {
                                     px-7
                                     text-sm
                                     font-black
-                                    text-[#e50914]
+                                    text-[#DC2626]
                                     shadow-xl
                                     transition-all
                                     duration-200
@@ -180,11 +172,11 @@ const Contact = () => {
                                 "
                             >
                                 <RiPhoneLine className="h-5 w-5" />
-                                Call Us
+                                {contactSection.buttons.phone.text}
                             </a>
 
                             <a
-                                href="https://wa.me/94700000000"
+                                href={contactSection.buttons.whatsapp.href}
                                 target="_blank"
                                 rel="noreferrer"
                                 className="
@@ -209,7 +201,7 @@ const Contact = () => {
                                 "
                             >
                                 <RiWhatsappLine className="h-5 w-5" />
-                                WhatsApp Us
+                                {contactSection.buttons.whatsapp.text}
                                 <RiArrowRightLine className="h-4 w-4" />
                             </a>
                         </div>

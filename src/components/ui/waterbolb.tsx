@@ -17,7 +17,7 @@ interface WaterBlobProps {
 
 const WaterBlob = ({
     size = 300,
-    color = "#e50914",
+    color = "#DC2626",
     opacity = 0.15,
     blur = 0,
     duration = 4,
