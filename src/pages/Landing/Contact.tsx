@@ -2,44 +2,49 @@ import {
     RiArrowRightLine,
     RiPhoneLine,
     RiWhatsappLine,
-    RiSparklingLine,
+    RiSparkling2Fill,
 } from "react-icons/ri";
+import { useReveal } from "../../hooks/useReveal";
 import { contactSection } from "../../data/siteData";
 
 const Contact = () => {
+    const bannerRef = useReveal<HTMLDivElement>({ y: 30, scale: 0.98 });
+
     return (
         <section
             id="contact"
             className="
                 relative
                 overflow-hidden
-                bg-white
+                bg-[#F8F4EE]
                 px-4
-                py-16
+                pb-20
+                pt-4
                 sm:px-6
-                sm:py-20
+                sm:pb-24
                 lg:px-8
-                lg:py-24
+                lg:pb-28
             "
         >
             <div className="relative mx-auto w-full max-w-[1440px]">
                 <div
+                    ref={bannerRef}
+                    data-reveal
                     className="
                         relative
                         overflow-hidden
                         rounded-[28px]
-                        bg-[#DC2626]
-                        px-5
-                        py-12
-                        shadow-[0_25px_60px_rgba(229,9,20,0.18)]
-                        sm:rounded-[36px]
-                        sm:px-10
-                        sm:py-14
+                        bg-[#E01E31]
+                        px-6
+                        py-14
+                        sm:rounded-[40px]
+                        sm:px-12
+                        sm:py-16
                         lg:px-16
-                        lg:py-16
                     "
                 >
                     <div
+                        aria-hidden="true"
                         className="
                             pointer-events-none
                             absolute
@@ -53,68 +58,58 @@ const Contact = () => {
                     />
 
                     <div
+                        aria-hidden="true"
                         className="
                             pointer-events-none
                             absolute
-                            -bottom-40
+                            -bottom-28
                             -left-20
-                            h-96
-                            w-96
+                            h-80
+                            w-80
                             rounded-full
-                            bg-black/10
+                            border-[24px]
+                            border-white/10
                         "
                     />
 
                     <div
                         className="
-                            pointer-events-none
-                            absolute
-                            right-[20%]
-                            top-10
-                            h-24
-                            w-24
-                            rounded-full
-                            border
-                            border-white/10
+                            relative
+                            grid
+                            gap-10
+                            lg:grid-cols-[1fr_auto]
+                            lg:items-center
+                            lg:gap-16
                         "
-                    />
-
-                    <div className="relative grid gap-10 lg:grid-cols-[1fr_auto] lg:items-center lg:gap-16">
+                    >
                         <div>
-                            <div
+                            <span
                                 className="
                                     inline-flex
                                     items-center
-                                    gap-2
-                                    rounded-full
-                                    border
-                                    border-white/20
-                                    bg-white/10
-                                    px-3
-                                    py-1.5
-                                    text-[10px]
+                                    gap-2.5
+                                    text-[11px]
                                     font-bold
                                     uppercase
-                                    tracking-[0.2em]
-                                    text-white/90
-                                    backdrop-blur
-                                    sm:px-4
-                                    sm:py-2
+                                    tracking-[0.22em]
+                                    text-white/80
                                     sm:text-xs
                                 "
                             >
-                                <RiSparklingLine className="h-3.5 w-3.5" />
+                                <RiSparkling2Fill className="h-4 w-4" />
+
                                 {contactSection.badge.text}
-                            </div>
+                            </span>
 
                             <h2
                                 className="
-                                    mt-5
-                                    max-w-3xl
+                                    font-display
+                                    mt-4
+                                    max-w-2xl
                                     text-4xl
-                                    font-black
-                                    leading-[1]
-                                    tracking-[-0.04em]
+                                    font-semibold
+                                    leading-[1.05]
+                                    tracking-[-0.02em]
                                     text-white
                                     sm:text-5xl
                                     lg:text-6xl
@@ -125,53 +120,51 @@ const Contact = () => {
 
                             <p
                                 className="
-                                    mt-6
+                                    mt-5
                                     max-w-xl
                                     text-sm
                                     leading-7
-                                    text-white/70
+                                    text-white/85
                                     sm:text-base
                                 "
                             >
                                 {contactSection.description}
                             </p>
-
-                            <div className="mt-7 flex flex-wrap gap-4">
-                                {contactSection.features.map((feature, index) => (
-                                    <div
-                                        key={index}
-                                        className="flex items-center gap-2 text-xs font-semibold text-white/70"
-                                    >
-                                        <span className="h-1.5 w-1.5 rounded-full bg-white" />
-                                        {feature}
-                                    </div>
-                                ))}
-                            </div>
                         </div>
 
-                        <div className="flex flex-col gap-3 sm:flex-row lg:min-w-[190px] lg:flex-col">
+                        <div
+                            className="
+                                flex
+                                flex-col
+                                gap-3
+                                sm:flex-row
+                                lg:min-w-[210px]
+                                lg:flex-col
+                            "
+                        >
                             <a
                                 href={contactSection.buttons.phone.href}
                                 className="
                                     flex
-                                    h-14
+                                    h-13
                                     items-center
                                     justify-center
                                     gap-3
-                                    rounded-2xl
-                                    bg-white
-                                    px-7
+                                    rounded-full
+                                    bg-[#FFFDF9]
+                                    px-8
                                     text-sm
-                                    font-black
-                                    text-[#DC2626]
-                                    shadow-xl
+                                    font-bold
+                                    text-[#E01E31]
+                                    shadow-[0_12px_30px_rgba(193,19,36,0.35)]
                                     transition-all
                                     duration-200
                                     hover:-translate-y-0.5
-                                    hover:bg-neutral-50
+                                    hover:shadow-[0_16px_40px_rgba(193,19,36,0.45)]
                                 "
                             >
                                 <RiPhoneLine className="h-5 w-5" />
+
                                 {contactSection.buttons.phone.text}
                             </a>
 
@@ -181,19 +174,18 @@ const Contact = () => {
                                 rel="noreferrer"
                                 className="
                                     flex
-                                    h-14
+                                    h-13
                                     items-center
                                     justify-center
                                     gap-3
-                                    rounded-2xl
+                                    rounded-full
                                     border
-                                    border-white/25
+                                    border-white/30
                                     bg-white/10
-                                    px-7
+                                    px-8
                                     text-sm
-                                    font-black
+                                    font-bold
                                     text-white
-                                    backdrop-blur
                                     transition-all
                                     duration-200
                                     hover:-translate-y-0.5
@@ -201,7 +193,9 @@ const Contact = () => {
                                 "
                             >
                                 <RiWhatsappLine className="h-5 w-5" />
+
                                 {contactSection.buttons.whatsapp.text}
+
                                 <RiArrowRightLine className="h-4 w-4" />
                             </a>
                         </div>

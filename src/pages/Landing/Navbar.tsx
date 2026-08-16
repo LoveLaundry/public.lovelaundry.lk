@@ -79,7 +79,7 @@ const Navbar = ({ actions }: NavbarProps) => {
     return (
         <header className="fixed inset-x-0 top-0 z-50">
             <div className="mx-auto w-full max-w-[1440px] px-3 pt-3 sm:px-4 sm:pt-4 lg:px-6">
-                <div className="relative flex min-h-[60px] items-center justify-between rounded-xl border border-neutral-200 bg-white px-3 shadow-[0_4px_20px_rgba(0,0,0,0.06)] sm:min-h-[64px] sm:px-4 md:px-5 lg:min-h-[68px]">
+                <div className="relative flex min-h-[60px] items-center justify-between rounded-full border border-[#E8DFD0] bg-[#FFFDF9] px-3 shadow-[0_4px_20px_rgba(75,56,36,0.08)] sm:min-h-[64px] sm:px-4 md:px-5 lg:min-h-[68px]">
 
                     <button
                         type="button"
@@ -95,11 +95,11 @@ const Navbar = ({ actions }: NavbarProps) => {
                         </div>
 
                         <div className="min-w-0 text-left">
-                            <div className="truncate text-[14px] font-bold leading-tight tracking-tight text-neutral-900 sm:text-[15px]">
+                            <div className="truncate text-[14px] font-bold leading-tight tracking-tight text-[#2B2623] sm:text-[15px]">
                                 {companyInfo.name}
                             </div>
 
-                            <div className="hidden text-[8px] font-semibold uppercase tracking-[0.15em] text-neutral-400 min-[400px]:block sm:text-[9px] sm:tracking-[0.18em]">
+                            <div className="hidden text-[8px] font-semibold uppercase tracking-[0.15em] text-[#786E60] min-[400px]:block sm:text-[9px] sm:tracking-[0.18em]">
                                 {companyInfo.description}
                             </div>
                         </div>
@@ -130,8 +130,8 @@ const Navbar = ({ actions }: NavbarProps) => {
                                             lg:px-3.5
                                             lg:text-[13px]
                                             ${isActive
-                                                ? "bg-red-50 text-[#DC2626]"
-                                                : "text-neutral-500 hover:bg-red-50 hover:text-[#DC2626]"
+                                                ? "bg-[#FCE7E5] text-[#E01E31]"
+                                                : "text-[#564D44] hover:bg-[#FCE7E5] hover:text-[#E01E31]"
                                             }
                                         `}
                                     >
@@ -140,7 +140,7 @@ const Navbar = ({ actions }: NavbarProps) => {
                                         {isActive && (
                                             <motion.span
                                                 layoutId="activeNav"
-                                                className="absolute bottom-0.5 left-1/2 h-0.5 w-5 -translate-x-1/2 rounded-full bg-[#DC2626]"
+                                                className="absolute bottom-0.5 left-1/2 h-0.5 w-5 -translate-x-1/2 rounded-full bg-[#E01E31]"
                                                 transition={{
                                                     type: "spring",
                                                     stiffness: 400,
@@ -161,18 +161,18 @@ const Navbar = ({ actions }: NavbarProps) => {
                                 flex
                                 items-center
                                 gap-1.5
-                                rounded-lg
-                                bg-[#DC2626]
+                                rounded-full
+                                bg-[#E01E31]
                                 px-3.5
                                 py-2
                                 text-[12px]
                                 font-bold
                                 text-white
-                                shadow-[0_4px_12px_rgba(229,9,20,0.18)]
+                                shadow-[0_4px_12px_rgba(224,30,49,0.18)]
                                 transition-all
                                 duration-200
-                                hover:bg-[#B91C1C]
-                                hover:shadow-[0_6px_18px_rgba(229,9,20,0.25)]
+                                hover:bg-[#C11324]
+                                hover:shadow-[0_6px_18px_rgba(224,30,49,0.25)]
                                 lg:ml-3
                                 lg:px-5
                                 lg:py-2.5
@@ -201,13 +201,13 @@ const Navbar = ({ actions }: NavbarProps) => {
                             justify-center
                             rounded-lg
                             border
-                            border-neutral-200
-                            bg-neutral-50
-                            text-neutral-700
+                            border-[#E8DFD0]
+                            bg-[#FFFDF9]
+                            text-[#564D44]
                             transition
-                            hover:border-red-200
-                            hover:bg-red-50
-                            hover:text-[#DC2626]
+                            hover:border-[#F3C7CE]
+                            hover:bg-[#FCE7E5]
+                            hover:text-[#E01E31]
                             sm:h-10
                             sm:w-10
                             md:hidden
@@ -259,8 +259,8 @@ const Navbar = ({ actions }: NavbarProps) => {
                                         overflow-y-auto
                                         rounded-xl
                                         border
-                                        border-neutral-200
-                                        bg-white
+                                        border-[#E8DFD0]
+                                        bg-[#FFFDF9]
                                         p-2
                                         shadow-[0_15px_40px_rgba(0,0,0,0.12)]
                                         md:hidden
@@ -297,8 +297,8 @@ const Navbar = ({ actions }: NavbarProps) => {
                                                         sm:px-4
                                                         sm:py-3.5
                                                         ${isActive
-                                                            ? "bg-red-50 text-[#DC2626]"
-                                                            : "text-neutral-600 hover:bg-red-50 hover:text-[#DC2626]"
+                                                            ? "bg-[#FCE7E5] text-[#E01E31]"
+                                                            : "text-[#3A332C] hover:bg-[#FCE7E5] hover:text-[#E01E31]"
                                                         }
                                                     `}
                                                 >
@@ -312,8 +312,8 @@ const Navbar = ({ actions }: NavbarProps) => {
                                                             justify-center
                                                             rounded-lg
                                                             ${isActive
-                                                                ? "bg-[#DC2626] text-white"
-                                                                : "bg-neutral-100 text-neutral-500"
+                                                                ? "bg-[#E01E31] text-white"
+                                                                : "bg-[#F1E9DC] text-[#786E60]"
                                                             }
                                                         `}
                                                     >
@@ -325,16 +325,16 @@ const Navbar = ({ actions }: NavbarProps) => {
                                                     </span>
 
                                                     {isActive ? (
-                                                        <span className="h-2 w-2 rounded-full bg-[#DC2626]" />
+                                                        <span className="h-2 w-2 rounded-full bg-[#E01E31]" />
                                                     ) : (
-                                                        <RiArrowRightLine className="h-4 w-4 text-neutral-300" />
+                                                        <RiArrowRightLine className="h-4 w-4 text-[#C9BEB0]" />
                                                     )}
                                                 </button>
                                             );
                                         })}
                                     </div>
 
-                                    <div className="my-1 h-px bg-neutral-100" />
+                                    <div className="my-1 h-px bg-[#F1E9DC]" />
 
                                     <div className="p-1">
                                         <button
@@ -349,15 +349,15 @@ const Navbar = ({ actions }: NavbarProps) => {
                                                 justify-center
                                                 gap-2
                                                 rounded-lg
-                                                bg-[#DC2626]
+                                                bg-[#E01E31]
                                                 px-4
                                                 py-3
                                                 text-sm
                                                 font-bold
                                                 text-white
-                                                shadow-[0_4px_12px_rgba(229,9,20,0.18)]
+                                                shadow-[0_4px_12px_rgba(224,30,49,0.18)]
                                                 transition
-                                                hover:bg-[#B91C1C]
+                                                hover:bg-[#C11324]
                                                 sm:py-3.5
                                             "
                                         >

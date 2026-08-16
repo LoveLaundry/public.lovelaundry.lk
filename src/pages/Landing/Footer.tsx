@@ -8,15 +8,15 @@ const Footer = () => {
     };
 
     return (
-        <footer className="border-t border-neutral-200 bg-white">
+        <footer className="bg-[#2B2623]">
             <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
                 <div
                     className="
                         flex
                         flex-col
                         gap-8
-                        py-10
-                        sm:py-12
+                        py-12
+                        sm:py-14
                         lg:flex-row
                         lg:items-center
                         lg:justify-between
@@ -31,16 +31,15 @@ const Footer = () => {
                             <div
                                 className="
                                     flex
-                                    h-10
-                                    w-10
+                                    h-11
+                                    w-11
                                     items-center
                                     justify-center
-                                    rounded-xl
-                                    bg-[#DC2626]
+                                    rounded-2xl
+                                    bg-[#E01E31]
                                     text-lg
-                                    font-black
+                                    font-bold
                                     text-white
-                                    shadow-[0_5px_15px_rgba(229,9,20,0.16)]
                                     transition-transform
                                     duration-200
                                     group-hover:scale-105
@@ -50,18 +49,26 @@ const Footer = () => {
                             </div>
 
                             <div>
-                                <div className="text-base font-black tracking-tight text-neutral-950">
+                                <div
+                                    className="
+                                        font-display
+                                        text-base
+                                        font-semibold
+                                        tracking-tight
+                                        text-[#FFFDF9]
+                                    "
+                                >
                                     {companyInfo.name}
                                 </div>
 
                                 <div
                                     className="
                                         mt-0.5
-                                        text-[9px]
+                                        text-[10px]
                                         font-semibold
                                         uppercase
-                                        tracking-[0.18em]
-                                        text-neutral-400
+                                        tracking-[0.16em]
+                                        text-[#A99F90]
                                     "
                                 >
                                     {companyInfo.tagline}
@@ -75,17 +82,17 @@ const Footer = () => {
                             flex
                             flex-wrap
                             items-center
-                            gap-x-6
+                            gap-x-7
                             gap-y-3
-                            text-xs
+                            text-sm
                             font-semibold
-                            text-neutral-500
+                            text-[#C9BEB0]
                         "
                     >
                         <button
                             type="button"
                             onClick={() => scrollTo("home")}
-                            className="transition hover:text-[#DC2626]"
+                            className="transition hover:text-[#E01E31]"
                         >
                             Home
                         </button>
@@ -93,7 +100,7 @@ const Footer = () => {
                         <button
                             type="button"
                             onClick={() => scrollTo("services")}
-                            className="transition hover:text-[#DC2626]"
+                            className="transition hover:text-[#E01E31]"
                         >
                             Services
                         </button>
@@ -101,7 +108,7 @@ const Footer = () => {
                         <button
                             type="button"
                             onClick={() => scrollTo("commercial")}
-                            className="transition hover:text-[#DC2626]"
+                            className="transition hover:text-[#E01E31]"
                         >
                             Commercial
                         </button>
@@ -109,7 +116,7 @@ const Footer = () => {
                         <button
                             type="button"
                             onClick={() => scrollTo("process")}
-                            className="transition hover:text-[#DC2626]"
+                            className="transition hover:text-[#E01E31]"
                         >
                             How It Works
                         </button>
@@ -117,7 +124,7 @@ const Footer = () => {
                         <button
                             type="button"
                             onClick={() => scrollTo("about")}
-                            className="transition hover:text-[#DC2626]"
+                            className="transition hover:text-[#E01E31]"
                         >
                             Why Us
                         </button>
@@ -125,7 +132,7 @@ const Footer = () => {
                         <button
                             type="button"
                             onClick={() => scrollTo("contact")}
-                            className="transition hover:text-[#DC2626]"
+                            className="transition hover:text-[#E01E31]"
                         >
                             Contact
                         </button>
@@ -138,23 +145,21 @@ const Footer = () => {
                         flex-col
                         gap-3
                         border-t
-                        border-neutral-100
+                        border-white/10
                         py-5
                         text-xs
-                        text-neutral-400
+                        text-[#8C8175]
                         sm:flex-row
                         sm:items-center
                         sm:justify-between
                     "
                 >
                     <p>
-                        © {new Date().getFullYear()} {companyInfo.name}. All rights
-                        reserved.
+                        © {new Date().getFullYear()} {companyInfo.name}. All
+                        rights reserved.
                     </p>
 
-                    <p className="text-neutral-300">
-                        {companyInfo.tagline}
-                    </p>
+                    <p>{companyInfo.tagline}</p>
                 </div>
             </div>
         </footer>

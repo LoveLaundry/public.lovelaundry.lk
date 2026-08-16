@@ -1,189 +1,94 @@
-import { motion } from "framer-motion";
 import { RiArrowRightLine } from "react-icons/ri";
-import { services, servicesSection, companyInfo } from "../../data/siteData";
+import { useReveal } from "../../hooks/useReveal";
+import { services, servicesSection } from "../../data/siteData";
+import SectionHeader from "./SectionHeader";
 
 const Services = () => {
+    const cardsRef = useReveal<HTMLDivElement>({ y: 30, stagger: 0.1 });
+
     return (
         <section
             id="services"
             className="
                 relative
-                overflow-hidden
-                bg-white
+                bg-[#F8F4EE]
                 px-4
                 py-16
                 sm:px-6
-                sm:py-20
+                sm:py-24
                 lg:px-8
-                lg:py-24
+                lg:py-28
             "
         >
-            <div
-                className="
-                    pointer-events-none
-                    absolute
-                    -right-40
-                    top-20
-                    h-80
-                    w-80
-                    rounded-full
-                    bg-red-50
-                    blur-3xl
-                "
-            />
-
-            <div
-                className="
-                    pointer-events-none
-                    absolute
-                    -left-40
-                    bottom-0
-                    h-72
-                    w-72
-                    rounded-full
-                    bg-red-50/70
-                    blur-3xl
-                "
-            />
-
             <div className="relative mx-auto w-full max-w-[1440px]">
-                <motion.div
-                    initial={{
-                        opacity: 0,
-                        y: 25,
-                    }}
-                    whileInView={{
-                        opacity: 1,
-                        y: 0,
-                    }}
-                    viewport={{
-                        once: true,
-                        amount: 0.2,
-                    }}
-                    transition={{
-                        duration: 0.6,
-                    }}
-                    className="
-                        mx-auto
-                        max-w-2xl
-                        text-center
-                        lg:mx-0
-                        lg:text-left
-                    "
-                >
-                    <span
-                        className="
-                            inline-flex
-                            rounded-full
-                            border
-                            border-red-100
-                            bg-red-50
-                            px-3
-                            py-1.5
-                            text-[10px]
-                            font-bold
-                            uppercase
-                            tracking-[0.2em]
-                            text-[#DC2626]
-                            sm:px-4
-                            sm:py-2
-                            sm:text-xs
-                        "
-                    >
-                        {servicesSection.badge}
-                    </span>
-
-                    <h2
-                        className="
-                            mt-4
-                            text-4xl
-                            font-black
-                            leading-[1]
-                            tracking-[-0.04em]
-                            text-neutral-950
-                            sm:text-5xl
-                            lg:text-6xl
-                        "
-                    >
-                        {servicesSection.title.main}
-                        <br className="hidden sm:block" />
-                        <span className="text-[#DC2626]">
-                            {servicesSection.title.highlight}
-                        </span>
-                    </h2>
-
-                    <p
-                        className="
-                            mt-5
-                            max-w-xl
-                            text-sm
-                            leading-6
-                            text-neutral-500
-                            sm:text-base
-                            sm:leading-7
-                        "
-                    >
-                        {servicesSection.description}
-                    </p>
-                </motion.div>
+                <SectionHeader
+                    badge={servicesSection.badge}
+                    main={servicesSection.title.main}
+                    highlight={servicesSection.title.highlight}
+                />
 
                 <div
+                    ref={cardsRef}
                     className="
-                        mt-10
+                        mt-12
                         grid
-                        gap-4
-                        sm:mt-12
+                        gap-5
+                        sm:mt-14
                         sm:grid-cols-2
-                        lg:mt-14
                         lg:grid-cols-4
                     "
                 >
-                    {services.map((service, index) => (
-                        <motion.article
+                    {services.map((service) => (
+                        <article
                             key={service.title}
-                            initial={{
-                                opacity: 0,
-                                y: 30,
-                            }}
-                            whileInView={{
-                                opacity: 1,
-                                y: 0,
-                            }}
-                            viewport={{
-                                once: true,
-                                amount: 0.15,
-                            }}
-                            transition={{
-                                duration: 0.5,
-                                delay: index * 0.08,
-                            }}
+                            data-reveal
                             className="
                                 group
+                                relative
                                 overflow-hidden
-                                rounded-2xl
+                                rounded-3xl
                                 border
-                                border-neutral-200
-                                bg-white
-                                shadow-[0_4px_18px_rgba(0,0,0,0.035)]
+                                border-[#E8DFD0]
+                                bg-[#FFFDF9]
                                 transition-all
                                 duration-300
-                                hover:-translate-y-1
-                                hover:border-red-100
-                                hover:shadow-[0_15px_35px_rgba(0,0,0,0.08)]
+                                hover:-translate-y-1.5
+                                hover:border-[#E01E31]/40
+                                hover:shadow-[0_24px_50px_rgba(75,56,36,0.16)]
                             "
                         >
+                            <div
+                                aria-hidden="true"
+                                className="
+                                    absolute
+                                    inset-x-0
+                                    top-0
+                                    z-10
+                                    h-1
+                                    bg-[#E01E31]
+                                    opacity-0
+                                    transition-opacity
+                                    duration-300
+                                    group-hover:opacity-100
+                                "
+                            />
+
                             <div
                                 className="
                                     relative
                                     aspect-[1.35/1]
                                     overflow-hidden
-                                    bg-red-50
+                                    bg-[#F1E9DC]
                                 "
                             >
                                 <img
                                     src={service.image}
                                     alt={service.title}
                                     loading="lazy"
+                                    style={{
+                                        filter:
+                                            "sepia(0.16) saturate(1.06) contrast(1.02)",
+                                    }}
                                     className="
                                         h-full
                                         w-full
@@ -194,51 +99,16 @@ const Services = () => {
                                         group-hover:scale-105
                                     "
                                 />
-
-                                <div
-                                    className="
-                                        pointer-events-none
-                                        absolute
-                                        inset-0
-                                        bg-gradient-to-t
-                                        from-black/20
-                                        via-transparent
-                                        to-transparent
-                                    "
-                                />
-
-                                <div
-                                    className="
-                                        absolute
-                                        left-3
-                                        top-3
-                                        rounded-full
-                                        border
-                                        border-white/70
-                                        bg-white/90
-                                        px-2.5
-                                        py-1
-                                        text-[9px]
-                                        font-bold
-                                        uppercase
-                                        tracking-wider
-                                        text-[#DC2626]
-                                        shadow-sm
-                                        backdrop-blur
-                                    "
-                                >
-                                    {companyInfo.name}
-                                </div>
                             </div>
 
-                            <div className="p-5 sm:p-6">
+                            <div className="p-6">
                                 <div
                                     className="
-                                        text-[9px]
+                                        text-[10px]
                                         font-bold
                                         uppercase
                                         tracking-[0.16em]
-                                        text-[#DC2626]
+                                        text-[#E01E31]
                                     "
                                 >
                                     {service.subtitle}
@@ -246,11 +116,12 @@ const Services = () => {
 
                                 <h3
                                     className="
+                                        font-display
                                         mt-2
                                         text-xl
-                                        font-black
+                                        font-semibold
                                         tracking-tight
-                                        text-neutral-950
+                                        text-[#2B2623]
                                     "
                                 >
                                     {service.title}
@@ -261,7 +132,7 @@ const Services = () => {
                                         mt-2.5
                                         text-sm
                                         leading-6
-                                        text-neutral-500
+                                        text-[#564D44]
                                     "
                                 >
                                     {service.description}
@@ -269,6 +140,13 @@ const Services = () => {
 
                                 <button
                                     type="button"
+                                    onClick={() => {
+                                        document
+                                            .getElementById("contact")
+                                            ?.scrollIntoView({
+                                                behavior: "smooth",
+                                            });
+                                    }}
                                     className="
                                         mt-5
                                         flex
@@ -276,7 +154,7 @@ const Services = () => {
                                         gap-2
                                         text-xs
                                         font-bold
-                                        text-[#DC2626]
+                                        text-[#E01E31]
                                         transition-all
                                         duration-200
                                         group-hover:gap-3
@@ -287,84 +165,9 @@ const Services = () => {
                                     <RiArrowRightLine className="h-4 w-4" />
                                 </button>
                             </div>
-                        </motion.article>
+                        </article>
                     ))}
                 </div>
-
-                <motion.div
-                    initial={{
-                        opacity: 0,
-                        y: 20,
-                    }}
-                    whileInView={{
-                        opacity: 1,
-                        y: 0,
-                    }}
-                    viewport={{
-                        once: true,
-                    }}
-                    transition={{
-                        duration: 0.5,
-                        delay: 0.3,
-                    }}
-                    className="
-                        mt-8
-                        flex
-                        flex-col
-                        items-center
-                        justify-between
-                        gap-4
-                        rounded-2xl
-                        border
-                        border-red-100
-                        bg-red-50/60
-                        px-5
-                        py-5
-                        sm:flex-row
-                        sm:px-6
-                    "
-                >
-                    <div className="text-center sm:text-left">
-                        <p className="text-sm font-bold text-neutral-900">
-                            {servicesSection.cta.text}
-                        </p>
-
-                        <p className="mt-1 text-xs text-neutral-500">
-                            {servicesSection.cta.subtext}
-                        </p>
-                    </div>
-
-                    <button
-                        type="button"
-                        onClick={() => {
-                            document
-                                .getElementById("contact")
-                                ?.scrollIntoView({
-                                    behavior: "smooth",
-                                });
-                        }}
-                        className="
-                            flex
-                            h-11
-                            shrink-0
-                            items-center
-                            justify-center
-                            gap-2
-                            rounded-lg
-                            bg-[#DC2626]
-                            px-5
-                            text-xs
-                            font-bold
-                            text-white
-                            shadow-[0_5px_15px_rgba(229,9,20,0.18)]
-                            transition
-                            hover:bg-[#B91C1C]
-                        "
-                    >
-                        {servicesSection.cta.buttonText}
-                        <RiArrowRightLine className="h-4 w-4" />
-                    </button>
-                </motion.div>
             </div>
         </section>
     );

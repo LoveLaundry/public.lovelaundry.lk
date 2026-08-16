@@ -1,182 +1,66 @@
-import { motion } from "framer-motion";
-import { RiArrowRightLine, RiCheckLine } from "react-icons/ri";
+import { RiArrowRightLine } from "react-icons/ri";
+import { useReveal } from "../../hooks/useReveal";
 import { commercialServices, commercialSection } from "../../data/siteData";
+import SectionHeader from "./SectionHeader";
 
 const Commercial = () => {
+    const cardsRef = useReveal<HTMLDivElement>({ y: 30, stagger: 0.12 });
+
     return (
         <section
             id="commercial"
             className="
                 relative
-                overflow-hidden
-                bg-[#fafafa]
+                bg-[#F1E9DC]
                 px-4
                 py-16
                 sm:px-6
-                sm:py-20
+                sm:py-24
                 lg:px-8
-                lg:py-24
+                lg:py-28
             "
         >
-            <div
-                className="
-                    pointer-events-none
-                    absolute
-                    -right-40
-                    top-20
-                    h-80
-                    w-80
-                    rounded-full
-                    bg-red-50
-                    blur-3xl
-                "
-            />
-
-            <div
-                className="
-                    pointer-events-none
-                    absolute
-                    -left-40
-                    bottom-0
-                    h-72
-                    w-72
-                    rounded-full
-                    bg-red-100/70
-                    blur-3xl
-                "
-            />
-
             <div className="relative mx-auto w-full max-w-[1440px]">
-                <motion.div
-                    initial={{
-                        opacity: 0,
-                        y: 25,
-                    }}
-                    whileInView={{
-                        opacity: 1,
-                        y: 0,
-                    }}
-                    viewport={{
-                        once: true,
-                        amount: 0.2,
-                    }}
-                    transition={{
-                        duration: 0.6,
-                    }}
-                    className="
-                        mx-auto
-                        max-w-2xl
-                        text-center
-                        lg:mx-0
-                        lg:text-left
-                    "
-                >
-                    <span
-                        className="
-                            inline-flex
-                            rounded-full
-                            border
-                            border-red-100
-                            bg-red-50
-                            px-3
-                            py-1.5
-                            text-[10px]
-                            font-bold
-                            uppercase
-                            tracking-[0.2em]
-                            text-[#DC2626]
-                            sm:px-4
-                            sm:py-2
-                            sm:text-xs
-                        "
-                    >
-                        {commercialSection.badge}
-                    </span>
-
-                    <h2
-                        className="
-                            mt-4
-                            text-4xl
-                            font-black
-                            leading-[1]
-                            tracking-[-0.04em]
-                            text-neutral-950
-                            sm:text-5xl
-                            lg:text-6xl
-                        "
-                    >
-                        {commercialSection.title.main}
-                        <br className="hidden sm:block" />
-                        <span className="text-[#DC2626]">
-                            {commercialSection.title.highlight}
-                        </span>
-                    </h2>
-
-                    <p
-                        className="
-                            mt-5
-                            max-w-3xl
-                            text-sm
-                            leading-6
-                            text-neutral-500
-                            sm:text-base
-                            sm:leading-7
-                        "
-                    >
-                        {commercialSection.description}
-                    </p>
-                </motion.div>
+                <SectionHeader
+                    badge={commercialSection.badge}
+                    main={commercialSection.title.main}
+                    highlight={commercialSection.title.highlight}
+                    description={commercialSection.description}
+                />
 
                 <div
+                    ref={cardsRef}
                     className="
-                        mt-10
+                        mt-12
                         grid
                         gap-5
-                        sm:mt-12
+                        sm:mt-14
                         sm:grid-cols-2
-                        lg:mt-14
                         lg:grid-cols-3
-                        lg:gap-6
                     "
                 >
                     {commercialServices.map((service, index) => {
                         const Icon = service.icon;
 
                         return (
-                            <motion.article
+                            <article
                                 key={service.title}
-                                initial={{
-                                    opacity: 0,
-                                    y: 30,
-                                }}
-                                whileInView={{
-                                    opacity: 1,
-                                    y: 0,
-                                }}
-                                viewport={{
-                                    once: true,
-                                    amount: 0.15,
-                                }}
-                                transition={{
-                                    duration: 0.5,
-                                    delay: index * 0.1,
-                                }}
+                                data-reveal
                                 className="
                                     group
-                                    overflow-hidden
-                                    rounded-2xl
+                                    rounded-3xl
                                     border
-                                    border-neutral-200
-                                    bg-white
-                                    shadow-[0_4px_18px_rgba(0,0,0,0.035)]
+                                    border-[#E0D5C2]
+                                    bg-[#FFFDF9]
+                                    p-8
                                     transition-all
                                     duration-300
-                                    hover:-translate-y-1
-                                    hover:border-red-100
-                                    hover:shadow-[0_15px_35px_rgba(0,0,0,0.08)]
+                                    hover:-translate-y-1.5
+                                    hover:border-[#E01E31]/40
+                                    hover:shadow-[0_24px_50px_rgba(75,56,36,0.16)]
                                 "
                             >
-                                <div className="p-6 sm:p-7">
+                                <div className="flex items-start justify-between">
                                     <div
                                         className="
                                             flex
@@ -184,14 +68,14 @@ const Commercial = () => {
                                             w-14
                                             items-center
                                             justify-center
-                                            rounded-xl
-                                            bg-red-50
-                                            text-[#DC2626]
-                                            transition-all
+                                            rounded-2xl
+                                            bg-[#E01E31]
+                                            text-white
+                                            shadow-[0_8px_20px_rgba(224,30,49,0.3)]
+                                            transition-transform
                                             duration-300
-                                            group-hover:bg-[#DC2626]
-                                            group-hover:text-white
-                                            group-hover:shadow-[0_6px_20px_rgba(229,9,20,0.2)]
+                                            group-hover:-rotate-6
+                                            group-hover:scale-105
                                         "
                                     >
                                         <Icon className="h-7 w-7" />
@@ -199,181 +83,90 @@ const Commercial = () => {
 
                                     <div
                                         className="
-                                            mt-4
-                                            text-[9px]
+                                            font-display
+                                            text-2xl
                                             font-bold
-                                            uppercase
-                                            tracking-[0.16em]
-                                            text-[#DC2626]
-                                        "
-                                    >
-                                        {service.subtitle}
-                                    </div>
-
-                                    <h3
-                                        className="
-                                            mt-2
-                                            text-xl
-                                            font-black
                                             tracking-tight
-                                            text-neutral-950
-                                            sm:text-2xl
+                                            text-[#E8DFD0]
                                         "
                                     >
-                                        {service.title}
-                                    </h3>
-
-                                    <p
-                                        className="
-                                            mt-3
-                                            text-sm
-                                            leading-6
-                                            text-neutral-500
-                                        "
-                                    >
-                                        {service.description}
-                                    </p>
-
-                                    <div className="mt-5 space-y-2.5">
-                                        {service.features.map((feature) => (
-                                            <div
-                                                key={feature}
-                                                className="
-                                                    flex
-                                                    items-center
-                                                    gap-2.5
-                                                    text-xs
-                                                    font-semibold
-                                                    text-neutral-700
-                                                "
-                                            >
-                                                <span
-                                                    className="
-                                                        flex
-                                                        h-5
-                                                        w-5
-                                                        shrink-0
-                                                        items-center
-                                                        justify-center
-                                                        rounded-full
-                                                        bg-red-50
-                                                        text-[#DC2626]
-                                                    "
-                                                >
-                                                    <RiCheckLine className="h-3.5 w-3.5" />
-                                                </span>
-
-                                                {feature}
-                                            </div>
-                                        ))}
+                                        0{index + 1}
                                     </div>
-
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            document
-                                                .getElementById("contact")
-                                                ?.scrollIntoView({
-                                                    behavior: "smooth",
-                                                });
-                                        }}
-                                        className="
-                                            mt-6
-                                            flex
-                                            items-center
-                                            gap-2
-                                            text-xs
-                                            font-bold
-                                            text-[#DC2626]
-                                            transition-all
-                                            duration-200
-                                            group-hover:gap-3
-                                        "
-                                    >
-                                        Get a Quote
-
-                                        <RiArrowRightLine className="h-4 w-4" />
-                                    </button>
                                 </div>
-                            </motion.article>
+
+                                <div
+                                    className="
+                                        mt-6
+                                        text-[10px]
+                                        font-bold
+                                        uppercase
+                                        tracking-[0.16em]
+                                        text-[#E01E31]
+                                    "
+                                >
+                                    {service.subtitle}
+                                </div>
+
+                                <h3
+                                    className="
+                                        font-display
+                                        mt-2
+                                        text-xl
+                                        font-semibold
+                                        tracking-tight
+                                        text-[#2B2623]
+                                        sm:text-2xl
+                                    "
+                                >
+                                    {service.title}
+                                </h3>
+
+                                <p
+                                    className="
+                                        mt-3
+                                        text-sm
+                                        leading-6
+                                        text-[#564D44]
+                                    "
+                                >
+                                    {service.description}
+                                </p>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        document
+                                            .getElementById("contact")
+                                            ?.scrollIntoView({
+                                                behavior: "smooth",
+                                            });
+                                    }}
+                                    className="
+                                        mt-7
+                                        inline-flex
+                                        items-center
+                                        gap-2
+                                        rounded-full
+                                        bg-[#2B2623]
+                                        px-5
+                                        py-2.5
+                                        text-xs
+                                        font-bold
+                                        text-[#FFFDF9]
+                                        transition-all
+                                        duration-200
+                                        group-hover:gap-3
+                                        group-hover:bg-[#E01E31]
+                                    "
+                                >
+                                    Get a Quote
+
+                                    <RiArrowRightLine className="h-4 w-4" />
+                                </button>
+                            </article>
                         );
                     })}
                 </div>
-
-                <motion.div
-                    initial={{
-                        opacity: 0,
-                        y: 20,
-                    }}
-                    whileInView={{
-                        opacity: 1,
-                        y: 0,
-                    }}
-                    viewport={{
-                        once: true,
-                    }}
-                    transition={{
-                        duration: 0.5,
-                        delay: 0.4,
-                    }}
-                    className="
-                        mt-8
-                        flex
-                        flex-col
-                        items-center
-                        justify-between
-                        gap-4
-                        rounded-2xl
-                        border
-                        border-red-100
-                        bg-red-50/60
-                        px-5
-                        py-5
-                        sm:flex-row
-                        sm:px-6
-                    "
-                >
-                    <div className="text-center sm:text-left">
-                        <p className="text-sm font-bold text-neutral-900">
-                            {commercialSection.cta.text}
-                        </p>
-
-                        <p className="mt-1 text-xs text-neutral-500">
-                            {commercialSection.cta.subtext}
-                        </p>
-                    </div>
-
-                    <button
-                        type="button"
-                        onClick={() => {
-                            document
-                                .getElementById("contact")
-                                ?.scrollIntoView({
-                                    behavior: "smooth",
-                                });
-                        }}
-                        className="
-                            flex
-                            h-11
-                            shrink-0
-                            items-center
-                            justify-center
-                            gap-2
-                            rounded-lg
-                            bg-[#DC2626]
-                            px-5
-                            text-xs
-                            font-bold
-                            text-white
-                            shadow-[0_5px_15px_rgba(229,9,20,0.18)]
-                            transition
-                            hover:bg-[#B91C1C]
-                        "
-                    >
-                        {commercialSection.cta.buttonText}
-                        <RiArrowRightLine className="h-4 w-4" />
-                    </button>
-                </motion.div>
             </div>
         </section>
     );

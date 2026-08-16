@@ -13,8 +13,10 @@ import Navbar from "./Landing/Navbar";
 import Hero from "./Landing/Hero";
 import Services from "./Landing/Services";
 import Commercial from "./Landing/Commercial";
+import Partners from "./Landing/Partners";
 import Process from "./Landing/Process";
 import WhyLoveLaundry from "./Landing/WhyLoveLaundry";
+import Testimonials from "./Landing/Testimonials";
 import Contact from "./Landing/Contact";
 import Footer from "./Landing/Footer";
 import ActionBar from "../components/ActionBar";
@@ -84,14 +86,16 @@ const LandingPage = () => {
     }, []);
 
     return (
-        <main className="min-h-screen overflow-x-hidden bg-[#fafafa] text-neutral-900">
+        <main className="min-h-screen overflow-x-hidden bg-[#F8F4EE] text-[#2B2623]">
 
             <Navbar actions={actions}/>
             <Hero />
             <Services />
             <Commercial />
+            <Partners />
             <Process />
             <WhyLoveLaundry />
+            <Testimonials />
             <Contact />
             <Footer />
             <ActionBar

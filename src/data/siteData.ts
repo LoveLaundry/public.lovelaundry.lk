@@ -40,7 +40,7 @@ export const heroData = {
         highlight: "More free time.",
     },
     description:
-        "Professional laundry care, ironing and dry cleaning with convenient pickup and delivery. We take care of your clothes, so you can take care of what matters.",
+        "Professional laundry care with doorstep pickup & delivery.",
     buttons: {
         primary: {
             text: "Book a Pickup",
@@ -123,8 +123,7 @@ export const servicesSection = {
         main: "Everything your",
         highlight: "clothes need.",
     },
-    description:
-        "From everyday washing to delicate dry cleaning, our professional team keeps your wardrobe fresh, clean and ready.",
+    description: "",
     cta: {
         text: "Not sure which service you need?",
         subtext: "Talk to our team and we'll help you choose.",
@@ -190,12 +189,49 @@ export const commercialSection = {
         highlight: "hotels & businesses.",
     },
     description:
-        "We provide specialized commercial laundry services for hotels, restaurants, spas, and businesses across Sri Lanka. From bulk linen processing to specialty cleaning, we handle all your commercial laundry needs with professional care and reliable service.",
+        "Bulk washing and specialty care for hotels, restaurants, spas and businesses.",
     cta: {
         text: "Need commercial laundry solutions?",
         subtext: "Get a custom quote for your business needs.",
         buttonText: "Request Quote",
     },
+};
+
+// Partners Section Data
+export const partnersSection = {
+    badge: "Our Partners",
+    title: {
+        main: "Trusted by leading",
+        highlight: "hotels & resorts.",
+    },
+    description:
+        "We provide professional linen and laundry care for hotels, resorts and villas across Sri Lanka.",
+    partners: [
+        {
+            name: "Goldi Sands Hotel",
+            image: "./assets/images/partners/goldi-sands.jpg",
+        },
+        {
+            name: "Carolina Beach Resort",
+            image: "./assets/images/partners/carolina-beach.jpg",
+        },
+        {
+            name: "Suriya Resort",
+            image: "./assets/images/partners/suriya-resort.jpg",
+        },
+        {
+            name: "Amagi Resort",
+            image: "./assets/images/partners/amagi-resort.jpg",
+        },
+        {
+            name: "Avenra Garden",
+            image: "./assets/images/partners/avenra-garden.jpg",
+        },
+        {
+            name: "1.2.3 Villa",
+            image: "./assets/images/partners/123-villa.jpg",
+        },
+    ],
 };
 
 // Process/How It Works Section Data
@@ -210,25 +246,25 @@ export const processSteps: ProcessStep[] = [
     {
         number: "01",
         title: "Book a pickup",
-        text: "Contact us and tell us what you need cleaned.",
+        text: "Tell us what needs cleaning.",
         icon: RiCalendarCheckLine,
     },
     {
         number: "02",
         title: "We collect",
-        text: "Our delivery team picks up your laundry from your location.",
+        text: "Picked up right from your door.",
         icon: RiTruckLine,
     },
     {
         number: "03",
         title: "We clean",
-        text: "Your clothes are washed, dried, ironed or dry cleaned as required.",
+        text: "Washed, ironed, perfected.",
         icon: RiSparklingLine,
     },
     {
         number: "04",
         title: "We deliver",
-        text: "Fresh, clean and neatly prepared clothes come back to your doorstep.",
+        text: "Back to you, fresh & ready.",
         icon: RiHomeSmileLine,
     },
 ];
@@ -236,11 +272,10 @@ export const processSteps: ProcessStep[] = [
 export const processSection = {
     badge: "How It Works",
     title: {
-        main: "Laundry day,",
-        highlight: "without the laundry.",
+        main: "Laundry in",
+        highlight: "4 easy steps.",
     },
-    description:
-        "Getting professionally cleaned clothes has never been easier. We handle the entire process from pickup to delivery.",
+    description: "",
     info: {
         title: "Simple. Professional. Convenient.",
         subtitle: "We take care of your clothes.",
@@ -295,16 +330,57 @@ export const whyLoveLaundrySection = {
         highlight: "It's care.",
     },
     description:
-        "We combine professional laundry care with modern convenience, making it easier for busy families, professionals and businesses to keep everything fresh.",
+        "Professional care plus modern convenience — for busy families, professionals and businesses.",
     card: {
         title: "We care about every garment.",
         description:
-            "Love Laundry is built around one simple idea: professional laundry should be convenient, reliable and genuinely cared for.",
+            "Professional laundry that's convenient, reliable and genuinely cared for.",
         info: {
             title: "Freshness you can trust",
             subtitle: "Every order receives professional care.",
         },
     },
+};
+
+// Testimonials Section Data
+export interface Testimonial {
+    quote: string;
+    name: string;
+    location: string;
+    service: string;
+}
+
+export const testimonials: Testimonial[] = [
+    {
+        quote:
+            "Our hotel linen has never looked better — always on time, always spotless.",
+        name: "Nadil Fernando",
+        location: "Colombo",
+        service: "Hotel Linen Service",
+    },
+    {
+        quote:
+            "Perfectly pressed shirts every week. My laundry day is completely gone.",
+        name: "Dinuka Perera",
+        location: "Dehiwala",
+        service: "Wash & Fold",
+    },
+    {
+        quote:
+            "They handled my delicate dress with such care, it looked brand new.",
+        name: "Amaya Wickramasinghe",
+        location: "Nugegoda",
+        service: "Dry Cleaning",
+    },
+];
+
+export const testimonialsSection = {
+    badge: "Testimonials",
+    title: {
+        main: "Loved by",
+        highlight: "busy families.",
+    },
+    description: "Real reviews from real customers.",
 };
 
 // Contact Section Data
@@ -314,8 +390,7 @@ export const contactSection = {
         text: "Ready when you are",
     },
     title: "Give your laundry day back to yourself.",
-    description:
-        "Book your next pickup and let Love Laundry handle the rest. Fresh clothes, professional care and convenient delivery.",
+    description: "Book a pickup and we'll handle the rest.",
     features: [
         "Professional care",
         "Doorstep pickup",

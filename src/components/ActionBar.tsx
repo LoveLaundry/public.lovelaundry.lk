@@ -15,6 +15,7 @@ const ActionBar = ({
     return (
         <nav
             className="
+                hidden
                 fixed
                 bottom-5
                 left-1/2
