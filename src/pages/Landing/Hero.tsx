@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef } from "react";
 import {
+    RiArrowDownLine,
     RiArrowRightLine,
     RiHeart3Fill,
     RiStarFill,
@@ -7,6 +8,7 @@ import {
 } from "react-icons/ri";
 import { gsap } from "../../lib/gsap";
 import { heroData, companyInfo } from "../../data/siteData";
+import Hero3D from "./Hero3D";
 
 const Hero = () => {
     const sectionRef = useRef<HTMLElement>(null);
@@ -99,6 +101,54 @@ const Hero = () => {
                 lg:pt-36
             "
         >
+            {/* Red accent line */}
+            <div
+                aria-hidden="true"
+                className="pointer-events-none absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#E01E31] to-transparent"
+            />
+
+            {/* Warm gradient wash */}
+            <div
+                aria-hidden="true"
+                className="
+                    pointer-events-none
+                    absolute
+                    inset-0
+                    bg-[radial-gradient(ellipse_80%_60%_at_25%_15%,rgba(252,231,229,0.35),transparent_65%)]
+                    sm:bg-[radial-gradient(ellipse_70%_60%_at_20%_20%,rgba(252,231,229,0.4),transparent_60%)]
+                "
+            />
+
+            {/* Decorative dot cluster */}
+            <div
+                aria-hidden="true"
+                className="
+                    pointer-events-none
+                    absolute
+                    left-6
+                    top-36
+                    grid
+                    grid-cols-3
+                    gap-2.5
+                    opacity-30
+                    sm:left-12
+                    sm:top-44
+                    lg:left-16
+                "
+            >
+                {Array.from({ length: 9 }).map((_, i) => (
+                    <div
+                        key={i}
+                        className="
+                            h-1.5
+                            w-1.5
+                            rounded-full
+                            bg-[#E01E31]
+                        "
+                    />
+                ))}
+            </div>
+
             <div
                 aria-hidden="true"
                 className="
@@ -132,6 +182,63 @@ const Hero = () => {
                 "
             />
 
+            {/* Floating decorative shapes */}
+            <div
+                aria-hidden="true"
+                className="
+                    pointer-events-none
+                    absolute
+                    right-[18%]
+                    top-[22%]
+                    hidden
+                    rotate-45
+                    border
+                    border-[#E01E31]/20
+                    bg-[#E01E31]/5
+                    sm:block
+                    lg:right-[15%]
+                    lg:top-[18%]
+                "
+            >
+                <div className="h-5 w-5 sm:h-6 sm:w-6" />
+            </div>
+
+            <div
+                aria-hidden="true"
+                className="
+                    pointer-events-none
+                    absolute
+                    left-[8%]
+                    top-[55%]
+                    hidden
+                    text-[#F1E9DC]
+                    sm:block
+                    lg:left-[6%]
+                "
+            >
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <line x1="10" y1="0" x2="10" y2="20" stroke="currentColor" strokeWidth="2" />
+                    <line x1="0" y1="10" x2="20" y2="10" stroke="currentColor" strokeWidth="2" />
+                </svg>
+            </div>
+
+            <div
+                aria-hidden="true"
+                className="
+                    pointer-events-none
+                    absolute
+                    right-[10%]
+                    bottom-[15%]
+                    hidden
+                    h-3
+                    w-3
+                    rounded-full
+                    border-2
+                    border-[#F1E9DC]
+                    sm:block
+                "
+            />
+
             <div
                 className="
                     relative
@@ -145,12 +252,38 @@ const Hero = () => {
                     lg:gap-20
                 "
             >
+                {/* 3D Object */}
+                <Hero3D />
                 <div
                     data-hero-text
                     className="relative z-10 mx-auto w-full max-w-2xl text-center lg:mx-0 lg:text-left"
                 >
+                    {/* LL watermark */}
+                    <div
+                        aria-hidden="true"
+                        className="
+                            pointer-events-none
+                            absolute
+                            -left-6
+                            -top-10
+                            select-none
+                            font-display
+                            text-[180px]
+                            font-bold
+                            leading-none
+                            tracking-tight
+                            text-[#F1E9DC]/60
+                            sm:text-[220px]
+                            lg:-left-10
+                            lg:text-[260px]
+                        "
+                    >
+                        LL
+                    </div>
+
                     <div
                         className="
+                            relative
                             mb-7
                             inline-flex
                             items-center
@@ -175,6 +308,7 @@ const Hero = () => {
 
                     <h1
                         className="
+                            relative
                             font-display
                             text-[50px]
                             font-semibold
@@ -221,6 +355,7 @@ const Hero = () => {
 
                     <p
                         className="
+                            relative
                             mx-auto
                             mt-7
                             max-w-xl
@@ -236,6 +371,7 @@ const Hero = () => {
 
                     <div
                         className="
+                            relative
                             mt-9
                             flex
                             flex-col
@@ -307,33 +443,101 @@ const Hero = () => {
                         </button>
                     </div>
 
+                    {/* Stats chips */}
                     <div
                         className="
+                            relative
                             mx-auto
-                            mt-14
+                            mt-12
                             grid
                             max-w-xl
                             grid-cols-3
-                            divide-x
-                            divide-[#E8DFD0]
+                            gap-3
+                            sm:gap-4
                             lg:mx-0
                         "
                     >
                         {heroData.stats.map((stat, index) => (
                             <div
                                 key={index}
-                                className="flex flex-col items-center px-2 lg:items-start lg:px-5 lg:first:pl-0"
+                                className="
+                                    flex
+                                    flex-col
+                                    items-center
+                                    gap-2
+                                    rounded-2xl
+                                    border
+                                    border-[#E8DFD0]/60
+                                    bg-[#FFFDF9]/70
+                                    px-2
+                                    py-4
+                                    backdrop-blur-sm
+                                    sm:px-3
+                                    lg:items-start
+                                    lg:px-4
+                                "
                             >
-                                <div className="font-display text-4xl font-bold tracking-tight text-[#E01E31] sm:text-[42px]">
+                                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FCE7E5] text-[#E01E31]">
+                                    <stat.icon className="h-4 w-4" />
+                                </div>
+
+                                <div className="font-display text-2xl font-bold tracking-tight text-[#2B2623] sm:text-3xl">
                                     {stat.value}
                                 </div>
 
-                                <div className="mt-1 text-[11px] font-bold uppercase tracking-[0.1em] text-[#786E60]">
+                                <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#564D44] sm:text-[11px]">
                                     {stat.label}
                                 </div>
                             </div>
                         ))}
                     </div>
+
+                    {/* Trust strip */}
+                    <button
+                        type="button"
+                        onClick={() => scrollTo("partners")}
+                        className="
+                            relative
+                            mx-auto
+                            mt-8
+                            inline-flex
+                            items-center
+                            gap-2.5
+                            rounded-full
+                            border
+                            border-[#E8DFD0]
+                            bg-[#FFFDF9]/80
+                            px-5
+                            py-2.5
+                            backdrop-blur-sm
+                            transition-all
+                            duration-200
+                            hover:border-[#E01E31]/30
+                            hover:bg-[#FFFDF9]
+                            sm:mt-9
+                            lg:mx-0
+                        "
+                    >
+                        <div className="flex -space-x-1.5">
+                            <div className="h-5 w-5 rounded-full border-2 border-white bg-[#F1E9DC]" />
+                            <div className="h-5 w-5 rounded-full border-2 border-white bg-[#FCE7E5]" />
+                            <div className="h-5 w-5 rounded-full border-2 border-white bg-[#E8DFD0]" />
+                        </div>
+
+                        <span className="hidden text-[11px] font-bold text-[#564D44] sm:inline sm:text-xs">
+                            Goldi Sands · Amagi · Avenra
+                        </span>
+
+                        <span className="text-[11px] font-bold text-[#564D44] sm:hidden sm:text-xs">
+                            Top hotels trust us
+                        </span>
+
+                        <span className="hidden text-[10px] font-semibold text-[#786E60] lg:inline">
+                            & 6 more
+                        </span>
+
+                        <RiArrowRightLine className="h-3 w-3 text-[#786E60]" />
+                    </button>
                 </div>
 
                 <div
@@ -350,14 +554,36 @@ const Hero = () => {
                             h-44
                             w-44
                             rounded-[36px]
-                            bg-[#E01E31]
+                            bg-gradient-to-br
+                            from-[#E01E31]
+                            to-[#C11324]
                             sm:block
                             lg:-right-6
                             lg:-top-6
                         "
-                    />
+                    >
+                        <div className="absolute inset-0 flex items-center justify-center opacity-15">
+                            <span className="font-display text-7xl font-bold text-white sm:text-8xl">
+                                LL
+                            </span>
+                        </div>
+                    </div>
 
                     <div className="relative overflow-hidden rounded-[36px] bg-[#EFE6D8] p-5 sm:p-7">
+                        {/* Decorative arch frame ring */}
+                        <div
+                            aria-hidden="true"
+                            className="
+                                pointer-events-none
+                                absolute
+                                inset-3
+                                rounded-[28px]
+                                border
+                                border-[#E01E31]/10
+                                sm:inset-5
+                                sm:rounded-[30px]
+                            "
+                        />
                         <div className="relative overflow-hidden rounded-t-full">
                             <div className="relative aspect-[1/1.15]">
                                 <img
@@ -416,7 +642,7 @@ const Hero = () => {
                         </div>
 
                         <div className="text-right">
-                            <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#786E60]">
+                            <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#564D44]">
                                 Next pickup
                             </div>
 
@@ -455,6 +681,33 @@ const Hero = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Scroll down indicator */}
+            <button
+                type="button"
+                onClick={() => scrollTo("services")}
+                className="
+                    pointer-events-auto
+                    absolute
+                    bottom-6
+                    left-1/2
+                    -translate-x-1/2
+                    flex
+                    flex-col
+                    items-center
+                    gap-1
+                    text-[#786E60]
+                    transition-colors
+                    hover:text-[#E01E31]
+                    sm:bottom-8
+                "
+                aria-label="Scroll down"
+            >
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em]">
+                    Scroll
+                </span>
+                <RiArrowDownLine className="h-4 w-4 animate-bounce" />
+            </button>
         </section>
     );
 };

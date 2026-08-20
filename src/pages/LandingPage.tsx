@@ -6,6 +6,7 @@ import {
     RiInformationLine,
     RiPhoneLine,
     RiBuildingLine,
+    RiMapPinLine,
 } from "react-icons/ri";
 
 import type { ActionType } from "../types/action";
@@ -17,6 +18,7 @@ import Partners from "./Landing/Partners";
 import Process from "./Landing/Process";
 import WhyLoveLaundry from "./Landing/WhyLoveLaundry";
 import Testimonials from "./Landing/Testimonials";
+import LocationMap from "./Landing/LocationMap";
 import Contact from "./Landing/Contact";
 import Footer from "./Landing/Footer";
 import ActionBar from "../components/ActionBar";
@@ -47,6 +49,11 @@ const actions: ActionType[] = [
         id: "about",
         label: "Why Us",
         icon: RiInformationLine,
+    },
+    {
+        id: "locations",
+        label: "Locations",
+        icon: RiMapPinLine,
     },
     {
         id: "contact",
@@ -96,6 +103,7 @@ const LandingPage = () => {
             <Process />
             <WhyLoveLaundry />
             <Testimonials />
+            <LocationMap />
             <Contact />
             <Footer />
             <ActionBar

@@ -198,6 +198,14 @@ export const commercialSection = {
 };
 
 // Partners Section Data
+export interface Partner {
+    name: string;
+    image: string;
+    description: string;
+    years: number;
+    location: string;
+}
+
 export const partnersSection = {
     badge: "Our Partners",
     title: {
@@ -210,26 +218,74 @@ export const partnersSection = {
         {
             name: "Goldi Sands Hotel",
             image: "./assets/images/partners/goldi-sands.jpg",
+            description:
+                "A beachfront hotel in Negombo offering comfortable rooms and direct access to the golden sands of the Indian Ocean.",
+            years: 3,
+            location: "Negombo",
         },
         {
             name: "Carolina Beach Resort",
             image: "./assets/images/partners/carolina-beach.jpg",
+            description:
+                "A tropical beach resort along the west coast, known for its serene atmosphere and warm hospitality.",
+            years: 2,
+            location: "Negombo",
         },
         {
             name: "Suriya Resort",
             image: "./assets/images/partners/suriya-resort.jpg",
+            description:
+                "A boutique resort offering a peaceful retreat with lush gardens and modern amenities.",
+            years: 2,
+            location: "Negombo",
         },
         {
             name: "Amagi Resort",
             image: "./assets/images/partners/amagi-resort.jpg",
+            description:
+                "A 4-star hotel group with properties near the Negombo Lagoon, offering panoramic views and refined accommodation.",
+            years: 3,
+            location: "Negombo",
         },
         {
             name: "Avenra Garden",
             image: "./assets/images/partners/avenra-garden.jpg",
+            description:
+                "A luxury hotel offering stylish rooms, exquisite dining, and exceptional service in the heart of Negombo.",
+            years: 2,
+            location: "Negombo",
         },
         {
             name: "1.2.3 Villa",
             image: "./assets/images/partners/123-villa.jpg",
+            description:
+                "A private villa accommodation offering a home-away-from-home experience with personalised service.",
+            years: 1,
+            location: "Negombo",
+        },
+        {
+            name: "Thisara Ayurvedic Spa",
+            image: "./assets/images/partners/thisara-ayurvedic.jpg",
+            description:
+                "A luxury villa and Ayurvedic wellness retreat offering tranquil pool-side living and holistic spa experiences.",
+            years: 1,
+            location: "Negombo",
+        },
+        {
+            name: "Camelot Beach Hotel",
+            image: "./assets/images/partners/camelot-hotel.jpg",
+            description:
+                "An upscale beachfront hotel featuring an Ayurvedic spa, beachfront pool, and multiple dining options.",
+            years: 2,
+            location: "Negombo",
+        },
+        {
+            name: "Maple Leaf Hotel",
+            image: "./assets/images/partners/maple-leaf.jpg",
+            description:
+                "A 3-star hotel near Negombo Beach offering indoor and outdoor pools, a restaurant, and comfortable rooms.",
+            years: 1,
+            location: "Negombo",
         },
     ],
 };
