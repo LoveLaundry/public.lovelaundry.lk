@@ -270,6 +270,51 @@ const WhyLoveLaundry = () => {
                             );
                         })}
                     </div>
+
+                    {/* Trust Stats */}
+                    <div
+                        className="
+                            mt-8
+                            grid
+                            grid-cols-3
+                            gap-3
+                            rounded-2xl
+                            border
+                            border-[#E0D5C2]
+                            bg-[#FFFDF9]
+                            p-5
+                            sm:mt-10
+                            sm:gap-4
+                            sm:p-6
+                        "
+                    >
+                        <div className="text-center">
+                            <div className="font-display text-2xl font-bold text-[#E01E31] sm:text-3xl">
+                                {companyInfo.customerCount}
+                            </div>
+                            <div className="mt-1 text-[10px] font-bold uppercase tracking-wider text-[#564D44] sm:text-[11px]">
+                                Happy Customers
+                            </div>
+                        </div>
+
+                        <div className="border-x border-[#E0D5C2] text-center">
+                            <div className="font-display text-2xl font-bold text-[#E01E31] sm:text-3xl">
+                                {companyInfo.rating}
+                            </div>
+                            <div className="mt-1 text-[10px] font-bold uppercase tracking-wider text-[#564D44] sm:text-[11px]">
+                                Star Rating
+                            </div>
+                        </div>
+
+                        <div className="text-center">
+                            <div className="font-display text-2xl font-bold text-[#E01E31] sm:text-3xl">
+                                {companyInfo.serviceCount}
+                            </div>
+                            <div className="mt-1 text-[10px] font-bold uppercase tracking-wider text-[#564D44] sm:text-[11px]">
+                                Services
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

@@ -23,6 +23,7 @@ import LocationMap from "./Landing/LocationMap";
 import Contact from "./Landing/Contact";
 import Footer from "./Landing/Footer";
 import ActionBar from "../components/ActionBar";
+import ChatWidget from "../components/ChatWidget";
 
 
 const actions: ActionType[] = [
@@ -113,6 +114,7 @@ const LandingPage = () => {
                 selectedItem={selectedItem}
                 setSelectedItem={setSelectedItem}
             />
+            <ChatWidget />
         </main>
     );
 };

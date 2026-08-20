@@ -20,6 +20,19 @@ const Services = () => {
                 lg:py-28
             "
         >
+            {/* Subtle dot pattern */}
+            <div
+                aria-hidden="true"
+                className="
+                    pointer-events-none
+                    absolute
+                    inset-0
+                    opacity-[0.035]
+                    bg-[radial-gradient(circle,#2B2623_1px,transparent_1px)]
+                    bg-[length:24px_24px]
+                "
+            />
+
             <div className="relative mx-auto w-full max-w-[1440px]">
                 <SectionHeader
                     badge={servicesSection.badge}

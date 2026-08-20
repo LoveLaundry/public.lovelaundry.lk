@@ -20,6 +20,25 @@ const Testimonials = () => {
                 lg:py-28
             "
         >
+            {/* Warm gradient accent */}
+            <div
+                aria-hidden="true"
+                className="
+                    pointer-events-none
+                    absolute
+                    -top-20
+                    right-0
+                    h-80
+                    w-80
+                    rounded-full
+                    bg-[#FCE7E5]
+                    opacity-40
+                    blur-3xl
+                    sm:h-96
+                    sm:w-96
+                "
+            />
+
             <div className="relative mx-auto w-full max-w-[1440px]">
                 <SectionHeader
                     badge={testimonialsSection.badge}

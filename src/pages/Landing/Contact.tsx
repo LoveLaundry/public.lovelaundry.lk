@@ -5,7 +5,7 @@ import {
     RiSparkling2Fill,
 } from "react-icons/ri";
 import { useReveal } from "../../hooks/useReveal";
-import { contactSection } from "../../data/siteData";
+import { contactSection, companyInfo } from "../../data/siteData";
 
 const Contact = () => {
     const bannerRef = useReveal<HTMLDivElement>({ y: 30, scale: 0.98 });
@@ -130,6 +130,24 @@ const Contact = () => {
                             >
                                 {contactSection.description}
                             </p>
+
+                            {/* Quick Stats */}
+                            <div className="mt-6 flex flex-wrap gap-4 sm:gap-6">
+                                {[
+                                    { label: "Available", value: companyInfo.availability },
+                                    { label: "Customers", value: companyInfo.customerCount },
+                                    { label: "Rating", value: `${companyInfo.rating}/5` },
+                                ].map((stat) => (
+                                    <div key={stat.label} className="flex items-center gap-2">
+                                        <div className="font-display text-lg font-bold text-white sm:text-xl">
+                                            {stat.value}
+                                        </div>
+                                        <div className="text-[10px] font-bold uppercase tracking-wider text-white/60">
+                                            {stat.label}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
 
                         <div
