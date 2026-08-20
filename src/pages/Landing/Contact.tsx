@@ -18,7 +18,7 @@ const Contact = () => {
             className="
                 relative
                 overflow-hidden
-                bg-white
+                bg-[#000000]
                 px-4
                 pb-20
                 pt-4
@@ -36,9 +36,10 @@ const Contact = () => {
                         relative
                         overflow-hidden
                         rounded-[28px]
-                        bg-[#E01E31]
+                        bg-white
                         px-6
                         py-14
+                        shadow-[0_8px_40px_rgba(0,0,0,0.3)]
                         sm:rounded-[40px]
                         sm:px-12
                         sm:py-16
@@ -55,7 +56,7 @@ const Contact = () => {
                             h-96
                             w-96
                             rounded-full
-                            bg-white/10
+                            bg-[#E01E31]/10
                         "
                     />
 
@@ -70,7 +71,7 @@ const Contact = () => {
                             w-80
                             rounded-full
                             border-[24px]
-                            border-white/10
+                            border-[#E01E31]/10
                         "
                     />
 
@@ -94,7 +95,7 @@ const Contact = () => {
                                     font-bold
                                     uppercase
                                     tracking-[0.22em]
-                                    text-white/80
+                                    text-[#E01E31]
                                     sm:text-xs
                                 "
                             >
@@ -112,7 +113,7 @@ const Contact = () => {
                                     font-semibold
                                     leading-[1.05]
                                     tracking-[-0.02em]
-                                    text-white
+                                    text-[#000000]
                                     sm:text-5xl
                                     lg:text-6xl
                                 "
@@ -126,7 +127,7 @@ const Contact = () => {
                                     max-w-xl
                                     text-sm
                                     leading-7
-                                    text-white/85
+                                    text-[#525252]
                                     sm:text-base
                                 "
                             >
@@ -141,10 +142,10 @@ const Contact = () => {
                                     { label: t("contactRating"), value: `${companyInfo.rating}/5` },
                                 ].map((stat) => (
                                     <div key={stat.label} className="flex items-center gap-2">
-                                        <div className="font-display text-lg font-bold text-white sm:text-xl">
+                                        <div className="font-display text-lg font-bold text-[#000000] sm:text-xl">
                                             {stat.value}
                                         </div>
-                                        <div className="text-[10px] font-bold uppercase tracking-wider text-white/60">
+                                        <div className="text-[10px] font-bold uppercase tracking-wider text-[#737373]">
                                             {stat.label}
                                         </div>
                                     </div>
@@ -200,16 +201,16 @@ const Contact = () => {
                                     gap-3
                                     rounded-full
                                     border
-                                    border-white/30
-                                    bg-white/10
+                                    border-[#E01E31]/20
+                                    bg-[#E01E31]/10
                                     px-8
                                     text-sm
                                     font-bold
-                                    text-white
+                                    text-[#E01E31]
                                     transition-all
                                     duration-200
                                     hover:-translate-y-0.5
-                                    hover:bg-white/20
+                                    hover:bg-[#E01E31]/20
                                 "
                             >
                                 <RiWhatsappLine className="h-5 w-5" />

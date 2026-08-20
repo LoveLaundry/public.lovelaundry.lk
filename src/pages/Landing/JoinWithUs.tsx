@@ -18,6 +18,7 @@ const JoinWithUs = () => {
                 relative
                 overflow-hidden
                 bg-[#000000]
+                bg-[radial-gradient(ellipse_60%_50%_at_50%_100%,rgba(224,30,49,0.12),transparent_70%)]
                 px-4
                 py-20
                 sm:px-6
@@ -158,12 +159,13 @@ const JoinWithUs = () => {
                                 bg-white/5
                                 p-6
                                 backdrop-blur-sm
+                                shadow-[0_4px_20px_rgba(0,0,0,0.3)]
                                 transition-all
                                 duration-300
                                 hover:-translate-y-1
                                 hover:border-[#E01E31]/30
                                 hover:bg-white/8
-                                hover:shadow-[0_20px_48px_rgba(224,30,49,0.12)]
+                                hover:shadow-[0_8px_32px_rgba(0,0,0,0.4)]
                             "
                         >
                             {/* Top accent */}
@@ -254,7 +256,7 @@ const JoinWithUs = () => {
                             <div
                                 key={index}
                                 data-reveal
-                                className="flex items-center gap-3"
+                                className="flex items-center gap-3 rounded-xl bg-white/5 px-4 py-3"
                             >
                                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#E01E31]/15 text-[#E01E31]">
                                     <perk.icon className="h-4 w-4" />
@@ -284,12 +286,12 @@ const JoinWithUs = () => {
                             text-sm
                             font-bold
                             text-white
-                            shadow-[0_12px_30px_rgba(224,30,49,0.35)]
+                            shadow-[0_0_20px_rgba(224,30,49,0.4)]
                             transition-all
                             duration-200
                             hover:-translate-y-0.5
                             hover:bg-[#C11324]
-                            hover:shadow-[0_16px_40px_rgba(224,30,49,0.45)]
+                            hover:shadow-[0_0_28px_rgba(224,30,49,0.55)]
                         "
                     >
                         <RiWhatsappLine className="h-5 w-5" />

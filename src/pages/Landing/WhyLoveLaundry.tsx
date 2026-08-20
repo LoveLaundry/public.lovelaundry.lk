@@ -18,7 +18,7 @@ const WhyLoveLaundry = () => {
             id="about"
             className="
                 relative
-                bg-[#F5F5F5]
+                bg-[#FAFAFA]
                 px-4
                 py-16
                 sm:px-6
@@ -49,7 +49,10 @@ const WhyLoveLaundry = () => {
                             border-[#E5E5E5]
                             bg-[#FFFFFF]
                             p-8
-                            shadow-[0_24px_60px_rgba(0,0,0,0.12)]
+                            shadow-[0_8px_40px_rgba(0,0,0,0.08)]
+                            transition-shadow
+                            duration-300
+                            hover:shadow-[0_12px_48px_rgba(0,0,0,0.12)]
                             sm:p-10
                         "
                     >
@@ -222,11 +225,12 @@ const WhyLoveLaundry = () => {
                                         border-[#E5E5E5]
                                         bg-[#FFFFFF]
                                         p-5
+                                        shadow-[0_2px_12px_rgba(0,0,0,0.04)]
                                         transition-all
                                         duration-300
                                         hover:-translate-y-1.5
                                         hover:border-[#E01E31]/40
-                                        hover:shadow-[0_24px_50px_rgba(0,0,0,0.16)]
+                                        hover:shadow-[0_8px_24px_rgba(0,0,0,0.1)]
                                     "
                                 >
                                     <div
@@ -279,18 +283,12 @@ const WhyLoveLaundry = () => {
                             grid
                             grid-cols-3
                             gap-3
-                            rounded-2xl
-                            border
-                            border-[#E5E5E5]
-                            bg-[#FFFFFF]
-                            p-5
                             sm:mt-10
                             sm:gap-4
-                            sm:p-6
                         "
                     >
-                        <div className="text-center">
-                            <div className="font-display text-2xl font-bold text-[#E01E31] sm:text-3xl">
+                        <div className="rounded-2xl bg-white px-6 py-4 text-center shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
+                            <div className="font-display text-3xl font-bold text-[#E01E31] sm:text-4xl">
                                 {companyInfo.customerCount}
                             </div>
                             <div className="mt-1 text-[10px] font-bold uppercase tracking-wider text-[#404040] sm:text-[11px]">
@@ -298,8 +296,8 @@ const WhyLoveLaundry = () => {
                             </div>
                         </div>
 
-                        <div className="border-x border-[#E5E5E5] text-center">
-                            <div className="font-display text-2xl font-bold text-[#E01E31] sm:text-3xl">
+                        <div className="rounded-2xl bg-white px-6 py-4 text-center shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
+                            <div className="font-display text-3xl font-bold text-[#E01E31] sm:text-4xl">
                                 {companyInfo.rating}
                             </div>
                             <div className="mt-1 text-[10px] font-bold uppercase tracking-wider text-[#404040] sm:text-[11px]">
@@ -307,8 +305,8 @@ const WhyLoveLaundry = () => {
                             </div>
                         </div>
 
-                        <div className="text-center">
-                            <div className="font-display text-2xl font-bold text-[#E01E31] sm:text-3xl">
+                        <div className="rounded-2xl bg-white px-6 py-4 text-center shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
+                            <div className="font-display text-3xl font-bold text-[#E01E31] sm:text-4xl">
                                 {companyInfo.serviceCount}
                             </div>
                             <div className="mt-1 text-[10px] font-bold uppercase tracking-wider text-[#404040] sm:text-[11px]">

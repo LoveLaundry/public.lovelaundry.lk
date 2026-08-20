@@ -12,7 +12,7 @@ const Testimonials = () => {
             id="testimonials"
             className="
                 relative
-                bg-[#FFFFFF]
+                bg-gradient-to-b from-white via-[#FEF2F2]/30 to-white
                 px-4
                 py-16
                 sm:px-6
@@ -71,21 +71,30 @@ const Testimonials = () => {
                                 border-[#E5E5E5]
                                 bg-[#FFFFFF]
                                 p-8
+                                shadow-[0_4px_20px_rgba(0,0,0,0.06)]
                                 transition-all
                                 duration-300
                                 hover:-translate-y-1.5
                                 hover:border-[#E01E31]/40
-                                hover:shadow-[0_24px_50px_rgba(0,0,0,0.16)]
+                                hover:shadow-[0_12px_36px_rgba(0,0,0,0.1)]
                             "
                         >
                             <div
                                 aria-hidden="true"
                                 className="
+                                    relative
+                                    -mb-3
                                     font-display
                                     text-6xl
                                     font-bold
                                     leading-none
-                                    text-[#E01E31]
+                                    text-[#E01E31]/20
+                                    before:absolute
+                                    before:-top-2
+                                    before:left-4
+                                    before:text-6xl
+                                    before:text-[#E01E31]/20
+                                    before:font-display
                                 "
                             >
                                 "
@@ -96,7 +105,7 @@ const Testimonials = () => {
                                     (_, index) => (
                                         <RiStarFill
                                             key={index}
-                                            className="h-4 w-4 text-[#E3A13C]"
+                                            className="h-[18px] w-[18px] text-[#E3A13C]"
                                         />
                                     )
                                 )}
@@ -122,7 +131,8 @@ const Testimonials = () => {
                                     items-center
                                     gap-3
                                     border-t
-                                    border-[#E5E5E5]
+                                    border-transparent
+                                    bg-gradient-to-r from-transparent via-[#E01E31]/20 to-transparent
                                     pt-5
                                 "
                             >

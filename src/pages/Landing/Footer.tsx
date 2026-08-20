@@ -10,7 +10,7 @@ const Footer = () => {
     };
 
     return (
-        <footer className="bg-[#000000]">
+        <footer className="bg-[#000000] border-t border-[#E01E31]/20">
             <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
                 <div
                     className="
@@ -94,7 +94,7 @@ const Footer = () => {
                         <button
                             type="button"
                             onClick={() => scrollTo("home")}
-                            className="transition hover:text-[#E01E31]"
+                            className="transition hover:text-[#E01E31] hover:underline hover:underline-offset-4"
                         >
                             {t("footerHome")}
                         </button>
@@ -102,7 +102,7 @@ const Footer = () => {
                         <button
                             type="button"
                             onClick={() => scrollTo("services")}
-                            className="transition hover:text-[#E01E31]"
+                            className="transition hover:text-[#E01E31] hover:underline hover:underline-offset-4"
                         >
                             {t("footerServices")}
                         </button>
@@ -110,7 +110,7 @@ const Footer = () => {
                         <button
                             type="button"
                             onClick={() => scrollTo("commercial")}
-                            className="transition hover:text-[#E01E31]"
+                            className="transition hover:text-[#E01E31] hover:underline hover:underline-offset-4"
                         >
                             {t("footerCommercial")}
                         </button>
@@ -118,7 +118,7 @@ const Footer = () => {
                         <button
                             type="button"
                             onClick={() => scrollTo("process")}
-                            className="transition hover:text-[#E01E31]"
+                            className="transition hover:text-[#E01E31] hover:underline hover:underline-offset-4"
                         >
                             {t("footerHowItWorks")}
                         </button>
@@ -126,7 +126,7 @@ const Footer = () => {
                         <button
                             type="button"
                             onClick={() => scrollTo("about")}
-                            className="transition hover:text-[#E01E31]"
+                            className="transition hover:text-[#E01E31] hover:underline hover:underline-offset-4"
                         >
                             {t("footerWhyUs")}
                         </button>
@@ -134,7 +134,7 @@ const Footer = () => {
                         <button
                             type="button"
                             onClick={() => scrollTo("careers")}
-                            className="transition hover:text-[#E01E31]"
+                            className="transition hover:text-[#E01E31] hover:underline hover:underline-offset-4"
                         >
                             {t("footerCareers")}
                         </button>
@@ -142,7 +142,7 @@ const Footer = () => {
                         <button
                             type="button"
                             onClick={() => scrollTo("contact")}
-                            className="transition hover:text-[#E01E31]"
+                            className="transition hover:text-[#E01E31] hover:underline hover:underline-offset-4"
                         >
                             {t("footerContact")}
                         </button>
@@ -156,7 +156,7 @@ const Footer = () => {
                         gap-3
                         border-t
                         border-white/10
-                        py-5
+                        py-8
                         text-xs
                         text-[#737373]
                         sm:flex-row

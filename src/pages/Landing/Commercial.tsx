@@ -19,7 +19,7 @@ const Commercial = () => {
             id="commercial"
             className="
                 relative
-                bg-[#F5F5F5]
+                bg-white
                 px-4
                 py-16
                 sm:px-6
@@ -56,6 +56,8 @@ const Commercial = () => {
                                 data-reveal
                                 className="
                                     group
+                                    relative
+                                    overflow-hidden
                                     rounded-3xl
                                     border
                                     border-[#E5E5E5]
@@ -63,11 +65,28 @@ const Commercial = () => {
                                     p-8
                                     transition-all
                                     duration-300
+                                    shadow-[0_2px_16px_rgba(0,0,0,0.05)]
                                     hover:-translate-y-1.5
                                     hover:border-[#E01E31]/40
-                                    hover:shadow-[0_24px_50px_rgba(0,0,0,0.16)]
+                                    hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)]
                                 "
                             >
+                                <div
+                                    aria-hidden="true"
+                                    className="
+                                        absolute
+                                        inset-x-0
+                                        top-0
+                                        z-10
+                                        h-1
+                                        bg-[#E01E31]
+                                        opacity-0
+                                        transition-opacity
+                                        duration-300
+                                        group-hover:opacity-100
+                                    "
+                                />
+
                                 <div className="flex items-start justify-between">
                                     <div
                                         className="

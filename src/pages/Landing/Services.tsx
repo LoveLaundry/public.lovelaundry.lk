@@ -20,7 +20,7 @@ const Services = () => {
             id="services"
             className="
                 relative
-                bg-[#FFFFFF]
+                bg-[#FAFAFA]
                 px-4
                 py-16
                 sm:px-6
@@ -36,7 +36,7 @@ const Services = () => {
                     pointer-events-none
                     absolute
                     inset-0
-                    opacity-[0.035]
+                    opacity-[0.06]
                     bg-[radial-gradient(circle,#000000_1px,transparent_1px)]
                     bg-[length:24px_24px]
                 "
@@ -74,6 +74,7 @@ const Services = () => {
                                 bg-[#FFFFFF]
                                 transition-all
                                 duration-300
+                                shadow-[0_2px_12px_rgba(0,0,0,0.06)]
                                 hover:-translate-y-1.5
                                 hover:border-[#E01E31]/40
                                 hover:shadow-[0_24px_50px_rgba(0,0,0,0.16)]
@@ -119,6 +120,19 @@ const Services = () => {
                                         duration-700
                                         ease-out
                                         group-hover:scale-105
+                                    "
+                                />
+                                <div
+                                    aria-hidden="true"
+                                    className="
+                                        absolute
+                                        inset-x-0
+                                        bottom-0
+                                        h-16
+                                        bg-gradient-to-t
+                                        from-black/20
+                                        to-transparent
+                                        pointer-events-none
                                     "
                                 />
                             </div>
@@ -201,8 +215,8 @@ const Services = () => {
                         gap-4
                         rounded-2xl
                         border
-                        border-[#E5E5E5]
-                        bg-[#FFFFFF]
+                        border-[#E01E31]/10
+                        bg-gradient-to-r from-[#E01E31]/5 via-white to-[#E01E31]/5
                         px-6
                         py-8
                         text-center

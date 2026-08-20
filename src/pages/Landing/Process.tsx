@@ -21,6 +21,7 @@ const Process = () => {
             className="
                 relative
                 bg-[#FFFFFF]
+                bg-[radial-gradient(circle_at_80%_50%,rgba(224,30,49,0.04),transparent_50%)]
                 px-4
                 py-16
                 sm:px-6
@@ -40,34 +41,37 @@ const Process = () => {
                     ref={stepsRef}
                     className="
                         mt-12
-                        grid
+                        flex
+                        flex-col
                         gap-5
                         sm:mt-14
-                        sm:grid-cols-2
-                        lg:grid-cols-4
+                        sm:flex-row
+                        sm:flex-wrap
+                        lg:flex-nowrap
                     "
                 >
-                    {processSteps.map((step, index) => {
+                    {processSteps.flatMap((step, index) => {
                         const Icon = step.icon;
-
-                        return (
+                        const card = (
                             <div
                                 key={step.number}
                                 data-reveal
                                 className="
                                     group
                                     relative
+                                    flex-1
                                     overflow-hidden
                                     rounded-3xl
                                     border
                                     border-[#E5E5E5]
                                     bg-[#FFFFFF]
                                     p-7
+                                    shadow-[0_2px_12px_rgba(0,0,0,0.06)]
                                     transition-all
                                     duration-300
                                     hover:-translate-y-1.5
                                     hover:border-[#E01E31]/40
-                                    hover:shadow-[0_24px_50px_rgba(0,0,0,0.16)]
+                                    hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)]
                                 "
                             >
                                 <div
@@ -95,14 +99,14 @@ const Process = () => {
                                     <div
                                         className="
                                             flex
-                                            h-12
-                                            w-12
+                                            h-14
+                                            w-14
                                             items-center
                                             justify-center
                                             rounded-2xl
                                             bg-[#E01E31]
                                             text-white
-                                            shadow-[0_8px_20px_rgba(224,30,49,0.28)]
+                                            shadow-[0_4px_12px_rgba(224,30,49,0.2)]
                                         "
                                     >
                                         <Icon className="h-6 w-6" />
@@ -145,6 +149,25 @@ const Process = () => {
                                 </p>
                             </div>
                         );
+
+                        if (index < processSteps.length - 1) {
+                            const separator = (
+                                <div
+                                    key={`sep-${step.number}`}
+                                    className="
+                                        hidden
+                                        items-center
+                                        justify-center
+                                        self-stretch
+                                        lg:flex
+                                    "
+                                >
+                                    <div className="h-0 w-full border-t-2 border-dashed border-[#E01E31]/15" />
+                                </div>
+                            );
+                            return [card, separator];
+                        }
+                        return [card];
                     })}
                 </div>
 
@@ -163,6 +186,7 @@ const Process = () => {
                         px-6
                         py-8
                         text-center
+                        shadow-[0_4px_20px_rgba(0,0,0,0.08)]
                         sm:flex-row
                         sm:justify-between
                         sm:text-left

@@ -198,15 +198,14 @@ const Hero = () => {
                 className="pointer-events-none absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#E01E31] to-transparent"
             />
 
-            {/* Warm gradient wash */}
+            {/* Dramatic red gradient blob */}
             <div
                 aria-hidden="true"
                 className="
                     pointer-events-none
                     absolute
                     inset-0
-                    bg-[radial-gradient(ellipse_80%_60%_at_25%_15%,rgba(254,242,242,0.35),transparent_65%)]
-                    sm:bg-[radial-gradient(ellipse_70%_60%_at_20%_20%,rgba(254,242,242,0.4),transparent_60%)]
+                    bg-[radial-gradient(ellipse_50%_50%_at_15%_20%,rgba(224,30,49,0.08),transparent_60%)]
                 "
             />
 
@@ -222,7 +221,7 @@ const Hero = () => {
                     grid
                     grid-cols-3
                     gap-2.5
-                    opacity-30
+                    opacity-50
                     sm:left-12
                     sm:top-44
                     lg:left-16
@@ -231,7 +230,7 @@ const Hero = () => {
                 {Array.from({ length: 9 }).map((_, i) => (
                     <div
                         key={i}
-                        className="h-1.5 w-1.5 rounded-full bg-[#E01E31]"
+                        className="h-2 w-2 rounded-full bg-[#E01E31]"
                     />
                 ))}
             </div>
@@ -248,7 +247,7 @@ const Hero = () => {
                     h-72
                     w-72
                     rounded-full
-                    bg-[#F5F5F5]
+                    bg-[#E01E31]/[0.04]
                     sm:h-96
                     sm:w-96
                 "
@@ -267,7 +266,7 @@ const Hero = () => {
                     w-64
                     rounded-full
                     border-[18px]
-                    border-[#F5F5F5]
+                    border-[#E01E31]/10
                     sm:h-80
                     sm:w-80
                 "
@@ -285,14 +284,14 @@ const Hero = () => {
                     hidden
                     rotate-45
                     border
-                    border-[#E01E31]/20
-                    bg-[#E01E31]/5
+                    border-[#E01E31]/30
+                    bg-[#E01E31]/[0.08]
                     sm:block
                     lg:right-[15%]
                     lg:top-[18%]
                 "
             >
-                <div className="h-5 w-5 sm:h-6 sm:w-6" />
+                <div className="h-7 w-7 sm:h-7 sm:w-7" />
             </div>
 
             {/* Cross shape */}
@@ -305,7 +304,7 @@ const Hero = () => {
                     left-[8%]
                     top-[55%]
                     hidden
-                    text-[#F5F5F5]
+                    text-[#E01E31]/20
                     sm:block
                     lg:left-[6%]
                 "
@@ -330,7 +329,7 @@ const Hero = () => {
                     w-3
                     rounded-full
                     border-2
-                    border-[#F5F5F5]
+                    border-[#E01E31]/20
                     sm:block
                 "
             />
@@ -363,14 +362,14 @@ const Hero = () => {
                             -top-10
                             select-none
                             font-display
-                            text-[180px]
+                            text-[200px]
                             font-bold
                             leading-none
                             tracking-tight
-                            text-[#F5F5F5]/60
-                            sm:text-[220px]
+                            text-[#E01E31]/[0.04]
+                            sm:text-[260px]
                             lg:-left-10
-                            lg:text-[260px]
+                            lg:text-[320px]
                         "
                     >
                         LL
@@ -394,7 +393,7 @@ const Hero = () => {
                             uppercase
                             tracking-[0.14em]
                             text-white
-                            shadow-[0_8px_20px_rgba(224,30,49,0.28)]
+                            shadow-[0_0_20px_rgba(224,30,49,0.3),0_8px_20px_rgba(224,30,49,0.28)]
                             sm:text-xs
                         "
                     >
@@ -507,7 +506,7 @@ const Hero = () => {
                                 duration-200
                                 hover:-translate-y-0.5
                                 hover:bg-[#C11324]
-                                hover:shadow-[0_18px_44px_rgba(224,30,49,0.4)]
+                                hover:shadow-[0_18px_44px_rgba(224,30,49,0.45)]
                                 sm:w-auto
                             "
                         >
@@ -566,24 +565,29 @@ const Hero = () => {
                                 key={index}
                                 data-hero-stat
                                 className="
+                                    relative
                                     flex
                                     flex-col
                                     items-center
                                     gap-2
                                     rounded-2xl
                                     border
-                                    border-[#E5E5E5]/60
-                                    bg-[#FFFFFF]/70
-                                    px-2
-                                    py-4
-                                    backdrop-blur-sm
-                                    sm:px-3
+                                    border-[#E5E5E5]/80
+                                    bg-white
+                                    px-3
+                                    py-5
+                                    shadow-[0_4px_24px_rgba(0,0,0,0.06)]
+                                    sm:px-4
                                     lg:items-start
-                                    lg:px-4
+                                    lg:px-5
+                                    transition-all
+                                    duration-300
+                                    hover:shadow-[0_8px_32px_rgba(0,0,0,0.1)]
+                                    hover:-translate-y-0.5
                                 "
                             >
-                                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FEF2F2] text-[#E01E31]">
-                                    <stat.icon className="h-4 w-4" />
+                                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#E01E31]/10 text-[#E01E31]">
+                                    <stat.icon className="h-5 w-5" />
                                 </div>
 
                                 <div className="font-display text-2xl font-bold tracking-tight text-[#000000] sm:text-3xl">
@@ -608,41 +612,41 @@ const Hero = () => {
                             mt-8
                             inline-flex
                             items-center
-                            gap-2.5
+                            gap-3
                             rounded-full
                             border
                             border-[#E5E5E5]
-                            bg-[#FFFFFF]/80
-                            px-5
-                            py-2.5
-                            backdrop-blur-sm
+                            bg-white
+                            px-6
+                            py-3
+                            shadow-[0_4px_16px_rgba(0,0,0,0.06)]
                             transition-all
                             duration-200
                             hover:border-[#E01E31]/30
-                            hover:bg-[#FFFFFF]
+                            hover:shadow-[0_8px_24px_rgba(0,0,0,0.1)]
                             sm:mt-9
                             lg:mx-0
                         "
                     >
-                        <div className="flex -space-x-1.5">
-                            <div className="h-5 w-5 rounded-full border-2 border-white bg-[#F5F5F5]" />
+                        <div className="flex -space-x-2">
+                            <div className="h-5 w-5 rounded-full border-2 border-white bg-[#E01E31]/10" />
                             <div className="h-5 w-5 rounded-full border-2 border-white bg-[#FEF2F2]" />
                             <div className="h-5 w-5 rounded-full border-2 border-white bg-[#E5E5E5]" />
                         </div>
 
-                        <span className="hidden text-[11px] font-bold text-[#404040] sm:inline sm:text-xs">
+                        <span className="hidden text-[11px] font-bold text-[#000000] sm:inline sm:text-xs">
                             {t("heroTrustDesktop")}
                         </span>
 
-                        <span className="text-[11px] font-bold text-[#404040] sm:hidden sm:text-xs">
+                        <span className="text-[11px] font-bold text-[#000000] sm:hidden sm:text-xs">
                             {t("heroTrustStrip")}
                         </span>
 
-                        <span className="hidden text-[10px] font-semibold text-[#737373] lg:inline">
+                        <span className="hidden text-[10px] text-[#737373] lg:inline">
                             {t("heroMore")}
                         </span>
 
-                        <RiArrowRightLine className="h-3 w-3 text-[#737373]" />
+                        <RiArrowRightLine className="h-3 w-3 text-[#E01E31]" />
                     </button>
                 </div>
 
@@ -658,12 +662,13 @@ const Hero = () => {
                             -right-3
                             -top-3
                             hidden
-                            h-44
-                            w-44
+                            h-48
+                            w-48
                             rounded-[36px]
                             bg-gradient-to-br
                             from-[#E01E31]
                             to-[#C11324]
+                            shadow-[0_20px_60px_rgba(224,30,49,0.25)]
                             sm:block
                             lg:-right-6
                             lg:-top-6
@@ -676,7 +681,7 @@ const Hero = () => {
                         </div>
                     </div>
 
-                    <div className="relative overflow-hidden rounded-[36px] bg-[#F5F5F5] p-5 sm:p-7">
+                    <div className="relative overflow-hidden rounded-[36px] bg-gradient-to-br from-[#F5F5F5] to-[#FEF2F2] p-5 sm:p-7">
                         <div
                             aria-hidden="true"
                             className="
@@ -722,9 +727,9 @@ const Hero = () => {
                             border
                             border-[#E5E5E5]
                             bg-[#FFFFFF]
-                            px-6
-                            py-4
-                            shadow-[0_24px_60px_rgba(0,0,0,0.2)]
+                            px-7
+                            py-5
+                            shadow-[0_20px_60px_rgba(0,0,0,0.15)]
                             sm:-translate-x-0
                             sm:left-auto
                             sm:right-6
@@ -778,6 +783,7 @@ const Hero = () => {
                             lg:-left-8
                         "
                     >
+                        <div className="h-2 w-2 rounded-full bg-[#E01E31]" />
                         <RiTimeFill className="h-4 w-4 text-[#E01E31]" />
 
                         <span className="text-xs font-bold text-[#000000]">

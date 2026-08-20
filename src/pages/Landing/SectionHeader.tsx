@@ -32,7 +32,7 @@ const SectionHeader = ({
             >
                 <span
                     aria-hidden="true"
-                    className="h-[3px] w-8 rounded-full bg-[#E01E31]"
+                    className="h-[3px] w-10 rounded-full bg-[#E01E31] shadow-[0_0_8px_rgba(224,30,49,0.4)]"
                 />
 
                 {badge}
@@ -64,7 +64,7 @@ const SectionHeader = ({
                         mt-5
                         max-w-xl
                         text-sm
-                        leading-7
+                        leading-8
                         text-[#404040]
                         sm:text-base
                     "
