@@ -1,6 +1,8 @@
 import { companyInfo } from "../../data/siteData";
+import { useLanguage } from "../../i18n";
 
 const Footer = () => {
+    const { t } = useLanguage();
     const scrollTo = (id: string) => {
         document.getElementById(id)?.scrollIntoView({
             behavior: "smooth",
@@ -8,7 +10,7 @@ const Footer = () => {
     };
 
     return (
-        <footer className="bg-[#2B2623]">
+        <footer className="bg-[#000000]">
             <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
                 <div
                     className="
@@ -55,7 +57,7 @@ const Footer = () => {
                                         text-base
                                         font-semibold
                                         tracking-tight
-                                        text-[#FFFDF9]
+                                        text-white
                                     "
                                 >
                                     {companyInfo.name}
@@ -68,7 +70,7 @@ const Footer = () => {
                                         font-semibold
                                         uppercase
                                         tracking-[0.16em]
-                                        text-[#A99F90]
+                                        text-[#A3A3A3]
                                     "
                                 >
                                     {companyInfo.tagline}
@@ -86,7 +88,7 @@ const Footer = () => {
                             gap-y-3
                             text-sm
                             font-semibold
-                            text-[#C9BEB0]
+                            text-[#D4D4D4]
                         "
                     >
                         <button
@@ -94,7 +96,7 @@ const Footer = () => {
                             onClick={() => scrollTo("home")}
                             className="transition hover:text-[#E01E31]"
                         >
-                            Home
+                            {t("footerHome")}
                         </button>
 
                         <button
@@ -102,7 +104,7 @@ const Footer = () => {
                             onClick={() => scrollTo("services")}
                             className="transition hover:text-[#E01E31]"
                         >
-                            Services
+                            {t("footerServices")}
                         </button>
 
                         <button
@@ -110,7 +112,7 @@ const Footer = () => {
                             onClick={() => scrollTo("commercial")}
                             className="transition hover:text-[#E01E31]"
                         >
-                            Commercial
+                            {t("footerCommercial")}
                         </button>
 
                         <button
@@ -118,7 +120,7 @@ const Footer = () => {
                             onClick={() => scrollTo("process")}
                             className="transition hover:text-[#E01E31]"
                         >
-                            How It Works
+                            {t("footerHowItWorks")}
                         </button>
 
                         <button
@@ -126,7 +128,7 @@ const Footer = () => {
                             onClick={() => scrollTo("about")}
                             className="transition hover:text-[#E01E31]"
                         >
-                            Why Us
+                            {t("footerWhyUs")}
                         </button>
 
                         <button
@@ -134,7 +136,7 @@ const Footer = () => {
                             onClick={() => scrollTo("careers")}
                             className="transition hover:text-[#E01E31]"
                         >
-                            Careers
+                            {t("footerCareers")}
                         </button>
 
                         <button
@@ -142,7 +144,7 @@ const Footer = () => {
                             onClick={() => scrollTo("contact")}
                             className="transition hover:text-[#E01E31]"
                         >
-                            Contact
+                            {t("footerContact")}
                         </button>
                     </nav>
                 </div>
@@ -156,15 +158,14 @@ const Footer = () => {
                         border-white/10
                         py-5
                         text-xs
-                        text-[#8C8175]
+                        text-[#737373]
                         sm:flex-row
                         sm:items-center
                         sm:justify-between
                     "
                 >
                     <p>
-                        © {new Date().getFullYear()} {companyInfo.name}. All
-                        rights reserved.
+                        © {new Date().getFullYear()} {companyInfo.name}. {t("footerRights")}
                     </p>
 
                     <p>{companyInfo.tagline}</p>

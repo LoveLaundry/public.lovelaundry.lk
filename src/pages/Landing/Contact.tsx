@@ -5,10 +5,12 @@ import {
     RiSparkling2Fill,
 } from "react-icons/ri";
 import { useReveal } from "../../hooks/useReveal";
+import { useLanguage } from "../../i18n";
 import { contactSection, companyInfo } from "../../data/siteData";
 
 const Contact = () => {
     const bannerRef = useReveal<HTMLDivElement>({ y: 30, scale: 0.98 });
+    const { t } = useLanguage();
 
     return (
         <section
@@ -16,7 +18,7 @@ const Contact = () => {
             className="
                 relative
                 overflow-hidden
-                bg-[#F8F4EE]
+                bg-white
                 px-4
                 pb-20
                 pt-4
@@ -98,7 +100,7 @@ const Contact = () => {
                             >
                                 <RiSparkling2Fill className="h-4 w-4" />
 
-                                {contactSection.badge.text}
+                                {t("contactBadge")}
                             </span>
 
                             <h2
@@ -115,7 +117,7 @@ const Contact = () => {
                                     lg:text-6xl
                                 "
                             >
-                                {contactSection.title}
+                                {t("contactTitle")}
                             </h2>
 
                             <p
@@ -128,15 +130,15 @@ const Contact = () => {
                                     sm:text-base
                                 "
                             >
-                                {contactSection.description}
+                                {t("contactDescription")}
                             </p>
 
                             {/* Quick Stats */}
                             <div className="mt-6 flex flex-wrap gap-4 sm:gap-6">
                                 {[
-                                    { label: "Available", value: companyInfo.availability },
-                                    { label: "Customers", value: companyInfo.customerCount },
-                                    { label: "Rating", value: `${companyInfo.rating}/5` },
+                                    { label: t("contactAvailable"), value: companyInfo.availability },
+                                    { label: t("contactCustomers"), value: companyInfo.customerCount },
+                                    { label: t("contactRating"), value: `${companyInfo.rating}/5` },
                                 ].map((stat) => (
                                     <div key={stat.label} className="flex items-center gap-2">
                                         <div className="font-display text-lg font-bold text-white sm:text-xl">
@@ -169,7 +171,7 @@ const Contact = () => {
                                     justify-center
                                     gap-3
                                     rounded-full
-                                    bg-[#FFFDF9]
+                                    bg-white
                                     px-8
                                     text-sm
                                     font-bold
@@ -183,7 +185,7 @@ const Contact = () => {
                             >
                                 <RiPhoneLine className="h-5 w-5" />
 
-                                {contactSection.buttons.phone.text}
+                                {t("contactCall")}
                             </a>
 
                             <a
@@ -212,7 +214,7 @@ const Contact = () => {
                             >
                                 <RiWhatsappLine className="h-5 w-5" />
 
-                                {contactSection.buttons.whatsapp.text}
+                                {t("contactWhatsapp")}
 
                                 <RiArrowRightLine className="h-4 w-4" />
                             </a>

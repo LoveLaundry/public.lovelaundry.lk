@@ -6,6 +6,7 @@ import {
     RiRobot2Line,
     RiUser3Line,
 } from "react-icons/ri";
+import { useLanguage } from "../i18n";
 
 interface Message {
     id: string;
@@ -75,6 +76,7 @@ function getBotResponse(userMessage: string): string {
 }
 
 const ChatWidget = () => {
+    const { t } = useLanguage();
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState("");
@@ -95,7 +97,7 @@ const ChatWidget = () => {
         if (isOpen && !hasGreeted) {
             const welcome: Message = {
                 id: crypto.randomUUID(),
-                text: "Hi there! I'm the Love Laundry assistant. I can help you with our services, pricing, pickup & delivery, locations, and more. How can I help?",
+                text: t("chatWelcome"),
                 sender: "bot",
                 timestamp: new Date(),
             };
@@ -103,7 +105,7 @@ const ChatWidget = () => {
             setHasGreeted(true);
             setTimeout(() => inputRef.current?.focus(), 300);
         }
-    }, [isOpen, hasGreeted]);
+    }, [isOpen, hasGreeted, t]);
 
     const sendMessage = useCallback(() => {
         const text = input.trim();
@@ -207,9 +209,9 @@ const ChatWidget = () => {
                         overflow-hidden
                         rounded-2xl
                         border
-                        border-[#E8DFD0]
-                        bg-[#FFFDF9]
-                        shadow-[0_24px_64px_rgba(75,56,36,0.25)]
+                        border-[#E5E5E5]
+                        bg-white
+                        shadow-[0_24px_64px_rgba(0,0,0,0.15)]
                         sm:bottom-28
                         sm:right-6
                         md:bottom-32
@@ -224,11 +226,11 @@ const ChatWidget = () => {
                         </div>
                         <div className="flex-1">
                             <div className="text-sm font-bold text-white">
-                                Love Laundry Assistant
+                                {t("chatTitle")}
                             </div>
                             <div className="flex items-center gap-1.5 text-[11px] text-white/80">
                                 <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                                Online
+                                {t("chatOnline")}
                             </div>
                         </div>
                         <button
@@ -248,7 +250,7 @@ const ChatWidget = () => {
                                 className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
                             >
                                 {msg.sender === "bot" && (
-                                    <div className="mr-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#FCE7E5] text-[#E01E31]">
+                                    <div className="mr-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#FEF2F2] text-[#E01E31]">
                                         <RiRobot2Line className="h-3.5 w-3.5" />
                                     </div>
                                 )}
@@ -264,7 +266,7 @@ const ChatWidget = () => {
                                         leading-relaxed
                                         ${msg.sender === "user"
                                             ? "rounded-br-md bg-[#E01E31] text-white"
-                                            : "rounded-bl-md bg-[#F1E9DC] text-[#2B2623]"
+                                            : "rounded-bl-md bg-[#F5F5F5] text-[#000000]"
                                         }
                                     `}
                                 >
@@ -282,13 +284,13 @@ const ChatWidget = () => {
                         {/* Typing indicator */}
                         {isTyping && (
                             <div className="flex justify-start">
-                                <div className="mr-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#FCE7E5] text-[#E01E31]">
+                                <div className="mr-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#FEF2F2] text-[#E01E31]">
                                     <RiRobot2Line className="h-3.5 w-3.5" />
                                 </div>
-                                <div className="flex items-center gap-1 rounded-2xl rounded-bl-md bg-[#F1E9DC] px-4 py-3">
-                                    <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#786E60]" style={{ animationDelay: "0ms" }} />
-                                    <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#786E60]" style={{ animationDelay: "150ms" }} />
-                                    <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#786E60]" style={{ animationDelay: "300ms" }} />
+                                <div className="flex items-center gap-1 rounded-2xl rounded-bl-md bg-[#F5F5F5] px-4 py-3">
+                                    <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#737373]" style={{ animationDelay: "0ms" }} />
+                                    <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#737373]" style={{ animationDelay: "150ms" }} />
+                                    <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#737373]" style={{ animationDelay: "300ms" }} />
                                 </div>
                             </div>
                         )}
@@ -297,7 +299,7 @@ const ChatWidget = () => {
                     </div>
 
                     {/* Quick Replies */}
-                    <div className="flex gap-2 overflow-x-auto border-t border-[#E8DFD0] px-4 py-2.5">
+                    <div className="flex gap-2 overflow-x-auto border-t border-[#E5E5E5] px-4 py-2.5">
                         {["Services", "Pricing", "Locations", "Hours"].map((q) => (
                             <button
                                 key={q}
@@ -330,17 +332,17 @@ const ChatWidget = () => {
                                     shrink-0
                                     rounded-full
                                     border
-                                    border-[#E8DFD0]
-                                    bg-[#F8F4EE]
+                                    border-[#E5E5E5]
+                                    bg-white
                                     px-3
                                     py-1.5
                                     text-[11px]
                                     font-semibold
-                                    text-[#564D44]
+                                    text-[#404040]
                                     transition-all
                                     duration-200
                                     hover:border-[#E01E31]/30
-                                    hover:bg-[#FCE7E5]
+                                    hover:bg-[#FEF2F2]
                                     hover:text-[#E01E31]
                                 "
                             >
@@ -350,25 +352,25 @@ const ChatWidget = () => {
                     </div>
 
                     {/* Input */}
-                    <div className="flex items-center gap-2 border-t border-[#E8DFD0] px-4 py-3">
+                    <div className="flex items-center gap-2 border-t border-[#E5E5E5] px-4 py-3">
                         <input
                             ref={inputRef}
                             type="text"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             onKeyDown={handleKeyDown}
-                            placeholder="Type a message..."
+                            placeholder={t("chatPlaceholder")}
                             className="
                                 flex-1
                                 rounded-full
                                 border
-                                border-[#E8DFD0]
-                                bg-[#F8F4EE]
+                                border-[#E5E5E5]
+                                bg-white
                                 px-4
                                 py-2.5
                                 text-[13px]
-                                text-[#2B2623]
-                                placeholder-[#A99F90]
+                                text-[#000000]
+                                placeholder-[#A3A3A3]
                                 outline-none
                                 transition-colors
                                 duration-200
@@ -404,8 +406,8 @@ const ChatWidget = () => {
                     </div>
 
                     {/* Footer */}
-                    <div className="border-t border-[#E8DFD0] px-4 py-2 text-center text-[10px] text-[#A99F90]">
-                        Powered by Love Laundry
+                    <div className="border-t border-[#E5E5E5] px-4 py-2 text-center text-[10px] text-[#A3A3A3]">
+                        {t("chatPowered")}
                     </div>
                 </div>
             )}

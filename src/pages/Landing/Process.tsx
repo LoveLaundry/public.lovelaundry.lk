@@ -1,17 +1,26 @@
 import { RiArrowRightLine } from "react-icons/ri";
 import { useReveal } from "../../hooks/useReveal";
-import { processSteps, processSection } from "../../data/siteData";
+import { processSteps } from "../../data/siteData";
+import { useLanguage } from "../../i18n";
 import SectionHeader from "./SectionHeader";
 
 const Process = () => {
+    const { t } = useLanguage();
     const stepsRef = useReveal<HTMLDivElement>({ y: 30, stagger: 0.1 });
+
+    const stepKeys = [
+        { titleKey: "processStep1Title", textKey: "processStep1Text" },
+        { titleKey: "processStep2Title", textKey: "processStep2Text" },
+        { titleKey: "processStep3Title", textKey: "processStep3Text" },
+        { titleKey: "processStep4Title", textKey: "processStep4Text" },
+    ];
 
     return (
         <section
             id="process"
             className="
                 relative
-                bg-[#F8F4EE]
+                bg-[#FFFFFF]
                 px-4
                 py-16
                 sm:px-6
@@ -22,9 +31,9 @@ const Process = () => {
         >
             <div className="relative mx-auto w-full max-w-[1440px]">
                 <SectionHeader
-                    badge={processSection.badge}
-                    main={processSection.title.main}
-                    highlight={processSection.title.highlight}
+                    badge={t("processBadge")}
+                    main={t("processTitleMain")}
+                    highlight={t("processTitleHighlight")}
                 />
 
                 <div
@@ -38,7 +47,7 @@ const Process = () => {
                         lg:grid-cols-4
                     "
                 >
-                    {processSteps.map((step) => {
+                    {processSteps.map((step, index) => {
                         const Icon = step.icon;
 
                         return (
@@ -51,14 +60,14 @@ const Process = () => {
                                     overflow-hidden
                                     rounded-3xl
                                     border
-                                    border-[#E8DFD0]
-                                    bg-[#FFFDF9]
+                                    border-[#E5E5E5]
+                                    bg-[#FFFFFF]
                                     p-7
                                     transition-all
                                     duration-300
                                     hover:-translate-y-1.5
                                     hover:border-[#E01E31]/40
-                                    hover:shadow-[0_24px_50px_rgba(75,56,36,0.16)]
+                                    hover:shadow-[0_24px_50px_rgba(0,0,0,0.16)]
                                 "
                             >
                                 <div
@@ -73,10 +82,10 @@ const Process = () => {
                                         font-bold
                                         leading-none
                                         tracking-tight
-                                        text-[#F1E9DC]
+                                        text-[#F5F5F5]
                                         transition-colors
                                         duration-300
-                                        group-hover:text-[#FCE7E5]
+                                        group-hover:text-[#FEF2F2]
                                     "
                                 >
                                     {step.number}
@@ -118,10 +127,10 @@ const Process = () => {
                                         text-xl
                                         font-semibold
                                         tracking-tight
-                                        text-[#2B2623]
+                                        text-[#000000]
                                     "
                                 >
-                                    {step.title}
+                                    {t(stepKeys[index].titleKey)}
                                 </h3>
 
                                 <p
@@ -129,10 +138,10 @@ const Process = () => {
                                         mt-2
                                         text-sm
                                         leading-6
-                                        text-[#564D44]
+                                        text-[#404040]
                                     "
                                 >
-                                    {step.text}
+                                    {t(stepKeys[index].textKey)}
                                 </p>
                             </div>
                         );
@@ -149,8 +158,8 @@ const Process = () => {
                         gap-4
                         rounded-2xl
                         border
-                        border-[#E8DFD0]
-                        bg-[#FFFDF9]
+                        border-[#E5E5E5]
+                        bg-[#FFFFFF]
                         px-6
                         py-8
                         text-center
@@ -161,11 +170,11 @@ const Process = () => {
                     "
                 >
                     <div>
-                        <h3 className="font-display text-lg font-semibold text-[#2B2623]">
-                            {processSection.info.title}
+                        <h3 className="font-display text-lg font-semibold text-[#000000]">
+                            {t("processCtaTitle")}
                         </h3>
-                        <p className="mt-1 text-sm text-[#564D44]">
-                            {processSection.info.subtitle}
+                        <p className="mt-1 text-sm text-[#404040]">
+                            {t("processCtaSub")}
                         </p>
                     </div>
 
@@ -196,7 +205,7 @@ const Process = () => {
                             hover:shadow-[0_12px_32px_rgba(224,30,49,0.4)]
                         "
                     >
-                        Get Started
+                        {t("processGetStarted")}
                         <RiArrowRightLine className="h-4 w-4" />
                     </button>
                 </div>

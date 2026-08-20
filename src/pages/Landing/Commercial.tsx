@@ -1,17 +1,25 @@
 import { RiArrowRightLine } from "react-icons/ri";
 import { useReveal } from "../../hooks/useReveal";
-import { commercialServices, commercialSection } from "../../data/siteData";
+import { commercialServices } from "../../data/siteData";
+import { useLanguage } from "../../i18n";
 import SectionHeader from "./SectionHeader";
 
 const Commercial = () => {
+    const { t } = useLanguage();
     const cardsRef = useReveal<HTMLDivElement>({ y: 30, stagger: 0.12 });
+
+    const commercialKeys = [
+        { titleKey: "commercialService1Title", subtitleKey: "commercialService1Subtitle", descKey: "commercialService1Desc" },
+        { titleKey: "commercialService2Title", subtitleKey: "commercialService2Subtitle", descKey: "commercialService2Desc" },
+        { titleKey: "commercialService3Title", subtitleKey: "commercialService3Subtitle", descKey: "commercialService3Desc" },
+    ];
 
     return (
         <section
             id="commercial"
             className="
                 relative
-                bg-[#F1E9DC]
+                bg-[#F5F5F5]
                 px-4
                 py-16
                 sm:px-6
@@ -22,10 +30,10 @@ const Commercial = () => {
         >
             <div className="relative mx-auto w-full max-w-[1440px]">
                 <SectionHeader
-                    badge={commercialSection.badge}
-                    main={commercialSection.title.main}
-                    highlight={commercialSection.title.highlight}
-                    description={commercialSection.description}
+                    badge={t("commercialBadge")}
+                    main={t("commercialTitleMain")}
+                    highlight={t("commercialTitleHighlight")}
+                    description={t("commercialDescription")}
                 />
 
                 <div
@@ -50,14 +58,14 @@ const Commercial = () => {
                                     group
                                     rounded-3xl
                                     border
-                                    border-[#E0D5C2]
-                                    bg-[#FFFDF9]
+                                    border-[#E5E5E5]
+                                    bg-[#FFFFFF]
                                     p-8
                                     transition-all
                                     duration-300
                                     hover:-translate-y-1.5
                                     hover:border-[#E01E31]/40
-                                    hover:shadow-[0_24px_50px_rgba(75,56,36,0.16)]
+                                    hover:shadow-[0_24px_50px_rgba(0,0,0,0.16)]
                                 "
                             >
                                 <div className="flex items-start justify-between">
@@ -87,7 +95,7 @@ const Commercial = () => {
                                             text-2xl
                                             font-bold
                                             tracking-tight
-                                            text-[#E8DFD0]
+                                            text-[#E5E5E5]
                                         "
                                     >
                                         0{index + 1}
@@ -104,7 +112,7 @@ const Commercial = () => {
                                         text-[#E01E31]
                                     "
                                 >
-                                    {service.subtitle}
+                                    {t(commercialKeys[index].subtitleKey)}
                                 </div>
 
                                 <h3
@@ -114,11 +122,11 @@ const Commercial = () => {
                                         text-xl
                                         font-semibold
                                         tracking-tight
-                                        text-[#2B2623]
+                                        text-[#000000]
                                         sm:text-2xl
                                     "
                                 >
-                                    {service.title}
+                                    {t(commercialKeys[index].titleKey)}
                                 </h3>
 
                                 <p
@@ -126,10 +134,10 @@ const Commercial = () => {
                                         mt-3
                                         text-sm
                                         leading-6
-                                        text-[#564D44]
+                                        text-[#404040]
                                     "
                                 >
-                                    {service.description}
+                                    {t(commercialKeys[index].descKey)}
                                 </p>
 
                                 <button
@@ -147,19 +155,19 @@ const Commercial = () => {
                                         items-center
                                         gap-2
                                         rounded-full
-                                        bg-[#2B2623]
+                                        bg-[#000000]
                                         px-5
                                         py-2.5
                                         text-xs
                                         font-bold
-                                        text-[#FFFDF9]
+                                        text-[#FFFFFF]
                                         transition-all
                                         duration-200
                                         group-hover:gap-3
                                         group-hover:bg-[#E01E31]
                                     "
                                 >
-                                    Get a Quote
+                                    {t("commercialGetQuote")}
 
                                     <RiArrowRightLine className="h-4 w-4" />
                                 </button>

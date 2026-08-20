@@ -1,9 +1,10 @@
 import { RiStarFill } from "react-icons/ri";
 import { useReveal } from "../../hooks/useReveal";
-import { testimonials, testimonialsSection } from "../../data/siteData";
+import { useLanguage } from "../../i18n";
 import SectionHeader from "./SectionHeader";
 
 const Testimonials = () => {
+    const { t } = useLanguage();
     const cardsRef = useReveal<HTMLDivElement>({ y: 30, stagger: 0.1 });
 
     return (
@@ -11,7 +12,7 @@ const Testimonials = () => {
             id="testimonials"
             className="
                 relative
-                bg-[#F8F4EE]
+                bg-[#FFFFFF]
                 px-4
                 py-16
                 sm:px-6
@@ -31,7 +32,7 @@ const Testimonials = () => {
                     h-80
                     w-80
                     rounded-full
-                    bg-[#FCE7E5]
+                    bg-[#FEF2F2]
                     opacity-40
                     blur-3xl
                     sm:h-96
@@ -41,10 +42,10 @@ const Testimonials = () => {
 
             <div className="relative mx-auto w-full max-w-[1440px]">
                 <SectionHeader
-                    badge={testimonialsSection.badge}
-                    main={testimonialsSection.title.main}
-                    highlight={testimonialsSection.title.highlight}
-                    description={testimonialsSection.description}
+                    badge={t("testimonialsBadge")}
+                    main={t("testimonialsTitleMain")}
+                    highlight={t("testimonialsTitleHighlight")}
+                    description={t("testimonialsDescription")}
                 />
 
                 <div
@@ -58,23 +59,23 @@ const Testimonials = () => {
                         lg:grid-cols-3
                     "
                 >
-                    {testimonials.map((testimonial) => (
+                    {[1, 2, 3].map((num) => (
                         <article
-                            key={testimonial.name}
+                            key={num}
                             data-reveal
                             className="
                                 flex
                                 flex-col
                                 rounded-3xl
                                 border
-                                border-[#E8DFD0]
-                                bg-[#FFFDF9]
+                                border-[#E5E5E5]
+                                bg-[#FFFFFF]
                                 p-8
                                 transition-all
                                 duration-300
                                 hover:-translate-y-1.5
                                 hover:border-[#E01E31]/40
-                                hover:shadow-[0_24px_50px_rgba(75,56,36,0.16)]
+                                hover:shadow-[0_24px_50px_rgba(0,0,0,0.16)]
                             "
                         >
                             <div
@@ -87,7 +88,7 @@ const Testimonials = () => {
                                     text-[#E01E31]
                                 "
                             >
-                                “
+                                "
                             </div>
 
                             <div className="-mt-5 flex items-center gap-1">
@@ -108,10 +109,10 @@ const Testimonials = () => {
                                     text-base
                                     font-semibold
                                     leading-7
-                                    text-[#3A332C]
+                                    text-[#000000]
                                 "
                             >
-                                {testimonial.quote}
+                                {t(`testimonial${num}Quote`)}
                             </p>
 
                             <div
@@ -121,7 +122,7 @@ const Testimonials = () => {
                                     items-center
                                     gap-3
                                     border-t
-                                    border-[#E8DFD0]
+                                    border-[#E5E5E5]
                                     pt-5
                                 "
                             >
@@ -140,7 +141,7 @@ const Testimonials = () => {
                                         text-white
                                     "
                                 >
-                                    {testimonial.name
+                                    {t(`testimonial${num}Name`)
                                         .split(" ")
                                         .slice(0, 2)
                                         .map((part) => part[0])
@@ -148,13 +149,13 @@ const Testimonials = () => {
                                 </div>
 
                                 <div>
-                                    <div className="text-sm font-bold text-[#2B2623]">
-                                        {testimonial.name}
+                                    <div className="text-sm font-bold text-[#000000]">
+                                        {t(`testimonial${num}Name`)}
                                     </div>
 
-                                    <div className="mt-0.5 text-xs text-[#786E60]">
-                                        {testimonial.service} ·{" "}
-                                        {testimonial.location}
+                                    <div className="mt-0.5 text-xs text-[#737373]">
+                                        {t(`testimonial${num}Service`)} ·{" "}
+                                        {t(`testimonial${num}Location`)}
                                     </div>
                                 </div>
                             </div>

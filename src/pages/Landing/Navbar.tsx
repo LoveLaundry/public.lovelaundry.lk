@@ -7,6 +7,7 @@ import {
 } from "react-icons/ri";
 import type { ActionType } from "../../types/action";
 import { companyInfo } from "../../data/siteData";
+import { useLanguage } from "../../i18n";
 
 interface NavbarProps {
     actions: ActionType[];
@@ -14,6 +15,7 @@ interface NavbarProps {
 
 const Navbar = ({ actions }: NavbarProps) => {
     const [open, setOpen] = useState(false);
+    const { t, lang, setLang } = useLanguage();
     const [activeSection, setActiveSection] = useState(
         actions[0]?.id ?? "home"
     );
@@ -79,7 +81,7 @@ const Navbar = ({ actions }: NavbarProps) => {
     return (
         <header className="fixed inset-x-0 top-0 z-50">
             <div className="mx-auto w-full max-w-[1440px] px-3 pt-3 sm:px-4 sm:pt-4 lg:px-6">
-                <div className="relative flex min-h-[60px] items-center justify-between rounded-full border border-[#E8DFD0] bg-[#FFFDF9] px-3 shadow-[0_4px_20px_rgba(75,56,36,0.08)] sm:min-h-[64px] sm:px-4 md:px-5 lg:min-h-[68px]">
+                <div className="relative flex min-h-[60px] items-center justify-between rounded-full border border-[#E5E5E5] bg-[#FFFFFF] px-3 shadow-[0_4px_20px_rgba(0,0,0,0.08)] sm:min-h-[64px] sm:px-4 md:px-5 lg:min-h-[68px]">
 
                     <button
                         type="button"
@@ -95,11 +97,11 @@ const Navbar = ({ actions }: NavbarProps) => {
                         </div>
 
                         <div className="min-w-0 text-left">
-                            <div className="truncate text-[14px] font-bold leading-tight tracking-tight text-[#2B2623] sm:text-[15px]">
+                            <div className="truncate text-[14px] font-bold leading-tight tracking-tight text-[#000000] sm:text-[15px]">
                                 {companyInfo.name}
                             </div>
 
-                            <div className="hidden text-[8px] font-semibold uppercase tracking-[0.15em] text-[#786E60] min-[400px]:block sm:text-[9px] sm:tracking-[0.18em]">
+                            <div className="hidden text-[8px] font-semibold uppercase tracking-[0.15em] text-[#737373] min-[400px]:block sm:text-[9px] sm:tracking-[0.18em]">
                                 {companyInfo.description}
                             </div>
                         </div>
@@ -130,8 +132,8 @@ const Navbar = ({ actions }: NavbarProps) => {
                                             lg:px-3.5
                                             lg:text-[13px]
                                             ${isActive
-                                                ? "bg-[#FCE7E5] text-[#E01E31]"
-                                                : "text-[#564D44] hover:bg-[#FCE7E5] hover:text-[#E01E31]"
+                                                ? "bg-[#FEF2F2] text-[#E01E31]"
+                                                : "text-[#404040] hover:bg-[#FEF2F2] hover:text-[#E01E31]"
                                             }
                                         `}
                                     >
@@ -179,10 +181,27 @@ const Navbar = ({ actions }: NavbarProps) => {
                                 lg:text-[13px]
                             "
                         >
-                            Book Now
+                            {t("navBookNow")}
 
                             <RiArrowRightLine className="h-3.5 w-3.5 lg:h-4 lg:w-4" />
                         </button>
+
+                        <div className="ml-2 flex items-center rounded-full border border-[#E5E5E5] bg-[#FFFFFF] p-0.5 lg:ml-3">
+                            <button
+                                type="button"
+                                onClick={() => setLang("en")}
+                                className={`rounded-full px-2.5 py-1 text-[11px] font-bold transition-all duration-200 lg:text-[12px] ${lang === "en" ? "bg-[#E01E31] text-white shadow-sm" : "text-[#737373] hover:text-[#000000]"}`}
+                            >
+                                EN
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setLang("sin")}
+                                className={`rounded-full px-2.5 py-1 text-[11px] font-bold transition-all duration-200 lg:text-[12px] ${lang === "sin" ? "bg-[#E01E31] text-white shadow-sm" : "text-[#737373] hover:text-[#000000]"}`}
+                            >
+                                සිං
+                            </button>
+                        </div>
                     </nav>
 
                     <button
@@ -201,12 +220,12 @@ const Navbar = ({ actions }: NavbarProps) => {
                             justify-center
                             rounded-lg
                             border
-                            border-[#E8DFD0]
-                            bg-[#FFFDF9]
-                            text-[#564D44]
+                            border-[#E5E5E5]
+                            bg-[#FFFFFF]
+                            text-[#404040]
                             transition
                             hover:border-[#F3C7CE]
-                            hover:bg-[#FCE7E5]
+                            hover:bg-[#FEF2F2]
                             hover:text-[#E01E31]
                             sm:h-10
                             sm:w-10
@@ -259,8 +278,8 @@ const Navbar = ({ actions }: NavbarProps) => {
                                         overflow-y-auto
                                         rounded-xl
                                         border
-                                        border-[#E8DFD0]
-                                        bg-[#FFFDF9]
+                                        border-[#E5E5E5]
+                                        bg-[#FFFFFF]
                                         p-2
                                         shadow-[0_15px_40px_rgba(0,0,0,0.12)]
                                         md:hidden
@@ -297,8 +316,8 @@ const Navbar = ({ actions }: NavbarProps) => {
                                                         sm:px-4
                                                         sm:py-3.5
                                                         ${isActive
-                                                            ? "bg-[#FCE7E5] text-[#E01E31]"
-                                                            : "text-[#3A332C] hover:bg-[#FCE7E5] hover:text-[#E01E31]"
+                                                            ? "bg-[#FEF2F2] text-[#E01E31]"
+                                                            : "text-[#000000] hover:bg-[#FEF2F2] hover:text-[#E01E31]"
                                                         }
                                                     `}
                                                 >
@@ -313,7 +332,7 @@ const Navbar = ({ actions }: NavbarProps) => {
                                                             rounded-lg
                                                             ${isActive
                                                                 ? "bg-[#E01E31] text-white"
-                                                                : "bg-[#F1E9DC] text-[#786E60]"
+                                                                : "bg-[#F5F5F5] text-[#737373]"
                                                             }
                                                         `}
                                                     >
@@ -327,14 +346,14 @@ const Navbar = ({ actions }: NavbarProps) => {
                                                     {isActive ? (
                                                         <span className="h-2 w-2 rounded-full bg-[#E01E31]" />
                                                     ) : (
-                                                        <RiArrowRightLine className="h-4 w-4 text-[#C9BEB0]" />
+                                                        <RiArrowRightLine className="h-4 w-4 text-[#D4D4D4]" />
                                                     )}
                                                 </button>
                                             );
                                         })}
                                     </div>
 
-                                    <div className="my-1 h-px bg-[#F1E9DC]" />
+                                    <div className="my-1 h-px bg-[#F5F5F5]" />
 
                                     <div className="p-1">
                                         <button
@@ -361,10 +380,31 @@ const Navbar = ({ actions }: NavbarProps) => {
                                                 sm:py-3.5
                                             "
                                         >
-                                            Book a Pickup
+                                            {t("heroPrimary")}
 
                                             <RiArrowRightLine className="h-4 w-4" />
                                         </button>
+                                    </div>
+
+                                    <div className="my-1 h-px bg-[#F5F5F5]" />
+
+                                    <div className="p-1">
+                                        <div className="flex items-center justify-center rounded-lg bg-[#F5F5F5] p-1">
+                                            <button
+                                                type="button"
+                                                onClick={() => setLang("en")}
+                                                className={`flex-1 rounded-md py-2.5 text-sm font-bold transition-all duration-200 ${lang === "en" ? "bg-[#E01E31] text-white shadow-sm" : "text-[#737373]"}`}
+                                            >
+                                                EN
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => setLang("sin")}
+                                                className={`flex-1 rounded-md py-2.5 text-sm font-bold transition-all duration-200 ${lang === "sin" ? "bg-[#E01E31] text-white shadow-sm" : "text-[#737373]"}`}
+                                            >
+                                                සිං
+                                            </button>
+                                        </div>
                                     </div>
                                 </motion.div>
                             </>

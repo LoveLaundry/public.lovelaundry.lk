@@ -1,17 +1,26 @@
 import { RiArrowRightLine, RiPhoneLine } from "react-icons/ri";
 import { useReveal } from "../../hooks/useReveal";
-import { services, servicesSection, companyInfo } from "../../data/siteData";
+import { services, companyInfo } from "../../data/siteData";
+import { useLanguage } from "../../i18n";
 import SectionHeader from "./SectionHeader";
 
 const Services = () => {
+    const { t } = useLanguage();
     const cardsRef = useReveal<HTMLDivElement>({ y: 30, stagger: 0.1 });
+
+    const serviceKeys = [
+        { titleKey: "serviceWashTitle", subtitleKey: "serviceWashSubtitle", descKey: "serviceWashDesc" },
+        { titleKey: "serviceDryTitle", subtitleKey: "serviceDrySubtitle", descKey: "serviceDryDesc" },
+        { titleKey: "serviceIronTitle", subtitleKey: "serviceIronSubtitle", descKey: "serviceIronDesc" },
+        { titleKey: "serviceFoldTitle", subtitleKey: "serviceFoldSubtitle", descKey: "serviceFoldDesc" },
+    ];
 
     return (
         <section
             id="services"
             className="
                 relative
-                bg-[#F8F4EE]
+                bg-[#FFFFFF]
                 px-4
                 py-16
                 sm:px-6
@@ -28,16 +37,16 @@ const Services = () => {
                     absolute
                     inset-0
                     opacity-[0.035]
-                    bg-[radial-gradient(circle,#2B2623_1px,transparent_1px)]
+                    bg-[radial-gradient(circle,#000000_1px,transparent_1px)]
                     bg-[length:24px_24px]
                 "
             />
 
             <div className="relative mx-auto w-full max-w-[1440px]">
                 <SectionHeader
-                    badge={servicesSection.badge}
-                    main={servicesSection.title.main}
-                    highlight={servicesSection.title.highlight}
+                    badge={t("servicesBadge")}
+                    main={t("servicesTitleMain")}
+                    highlight={t("servicesTitleHighlight")}
                 />
 
                 <div
@@ -51,7 +60,7 @@ const Services = () => {
                         lg:grid-cols-4
                     "
                 >
-                    {services.map((service) => (
+                    {services.map((service, index) => (
                         <article
                             key={service.title}
                             data-reveal
@@ -61,13 +70,13 @@ const Services = () => {
                                 overflow-hidden
                                 rounded-3xl
                                 border
-                                border-[#E8DFD0]
-                                bg-[#FFFDF9]
+                                border-[#E5E5E5]
+                                bg-[#FFFFFF]
                                 transition-all
                                 duration-300
                                 hover:-translate-y-1.5
                                 hover:border-[#E01E31]/40
-                                hover:shadow-[0_24px_50px_rgba(75,56,36,0.16)]
+                                hover:shadow-[0_24px_50px_rgba(0,0,0,0.16)]
                             "
                         >
                             <div
@@ -91,12 +100,12 @@ const Services = () => {
                                     relative
                                     aspect-[1.35/1]
                                     overflow-hidden
-                                    bg-[#F1E9DC]
+                                    bg-[#F5F5F5]
                                 "
                             >
                                 <img
                                     src={service.image}
-                                    alt={service.title}
+                                    alt={t(serviceKeys[index].titleKey)}
                                     loading="lazy"
                                     style={{
                                         filter:
@@ -124,7 +133,7 @@ const Services = () => {
                                         text-[#E01E31]
                                     "
                                 >
-                                    {service.subtitle}
+                                    {t(serviceKeys[index].subtitleKey)}
                                 </div>
 
                                 <h3
@@ -134,10 +143,10 @@ const Services = () => {
                                         text-xl
                                         font-semibold
                                         tracking-tight
-                                        text-[#2B2623]
+                                        text-[#000000]
                                     "
                                 >
-                                    {service.title}
+                                    {t(serviceKeys[index].titleKey)}
                                 </h3>
 
                                 <p
@@ -145,10 +154,10 @@ const Services = () => {
                                         mt-2.5
                                         text-sm
                                         leading-6
-                                        text-[#564D44]
+                                        text-[#404040]
                                     "
                                 >
-                                    {service.description}
+                                    {t(serviceKeys[index].descKey)}
                                 </p>
 
                                 <button
@@ -173,7 +182,7 @@ const Services = () => {
                                         group-hover:gap-3
                                     "
                                 >
-                                    Learn more
+                                    {t("servicesLearnMore")}
 
                                     <RiArrowRightLine className="h-4 w-4" />
                                 </button>
@@ -192,8 +201,8 @@ const Services = () => {
                         gap-4
                         rounded-2xl
                         border
-                        border-[#E8DFD0]
-                        bg-[#FFFDF9]
+                        border-[#E5E5E5]
+                        bg-[#FFFFFF]
                         px-6
                         py-8
                         text-center
@@ -204,11 +213,11 @@ const Services = () => {
                     "
                 >
                     <div>
-                        <h3 className="font-display text-lg font-semibold text-[#2B2623]">
-                            {servicesSection.cta.text}
+                        <h3 className="font-display text-lg font-semibold text-[#000000]">
+                            {t("servicesCtaTitle")}
                         </h3>
-                        <p className="mt-1 text-sm text-[#564D44]">
-                            {servicesSection.cta.subtext}
+                        <p className="mt-1 text-sm text-[#404040]">
+                            {t("servicesCtaSub")}
                         </p>
                     </div>
 
@@ -235,7 +244,7 @@ const Services = () => {
                         "
                     >
                         <RiPhoneLine className="h-4 w-4" />
-                        {servicesSection.cta.buttonText}
+                        {t("servicesCtaBtn")}
                     </a>
                 </div>
             </div>

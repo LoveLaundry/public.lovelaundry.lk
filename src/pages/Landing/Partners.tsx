@@ -8,8 +8,10 @@ import {
 import { useReveal } from "../../hooks/useReveal";
 import { partnersSection, type Partner } from "../../data/siteData";
 import SectionHeader from "./SectionHeader";
+import { useLanguage } from "../../i18n";
 
 const Partners = () => {
+    const { t } = useLanguage();
     const cardsRef = useReveal<HTMLDivElement>({ y: 20, stagger: 0.06 });
     const [selected, setSelected] = useState<Partner | null>(null);
 
@@ -18,7 +20,7 @@ const Partners = () => {
             id="partners"
             className="
                 relative
-                bg-[#FFFDF9]
+                bg-[#FFFFFF]
                 px-4
                 py-16
                 sm:px-6
@@ -29,10 +31,10 @@ const Partners = () => {
         >
             <div className="relative mx-auto w-full max-w-[1440px]">
                 <SectionHeader
-                    badge={partnersSection.badge}
-                    main={partnersSection.title.main}
-                    highlight={partnersSection.title.highlight}
-                    description={partnersSection.description}
+                    badge={t("partnersBadge")}
+                    main={t("partnersTitleMain")}
+                    highlight={t("partnersTitleHighlight")}
+                    description={t("partnersDescription")}
                 />
 
                 <div
@@ -60,15 +62,15 @@ const Partners = () => {
                                 overflow-hidden
                                 rounded-2xl
                                 border
-                                border-[#E8DFD0]
-                                bg-[#F8F4EE]
+                                border-[#E5E5E5]
+                                bg-[#FFFFFF]
                                 text-center
                                 transition-all
                                 duration-300
                                 hover:-translate-y-1.5
                                 hover:border-[#E01E31]/40
                                 hover:bg-white
-                                hover:shadow-[0_20px_44px_rgba(75,56,36,0.14)]
+                                hover:shadow-[0_20px_44px_rgba(0,0,0,0.14)]
                             "
                         >
                             {partner.image ? (
@@ -101,7 +103,7 @@ const Partners = () => {
                                             items-center
                                             justify-center
                                             rounded-full
-                                            bg-[#FCE7E5]
+                                            bg-[#FEF2F2]
                                             text-[#E01E31]
                                         "
                                     >
@@ -129,7 +131,7 @@ const Partners = () => {
                                         font-semibold
                                         leading-snug
                                         tracking-tight
-                                        text-[#2B2623]
+                                        text-[#000000]
                                         sm:text-[17px]
                                     "
                                 >
@@ -141,10 +143,10 @@ const Partners = () => {
                                         font-semibold
                                         uppercase
                                         tracking-[0.16em]
-                                        text-[#786E60]
+                                        text-[#737373]
                                     "
                                 >
-                                    Hotel Partner
+                                    {t("partnersYears")}
                                 </div>
                             </div>
                         </button>
@@ -154,7 +156,7 @@ const Partners = () => {
                 <p
                     ref={cardsRef}
                     data-reveal
-                    className="mt-8 text-center text-sm font-semibold text-[#786E60]"
+                    className="mt-8 text-center text-sm font-semibold text-[#737373]"
                 >
                     …and more hotels, resorts & villas across Sri Lanka.
                 </p>
@@ -179,8 +181,8 @@ const Partners = () => {
                             overflow-hidden
                             rounded-3xl
                             border
-                            border-[#E8DFD0]
-                            bg-[#FFFDF9]
+                            border-[#E5E5E5]
+                            bg-[#FFFFFF]
                             shadow-[0_32px_64px_rgba(0,0,0,0.25)]
                         "
                         onClick={(e) => e.stopPropagation()}
@@ -245,8 +247,7 @@ const Partners = () => {
                                 >
                                     <RiTimeLine className="h-3.5 w-3.5" />
                                     {selected.years}{" "}
-                                    {selected.years === 1 ? "Year" : "Years"}{" "}
-                                    Partner
+                                    {t("partnersYears")}
                                 </div>
                             </div>
                         )}
@@ -259,19 +260,19 @@ const Partners = () => {
                                     text-xl
                                     font-bold
                                     tracking-tight
-                                    text-[#2B2623]
+                                    text-[#000000]
                                     sm:text-2xl
                                 "
                             >
                                 {selected.name}
                             </h3>
 
-                            <div className="mt-2 flex items-center gap-1.5 text-sm text-[#786E60]">
+                            <div className="mt-2 flex items-center gap-1.5 text-sm text-[#737373]">
                                 <RiMapPin2Line className="h-4 w-4 text-[#E01E31]" />
                                 {selected.location}
                             </div>
 
-                            <p className="mt-4 text-sm leading-relaxed text-[#564D44]">
+                            <p className="mt-4 text-sm leading-relaxed text-[#404040]">
                                 {selected.description}
                             </p>
 
@@ -283,8 +284,8 @@ const Partners = () => {
                                     gap-2
                                     rounded-xl
                                     border
-                                    border-[#E8DFD0]
-                                    bg-[#F8F4EE]
+                                    border-[#E5E5E5]
+                                    bg-[#FFFFFF]
                                     px-4
                                     py-3
                                 "
@@ -305,10 +306,10 @@ const Partners = () => {
                                     <RiTimeLine className="h-5 w-5" />
                                 </div>
                                 <div>
-                                    <div className="text-xs font-semibold uppercase tracking-wider text-[#786E60]">
-                                        Partnership Duration
+                                    <div className="text-xs font-semibold uppercase tracking-wider text-[#737373]">
+                                        {t("partnersDuration")}
                                     </div>
-                                    <div className="font-display text-lg font-bold text-[#2B2623]">
+                                    <div className="font-display text-lg font-bold text-[#000000]">
                                         {selected.years}{" "}
                                         {selected.years === 1 ? "Year" : "Years"}
                                     </div>

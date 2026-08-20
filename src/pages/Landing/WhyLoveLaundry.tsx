@@ -1,13 +1,14 @@
 import { RiCheckLine, RiHeart3Fill } from "react-icons/ri";
 import { useReveal } from "../../hooks/useReveal";
+import { useLanguage } from "../../i18n";
 import {
     features,
     benefits,
-    whyLoveLaundrySection,
     companyInfo,
 } from "../../data/siteData";
 
 const WhyLoveLaundry = () => {
+    const { t } = useLanguage();
     const leftRef = useReveal<HTMLDivElement>({ x: -30, y: 0 });
     const rightRef = useReveal<HTMLDivElement>({ x: 30, y: 0 });
     const featuresRef = useReveal<HTMLDivElement>({ y: 20, stagger: 0.08 });
@@ -17,7 +18,7 @@ const WhyLoveLaundry = () => {
             id="about"
             className="
                 relative
-                bg-[#F1E9DC]
+                bg-[#F5F5F5]
                 px-4
                 py-16
                 sm:px-6
@@ -45,10 +46,10 @@ const WhyLoveLaundry = () => {
                         className="
                             rounded-[28px]
                             border
-                            border-[#E0D5C2]
-                            bg-[#FFFDF9]
+                            border-[#E5E5E5]
+                            bg-[#FFFFFF]
                             p-8
-                            shadow-[0_24px_60px_rgba(75,56,36,0.12)]
+                            shadow-[0_24px_60px_rgba(0,0,0,0.12)]
                             sm:p-10
                         "
                     >
@@ -72,14 +73,14 @@ const WhyLoveLaundry = () => {
                             <span
                                 className="
                                     rounded-full
-                                    bg-[#F1E9DC]
+                                    bg-[#F5F5F5]
                                     px-3
                                     py-1.5
                                     text-[10px]
                                     font-bold
                                     uppercase
                                     tracking-[0.15em]
-                                    text-[#564D44]
+                                    text-[#404040]
                                 "
                             >
                                 {companyInfo.name}
@@ -95,11 +96,11 @@ const WhyLoveLaundry = () => {
                                 font-semibold
                                 leading-[1.08]
                                 tracking-[-0.02em]
-                                text-[#2B2623]
+                                text-[#000000]
                                 sm:text-4xl
                             "
                         >
-                            {whyLoveLaundrySection.card.title}
+                            {t("whyCardTitle")}
                         </h3>
 
                         <p
@@ -108,18 +109,18 @@ const WhyLoveLaundry = () => {
                                 max-w-md
                                 text-sm
                                 leading-7
-                                text-[#564D44]
+                                text-[#404040]
                                 sm:text-base
                             "
                         >
-                            {whyLoveLaundrySection.card.description}
+                            {t("whyCardDesc")}
                         </p>
 
                         <div className="mt-8 space-y-3">
-                            {benefits.map((item) => (
+                            {benefits.map((_, index) => (
                                 <div
-                                    key={item}
-                                    className="flex items-center gap-3 text-sm font-semibold text-[#3A332C]"
+                                    key={index}
+                                    className="flex items-center gap-3 text-sm font-semibold text-[#000000]"
                                 >
                                     <span
                                         className="
@@ -130,14 +131,14 @@ const WhyLoveLaundry = () => {
                                             items-center
                                             justify-center
                                             rounded-full
-                                            bg-[#FCE7E5]
+                                            bg-[#FEF2F2]
                                             text-[#E01E31]
                                         "
                                     >
                                         <RiCheckLine className="h-3.5 w-3.5" />
                                     </span>
 
-                                    {item}
+                                    {t(`whyBenefit${index + 1}`)}
                                 </div>
                             ))}
                         </div>
@@ -163,7 +164,7 @@ const WhyLoveLaundry = () => {
                             className="h-[3px] w-8 rounded-full bg-[#E01E31]"
                         />
 
-                        {whyLoveLaundrySection.badge}
+                        {t("whyBadge")}
                     </span>
 
                     <h2
@@ -174,14 +175,14 @@ const WhyLoveLaundry = () => {
                             font-semibold
                             leading-[1.05]
                             tracking-[-0.02em]
-                            text-[#2B2623]
+                            text-[#000000]
                             sm:text-5xl
                             lg:text-6xl
                         "
                     >
-                        {whyLoveLaundrySection.title.main}{" "}
+                        {t("whyTitleMain")}{" "}
                         <span className="text-[#E01E31]">
-                            {whyLoveLaundrySection.title.highlight}
+                            {t("whyTitleHighlight")}
                         </span>
                     </h2>
 
@@ -191,11 +192,11 @@ const WhyLoveLaundry = () => {
                             max-w-xl
                             text-sm
                             leading-7
-                            text-[#564D44]
+                            text-[#404040]
                             sm:text-base
                         "
                     >
-                        {whyLoveLaundrySection.description}
+                        {t("whyDescription")}
                     </p>
 
                     <div
@@ -208,24 +209,24 @@ const WhyLoveLaundry = () => {
                             sm:grid-cols-2
                         "
                     >
-                        {features.map((feature) => {
+                        {features.map((feature, index) => {
                             const Icon = feature.icon;
 
                             return (
                                 <div
-                                    key={feature.title}
+                                    key={index}
                                     data-reveal
                                     className="
                                         rounded-3xl
                                         border
-                                        border-[#E0D5C2]
-                                        bg-[#FFFDF9]
+                                        border-[#E5E5E5]
+                                        bg-[#FFFFFF]
                                         p-5
                                         transition-all
                                         duration-300
                                         hover:-translate-y-1.5
                                         hover:border-[#E01E31]/40
-                                        hover:shadow-[0_24px_50px_rgba(75,56,36,0.16)]
+                                        hover:shadow-[0_24px_50px_rgba(0,0,0,0.16)]
                                     "
                                 >
                                     <div
@@ -236,7 +237,7 @@ const WhyLoveLaundry = () => {
                                             items-center
                                             justify-center
                                             rounded-2xl
-                                            bg-[#FCE7E5]
+                                            bg-[#FEF2F2]
                                             text-[#E01E31]
                                         "
                                     >
@@ -248,11 +249,11 @@ const WhyLoveLaundry = () => {
                                             mt-4
                                             text-sm
                                             font-bold
-                                            text-[#2B2623]
+                                            text-[#000000]
                                             sm:text-base
                                         "
                                     >
-                                        {feature.title}
+                                        {t(`whyFeat${["Door","Prof","Time","Trust"][index]}Title`)}
                                     </h3>
 
                                     <p
@@ -260,11 +261,11 @@ const WhyLoveLaundry = () => {
                                             mt-2
                                             text-xs
                                             leading-6
-                                            text-[#564D44]
+                                            text-[#404040]
                                             sm:text-sm
                                         "
                                     >
-                                        {feature.description}
+                                        {t(`whyFeat${["Door","Prof","Time","Trust"][index]}Desc`)}
                                     </p>
                                 </div>
                             );
@@ -280,8 +281,8 @@ const WhyLoveLaundry = () => {
                             gap-3
                             rounded-2xl
                             border
-                            border-[#E0D5C2]
-                            bg-[#FFFDF9]
+                            border-[#E5E5E5]
+                            bg-[#FFFFFF]
                             p-5
                             sm:mt-10
                             sm:gap-4
@@ -292,17 +293,17 @@ const WhyLoveLaundry = () => {
                             <div className="font-display text-2xl font-bold text-[#E01E31] sm:text-3xl">
                                 {companyInfo.customerCount}
                             </div>
-                            <div className="mt-1 text-[10px] font-bold uppercase tracking-wider text-[#564D44] sm:text-[11px]">
-                                Happy Customers
+                            <div className="mt-1 text-[10px] font-bold uppercase tracking-wider text-[#404040] sm:text-[11px]">
+                                {t("whyStatCustomers")}
                             </div>
                         </div>
 
-                        <div className="border-x border-[#E0D5C2] text-center">
+                        <div className="border-x border-[#E5E5E5] text-center">
                             <div className="font-display text-2xl font-bold text-[#E01E31] sm:text-3xl">
                                 {companyInfo.rating}
                             </div>
-                            <div className="mt-1 text-[10px] font-bold uppercase tracking-wider text-[#564D44] sm:text-[11px]">
-                                Star Rating
+                            <div className="mt-1 text-[10px] font-bold uppercase tracking-wider text-[#404040] sm:text-[11px]">
+                                {t("whyStatRating")}
                             </div>
                         </div>
 
@@ -310,8 +311,8 @@ const WhyLoveLaundry = () => {
                             <div className="font-display text-2xl font-bold text-[#E01E31] sm:text-3xl">
                                 {companyInfo.serviceCount}
                             </div>
-                            <div className="mt-1 text-[10px] font-bold uppercase tracking-wider text-[#564D44] sm:text-[11px]">
-                                Services
+                            <div className="mt-1 text-[10px] font-bold uppercase tracking-wider text-[#404040] sm:text-[11px]">
+                                {t("whyStatServices")}
                             </div>
                         </div>
                     </div>

@@ -3,9 +3,11 @@ import {
     RiWhatsappLine,
 } from "react-icons/ri";
 import { useReveal } from "../../hooks/useReveal";
+import { useLanguage } from "../../i18n";
 import { hiringSection, jobOpenings } from "../../data/siteData";
 
 const JoinWithUs = () => {
+    const { t } = useLanguage();
     const cardsRef = useReveal<HTMLDivElement>({ y: 30, stagger: 0.08 });
     const perksRef = useReveal<HTMLDivElement>({ y: 20, stagger: 0.06 });
 
@@ -15,7 +17,7 @@ const JoinWithUs = () => {
             className="
                 relative
                 overflow-hidden
-                bg-[#2B2623]
+                bg-[#000000]
                 px-4
                 py-20
                 sm:px-6
@@ -95,7 +97,7 @@ const JoinWithUs = () => {
                             aria-hidden="true"
                             className="h-[3px] w-8 rounded-full bg-[#E01E31]"
                         />
-                        {hiringSection.badge}
+                        {t("joinBadge")}
                     </span>
 
                     <h2
@@ -111,10 +113,10 @@ const JoinWithUs = () => {
                             lg:text-6xl
                         "
                     >
-                        {hiringSection.title.main}
+                        {t("joinTitleMain")}
                         <span className="text-[#E01E31]">
                             {" "}
-                            {hiringSection.title.highlight}
+                            {t("joinTitleHighlight")}
                         </span>
                     </h2>
 
@@ -124,11 +126,11 @@ const JoinWithUs = () => {
                             max-w-xl
                             text-sm
                             leading-7
-                            text-[#C9BEB0]
+                            text-[#D4D4D4]
                             sm:text-base
                         "
                     >
-                        {hiringSection.description}
+                        {t("joinDescription")}
                     </p>
                 </div>
 
@@ -197,9 +199,9 @@ const JoinWithUs = () => {
                                 font-bold
                                 uppercase
                                 tracking-wider
-                                text-[#C9BEB0]
+                                text-[#D4D4D4]
                             ">
-                                {job.type}
+                                {t(`joinJob${index + 1}Type`)}
                             </span>
 
                             <h3 className="
@@ -209,16 +211,16 @@ const JoinWithUs = () => {
                                 font-semibold
                                 text-white
                             ">
-                                {job.title}
+                                {t(`joinJob${index + 1}Title`)}
                             </h3>
 
                             <p className="
                                 mt-2
                                 text-sm
                                 leading-6
-                                text-[#A99F90]
+                                text-[#A3A3A3]
                             ">
-                                {job.description}
+                                {t(`joinJob${index + 1}Desc`)}
                             </p>
                         </article>
                     ))}
@@ -257,8 +259,8 @@ const JoinWithUs = () => {
                                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#E01E31]/15 text-[#E01E31]">
                                     <perk.icon className="h-4 w-4" />
                                 </div>
-                                <span className="text-sm font-semibold text-[#C9BEB0]">
-                                    {perk.text}
+                                <span className="text-sm font-semibold text-[#D4D4D4]">
+                                    {t(`joinPerk${index + 1}`)}
                                 </span>
                             </div>
                         ))}
@@ -291,7 +293,7 @@ const JoinWithUs = () => {
                         "
                     >
                         <RiWhatsappLine className="h-5 w-5" />
-                        {hiringSection.cta.text}
+                        {t("joinCta")}
                         <RiArrowRightLine className="h-4 w-4" />
                     </a>
                 </div>

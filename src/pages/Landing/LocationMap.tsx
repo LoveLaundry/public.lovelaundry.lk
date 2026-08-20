@@ -13,6 +13,7 @@ import {
     RiAppsLine,
 } from "react-icons/ri";
 import { useReveal } from "../../hooks/useReveal";
+import { useLanguage } from "../../i18n";
 import {
     allLocations,
     mainLaundry,
@@ -21,6 +22,7 @@ import {
 } from "../../data/locations";
 
 const MapContent = () => {
+    const { t } = useLanguage();
     const [map, setMap] = useState<L.Map | null>(null);
     const [L, setL] = useState<typeof import("leaflet") | null>(null);
     const [nearest, setNearest] = useState<Location | null>(null);
@@ -326,7 +328,7 @@ const MapContent = () => {
                     ) : (
                         <RiNavigationLine className="h-5 w-5" />
                     )}
-                    {loadingGeo ? "Finding..." : "Find Nearest to Me"}
+                    {loadingGeo ? t("mapFinding") : t("mapFindNearest")}
                 </button>
 
                 {/* Nearest Result - Gradient Card */}
@@ -339,12 +341,12 @@ const MapContent = () => {
                             </div>
                             <div className="min-w-0 flex-1">
                                 <div className="text-[10px] font-bold uppercase tracking-widest text-[#E01E31]">
-                                    Nearest to You
+                                    {t("mapNearestLocation")}
                                 </div>
-                                <div className="mt-0.5 truncate font-display text-sm font-semibold text-[#2B2623]">
+                                <div className="mt-0.5 truncate font-display text-sm font-semibold text-[#000000]">
                                     {nearest.name}
                                 </div>
-                                <div className="mt-0.5 truncate text-xs text-[#786E60]">
+                                <div className="mt-0.5 truncate text-xs text-[#737373]">
                                     {nearest.address}
                                 </div>
                             </div>
@@ -372,35 +374,35 @@ const MapContent = () => {
                                 transition-all
                                 duration-200
                                 hover:border-[#E01E31]/40
-                                hover:bg-[#FCE7E5]
+                                hover:bg-[#FEF2F2]
                             "
                         >
                             <RiArrowRightLine className="h-3.5 w-3.5" />
-                            Get Directions
+                            {t("mapGetDirections")}
                         </button>
                     </div>
                 )}
 
                 {/* Search Bar */}
                 <div className="relative">
-                    <RiSearchLine className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#A99F90]" />
+                    <RiSearchLine className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#A3A3A3]" />
                     <input
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        placeholder="Search locations..."
+                        placeholder={t("mapSearchPlaceholder")}
                         className="
                             w-full
                             rounded-xl
                             border
-                            border-[#E8DFD0]
-                            bg-[#F8F4EE]
+                            border-[#E5E5E5]
+                            bg-white
                             py-2.5
                             pl-10
                             pr-10
                             text-sm
-                            text-[#2B2623]
-                            placeholder-[#A99F90]
+                            text-[#000000]
+                            placeholder-[#A3A3A3]
                             outline-none
                             transition-all
                             duration-200
@@ -420,10 +422,10 @@ const MapContent = () => {
                                 -translate-y-1/2
                                 rounded-full
                                 p-0.5
-                                text-[#A99F90]
+                                text-[#A3A3A3]
                                 transition-colors
-                                hover:bg-[#E8DFD0]
-                                hover:text-[#564D44]
+                                hover:bg-[#E5E5E5]
+                                hover:text-[#404040]
                             "
                         >
                             <RiCloseLine className="h-4 w-4" />
@@ -432,12 +434,12 @@ const MapContent = () => {
                 </div>
 
                 {/* Filter Tabs */}
-                <div className="flex gap-1 rounded-xl bg-[#F1E9DC] p-1">
+                <div className="flex gap-1 rounded-xl bg-[#F5F5F5] p-1">
                     {(
                         [
-                            { key: "all", label: "All", icon: RiAppsLine },
-                            { key: "main", label: "Main", icon: RiMapPin2Line },
-                            { key: "shops", label: "Shops", icon: RiStore2Line },
+                            { key: "all", label: t("mapFilterAll"), icon: RiAppsLine },
+                            { key: "main", label: t("mapFilterMain"), icon: RiMapPin2Line },
+                            { key: "shops", label: t("mapFilterShops"), icon: RiStore2Line },
                         ] as const
                     ).map((tab) => (
                         <button
@@ -450,7 +452,7 @@ const MapContent = () => {
                                 ${
                                     activeFilter === tab.key
                                         ? "bg-white text-[#E01E31] shadow-sm"
-                                        : "text-[#786E60] hover:text-[#2B2623]"
+                                        : "text-[#737373] hover:text-[#000000]"
                                 }
                             `}
                         >
@@ -462,10 +464,10 @@ const MapContent = () => {
 
                 {/* Location Count */}
                 <div className="flex items-center justify-between px-1">
-                    <span className="text-xs font-medium text-[#786E60]">
+                    <span className="text-xs font-medium text-[#737373]">
                         {filteredLocations.length === allLocations.length
-                            ? `${allLocations.length} locations`
-                            : `${filteredLocations.length} of ${allLocations.length} locations`}
+                            ? `${allLocations.length} ${t("mapLocations")}`
+                            : `${filteredLocations.length} of ${allLocations.length} ${t("mapLocations")}`}
                     </span>
                     {(searchQuery || activeFilter !== "all") && (
                         <button
@@ -476,7 +478,7 @@ const MapContent = () => {
                             }}
                             className="text-xs font-semibold text-[#E01E31] transition-colors hover:text-[#C11324]"
                         >
-                            Clear filters
+                            {t("mapClearFilters")}
                         </button>
                     )}
                 </div>
@@ -486,13 +488,13 @@ const MapContent = () => {
                     {filteredLocations.length === 0 ? (
                         /* Empty State */
                         <div className="flex flex-col items-center justify-center py-10 text-center">
-                            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#F1E9DC]">
-                                <RiMapPinAddLine className="h-7 w-7 text-[#A99F90]" />
+                            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#F5F5F5]">
+                                <RiMapPinAddLine className="h-7 w-7 text-[#A3A3A3]" />
                             </div>
-                            <div className="mt-3 text-sm font-semibold text-[#2B2623]">
-                                No locations found
+                            <div className="mt-3 text-sm font-semibold text-[#000000]">
+                                {t("mapNoResults")}
                             </div>
-                            <div className="mt-1 text-xs text-[#786E60]">
+                            <div className="mt-1 text-xs text-[#737373]">
                                 Try adjusting your search or filter
                             </div>
                         </div>
@@ -510,8 +512,8 @@ const MapContent = () => {
                                             flex w-full items-center gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-200
                                             ${
                                                 isSelected
-                                                    ? "border-[#E01E31]/50 bg-[#FCE7E5] shadow-sm"
-                                                    : "border-[#E8DFD0] bg-[#F8F4EE] hover:border-[#E01E31]/30 hover:bg-white"
+                                                    ? "border-[#E01E31]/50 bg-[#FEF2F2] shadow-sm"
+                                                    : "border-[#E5E5E5] bg-white hover:border-[#E01E31]/30 hover:bg-white"
                                             }
                                         `}
                                     >
@@ -532,11 +534,11 @@ const MapContent = () => {
                                             )}
                                         </div>
                                         <div className="min-w-0 flex-1">
-                                            <div className="truncate text-sm font-semibold text-[#2B2623]">
+                                            <div className="truncate text-sm font-semibold text-[#000000]">
                                                 {loc.name}
                                             </div>
-                                            <div className="truncate text-xs text-[#786E60]">
-                                                {isMain ? "Main Centre" : loc.address}
+                                            <div className="truncate text-xs text-[#737373]">
+                                                {isMain ? t("mapMainCentre") : loc.address}
                                             </div>
                                         </div>
                                         {isSelected && (
@@ -557,7 +559,7 @@ const MapContent = () => {
                                                     transition-all
                                                     duration-200
                                                     hover:border-[#E01E31]/40
-                                                    hover:bg-[#FCE7E5]
+                                                    hover:bg-[#FEF2F2]
                                                 "
                                                 title="Get Directions"
                                             >
@@ -576,6 +578,7 @@ const MapContent = () => {
 };
 
 const LocationMap = () => {
+    const { t } = useLanguage();
     const sectionRef = useReveal<HTMLDivElement>({ y: 20 });
 
     return (
@@ -583,7 +586,7 @@ const LocationMap = () => {
             id="locations"
             className="
                 relative
-                bg-[#F8F4EE]
+                bg-white
                 px-4
                 py-16
                 sm:px-6
@@ -609,7 +612,7 @@ const LocationMap = () => {
                         "
                     >
                         <RiMapPinLine className="h-4 w-4" />
-                        Find Us
+                        {t("mapBadge")}
                     </span>
                     <h2
                         className="
@@ -619,18 +622,16 @@ const LocationMap = () => {
                             font-semibold
                             leading-[1.1]
                             tracking-[-0.02em]
-                            text-[#2B2623]
+                            text-[#000000]
                             sm:text-4xl
                             lg:text-5xl
                         "
                     >
-                        Our locations
-                        <span className="text-[#E01E31]"> across Sri Lanka.</span>
+                        {t("mapTitle")}
+                        <span className="text-[#E01E31]"> {t("mapTitleHighlight")}</span>
                     </h2>
-                    <p className="mt-4 max-w-xl text-sm leading-relaxed text-[#564D44] sm:text-base">
-                        Find your nearest Love Laundry drop-off point or visit
-                        our main centre. We&apos;re always expanding to serve
-                        you better.
+                    <p className="mt-4 max-w-xl text-sm leading-relaxed text-[#404040] sm:text-base">
+                        {t("mapDescription")}
                     </p>
                 </div>
 
@@ -645,9 +646,9 @@ const LocationMap = () => {
                         overflow-hidden
                         rounded-3xl
                         border
-                        border-[#E8DFD0]
-                        bg-[#FFFDF9]
-                        shadow-[0_16px_48px_rgba(75,56,36,0.1)]
+                        border-[#E5E5E5]
+                        bg-white
+                        shadow-[0_16px_48px_rgba(0,0,0,0.08)]
                         lg:flex-row
                     "
                 >
@@ -670,7 +671,7 @@ const LocationMap = () => {
                                 z-[400]
                                 h-8
                                 bg-gradient-to-b
-                                from-[#FFFDF9]
+                                from-white
                                 to-transparent
                             "
                         />
@@ -687,7 +688,7 @@ const LocationMap = () => {
 
                     .leaflet-container {
                         border-radius: 0 24px 24px 0;
-                        background: #F8F4EE;
+                        background: #FFFFFF;
                     }
 
                     @media (max-width: 1023px) {
@@ -708,8 +709,8 @@ const LocationMap = () => {
                         height: 36px !important;
                         line-height: 36px !important;
                         font-size: 18px !important;
-                        color: #2B2623 !important;
-                        border-bottom: 1px solid #E8DFD0 !important;
+                        color: #000000 !important;
+                        border-bottom: 1px solid #E5E5E5 !important;
                     }
 
                     .leaflet-control-zoom a:last-child {
@@ -717,12 +718,12 @@ const LocationMap = () => {
                     }
 
                     .leaflet-control-zoom a:hover {
-                        background: #FCE7E5 !important;
+                        background: #FEF2F2 !important;
                         color: #E01E31 !important;
                     }
 
                     .leaflet-control-attribution {
-                        background: rgba(255,253,249,0.85) !important;
+                        background: rgba(255,255,255,0.85) !important;
                         backdrop-filter: blur(4px);
                         font-size: 10px !important;
                         padding: 2px 8px !important;
@@ -730,7 +731,7 @@ const LocationMap = () => {
                     }
 
                     .leaflet-control-attribution a {
-                        color: #786E60 !important;
+                        color: #737373 !important;
                     }
 
                     /* Custom Main Marker */
@@ -839,7 +840,7 @@ const LocationMap = () => {
                     .custom-popup .leaflet-popup-content-wrapper {
                         border-radius: 16px !important;
                         box-shadow: 0 12px 36px rgba(0,0,0,0.15) !important;
-                        border: 1px solid #E8DFD0;
+                        border: 1px solid #E5E5E5;
                         padding: 0;
                     }
 
@@ -874,7 +875,7 @@ const LocationMap = () => {
                     }
 
                     .popup-badge-shop {
-                        background: #FCE7E5;
+                        background: #FEF2F2;
                         color: #E01E31;
                     }
 
@@ -887,14 +888,14 @@ const LocationMap = () => {
                         font-family: 'Fraunces', serif;
                         font-weight: 700;
                         font-size: 15px;
-                        color: #2B2623;
+                        color: #000000;
                         margin: 0 0 4px;
                         line-height: 1.3;
                     }
 
                     .popup-address {
                         font-size: 12px;
-                        color: #786E60;
+                        color: #737373;
                         margin: 0 0 8px;
                         line-height: 1.4;
                     }
@@ -919,7 +920,7 @@ const LocationMap = () => {
                         align-items: center;
                         gap: 6px;
                         font-size: 11px;
-                        color: #564D44;
+                        color: #404040;
                         margin-top: 4px;
                     }
 
@@ -933,13 +934,13 @@ const LocationMap = () => {
                     }
 
                     .location-list::-webkit-scrollbar-thumb {
-                        background: #E8DFD0;
+                        background: #E5E5E5;
                         border-radius: 4px;
                     }
 
                     /* Nearest result card */
                     .nearest-result-card {
-                        background: linear-gradient(135deg, #FFFDF9 0%, #FCE7E5 100%);
+                        background: linear-gradient(135deg, #FFFFFF 0%, #FEF2F2 100%);
                         transition: all 0.3s ease;
                     }
 

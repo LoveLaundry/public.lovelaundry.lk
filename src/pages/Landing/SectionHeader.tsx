@@ -46,7 +46,7 @@ const SectionHeader = ({
                     font-semibold
                     leading-[1.05]
                     tracking-[-0.02em]
-                    text-[#2B2623]
+                    text-[#000000]
                     sm:text-5xl
                     lg:text-6xl
                 "
@@ -65,7 +65,7 @@ const SectionHeader = ({
                         max-w-xl
                         text-sm
                         leading-7
-                        text-[#564D44]
+                        text-[#404040]
                         sm:text-base
                     "
                 >

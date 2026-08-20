@@ -5,12 +5,15 @@ import {
     RiHeart3Fill,
     RiStarFill,
     RiTimeFill,
+    RiShoppingBasket2Line,
+    RiTimeLine,
 } from "react-icons/ri";
 import { gsap } from "../../lib/gsap";
-import { heroData, companyInfo } from "../../data/siteData";
+import { useLanguage } from "../../i18n";
 
 const Hero = () => {
     const sectionRef = useRef<HTMLElement>(null);
+    const { t } = useLanguage();
 
     const scrollTo = (id: string) => {
         const element = document.getElementById(id);
@@ -21,6 +24,24 @@ const Hero = () => {
             behavior: "smooth",
         });
     };
+
+    const stats = [
+        {
+            icon: RiShoppingBasket2Line,
+            value: "10+",
+            label: t("heroStatServices"),
+        },
+        {
+            icon: RiStarFill,
+            value: "4.9",
+            label: t("heroStatRating"),
+        },
+        {
+            icon: RiTimeLine,
+            value: "24/7",
+            label: t("heroStatConvenience"),
+        },
+    ];
 
     useLayoutEffect(() => {
         const section = sectionRef.current;
@@ -137,13 +158,6 @@ const Hero = () => {
                 repeat: -1,
             });
 
-            // Scroll indicator bounce
-            gsap.fromTo(
-                "[data-hero-scroll]",
-                { opacity: 0 },
-                { opacity: 1, duration: 0.6, delay: 2.5 }
-            );
-
             // LL watermark subtle pulse
             gsap.to("[data-hero-watermark]", {
                 scale: 1.02,
@@ -166,7 +180,7 @@ const Hero = () => {
             className="
                 relative
                 overflow-hidden
-                bg-[#F8F4EE]
+                bg-[#FFFFFF]
                 px-4
                 pb-20
                 pt-28
@@ -191,8 +205,8 @@ const Hero = () => {
                     pointer-events-none
                     absolute
                     inset-0
-                    bg-[radial-gradient(ellipse_80%_60%_at_25%_15%,rgba(252,231,229,0.35),transparent_65%)]
-                    sm:bg-[radial-gradient(ellipse_70%_60%_at_20%_20%,rgba(252,231,229,0.4),transparent_60%)]
+                    bg-[radial-gradient(ellipse_80%_60%_at_25%_15%,rgba(254,242,242,0.35),transparent_65%)]
+                    sm:bg-[radial-gradient(ellipse_70%_60%_at_20%_20%,rgba(254,242,242,0.4),transparent_60%)]
                 "
             />
 
@@ -234,7 +248,7 @@ const Hero = () => {
                     h-72
                     w-72
                     rounded-full
-                    bg-[#F1E9DC]
+                    bg-[#F5F5F5]
                     sm:h-96
                     sm:w-96
                 "
@@ -253,7 +267,7 @@ const Hero = () => {
                     w-64
                     rounded-full
                     border-[18px]
-                    border-[#F1E9DC]
+                    border-[#F5F5F5]
                     sm:h-80
                     sm:w-80
                 "
@@ -291,7 +305,7 @@ const Hero = () => {
                     left-[8%]
                     top-[55%]
                     hidden
-                    text-[#F1E9DC]
+                    text-[#F5F5F5]
                     sm:block
                     lg:left-[6%]
                 "
@@ -316,7 +330,7 @@ const Hero = () => {
                     w-3
                     rounded-full
                     border-2
-                    border-[#F1E9DC]
+                    border-[#F5F5F5]
                     sm:block
                 "
             />
@@ -353,7 +367,7 @@ const Hero = () => {
                             font-bold
                             leading-none
                             tracking-tight
-                            text-[#F1E9DC]/60
+                            text-[#F5F5F5]/60
                             sm:text-[220px]
                             lg:-left-10
                             lg:text-[260px]
@@ -385,7 +399,7 @@ const Hero = () => {
                         "
                     >
                         <RiHeart3Fill className="h-3.5 w-3.5" />
-                        {heroData.badge.text}
+                        {t("heroBadge")}
                     </div>
 
                     {/* Heading */}
@@ -397,7 +411,7 @@ const Hero = () => {
                             font-semibold
                             leading-[1.02]
                             tracking-[-0.02em]
-                            text-[#2B2623]
+                            text-[#000000]
                             sm:text-6xl
                             md:text-7xl
                             lg:text-[76px]
@@ -405,12 +419,12 @@ const Hero = () => {
                         "
                     >
                         <span data-hero-line-1 className="block">
-                            {heroData.title.main}
+                            {t("heroTitleMain")}
                         </span>
 
                         <span className="relative inline-block text-[#E01E31]">
                             <span data-hero-line-2 className="block">
-                                {heroData.title.highlight}
+                                {t("heroTitleHighlight")}
                             </span>
 
                             <svg
@@ -450,12 +464,12 @@ const Hero = () => {
                             max-w-xl
                             text-base
                             leading-8
-                            text-[#564D44]
+                            text-[#404040]
                             sm:text-lg
                             lg:mx-0
                         "
                     >
-                        {heroData.description}
+                        {t("heroDescription")}
                     </p>
 
                     {/* Buttons */}
@@ -497,7 +511,7 @@ const Hero = () => {
                                 sm:w-auto
                             "
                         >
-                            {heroData.buttons.primary.text}
+                            {t("heroPrimary")}
                             <RiArrowRightLine className="h-4 w-4" />
                         </button>
 
@@ -514,21 +528,21 @@ const Hero = () => {
                                 gap-2.5
                                 rounded-full
                                 border-2
-                                border-[#2B2623]
-                                bg-[#FFFDF9]
+                                border-[#000000]
+                                bg-[#FFFFFF]
                                 px-9
                                 text-sm
                                 font-bold
-                                text-[#2B2623]
+                                text-[#000000]
                                 transition-all
                                 duration-200
                                 hover:-translate-y-0.5
-                                hover:bg-[#2B2623]
-                                hover:text-[#FFFDF9]
+                                hover:bg-[#000000]
+                                hover:text-[#FFFFFF]
                                 sm:w-auto
                             "
                         >
-                            {heroData.buttons.secondary.text}
+                            {t("heroSecondary")}
                             <RiArrowRightLine className="h-4 w-4" />
                         </button>
                     </div>
@@ -547,7 +561,7 @@ const Hero = () => {
                             lg:mx-0
                         "
                     >
-                        {heroData.stats.map((stat, index) => (
+                        {stats.map((stat, index) => (
                             <div
                                 key={index}
                                 data-hero-stat
@@ -558,8 +572,8 @@ const Hero = () => {
                                     gap-2
                                     rounded-2xl
                                     border
-                                    border-[#E8DFD0]/60
-                                    bg-[#FFFDF9]/70
+                                    border-[#E5E5E5]/60
+                                    bg-[#FFFFFF]/70
                                     px-2
                                     py-4
                                     backdrop-blur-sm
@@ -568,15 +582,15 @@ const Hero = () => {
                                     lg:px-4
                                 "
                             >
-                                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FCE7E5] text-[#E01E31]">
+                                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FEF2F2] text-[#E01E31]">
                                     <stat.icon className="h-4 w-4" />
                                 </div>
 
-                                <div className="font-display text-2xl font-bold tracking-tight text-[#2B2623] sm:text-3xl">
+                                <div className="font-display text-2xl font-bold tracking-tight text-[#000000] sm:text-3xl">
                                     {stat.value}
                                 </div>
 
-                                <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#564D44] sm:text-[11px]">
+                                <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#404040] sm:text-[11px]">
                                     {stat.label}
                                 </div>
                             </div>
@@ -597,38 +611,38 @@ const Hero = () => {
                             gap-2.5
                             rounded-full
                             border
-                            border-[#E8DFD0]
-                            bg-[#FFFDF9]/80
+                            border-[#E5E5E5]
+                            bg-[#FFFFFF]/80
                             px-5
                             py-2.5
                             backdrop-blur-sm
                             transition-all
                             duration-200
                             hover:border-[#E01E31]/30
-                            hover:bg-[#FFFDF9]
+                            hover:bg-[#FFFFFF]
                             sm:mt-9
                             lg:mx-0
                         "
                     >
                         <div className="flex -space-x-1.5">
-                            <div className="h-5 w-5 rounded-full border-2 border-white bg-[#F1E9DC]" />
-                            <div className="h-5 w-5 rounded-full border-2 border-white bg-[#FCE7E5]" />
-                            <div className="h-5 w-5 rounded-full border-2 border-white bg-[#E8DFD0]" />
+                            <div className="h-5 w-5 rounded-full border-2 border-white bg-[#F5F5F5]" />
+                            <div className="h-5 w-5 rounded-full border-2 border-white bg-[#FEF2F2]" />
+                            <div className="h-5 w-5 rounded-full border-2 border-white bg-[#E5E5E5]" />
                         </div>
 
-                        <span className="hidden text-[11px] font-bold text-[#564D44] sm:inline sm:text-xs">
-                            Goldi Sands · Amagi · Avenra
+                        <span className="hidden text-[11px] font-bold text-[#404040] sm:inline sm:text-xs">
+                            {t("heroTrustDesktop")}
                         </span>
 
-                        <span className="text-[11px] font-bold text-[#564D44] sm:hidden sm:text-xs">
-                            Top hotels trust us
+                        <span className="text-[11px] font-bold text-[#404040] sm:hidden sm:text-xs">
+                            {t("heroTrustStrip")}
                         </span>
 
-                        <span className="hidden text-[10px] font-semibold text-[#786E60] lg:inline">
-                            & 6 more
+                        <span className="hidden text-[10px] font-semibold text-[#737373] lg:inline">
+                            {t("heroMore")}
                         </span>
 
-                        <RiArrowRightLine className="h-3 w-3 text-[#786E60]" />
+                        <RiArrowRightLine className="h-3 w-3 text-[#737373]" />
                     </button>
                 </div>
 
@@ -662,7 +676,7 @@ const Hero = () => {
                         </div>
                     </div>
 
-                    <div className="relative overflow-hidden rounded-[36px] bg-[#EFE6D8] p-5 sm:p-7">
+                    <div className="relative overflow-hidden rounded-[36px] bg-[#F5F5F5] p-5 sm:p-7">
                         <div
                             aria-hidden="true"
                             className="
@@ -679,8 +693,8 @@ const Hero = () => {
                         <div className="relative overflow-hidden rounded-t-full">
                             <div className="relative aspect-[1/1.15]">
                                 <img
-                                    src={heroData.image.src}
-                                    alt={heroData.image.alt}
+                                    src="./assets/images/love-laundry-hero.png"
+                                    alt="Love Laundry pickup and laundry service"
                                     style={{
                                         filter: "sepia(0.14) saturate(1.08) contrast(1.02)",
                                     }}
@@ -706,11 +720,11 @@ const Hero = () => {
                             gap-3
                             rounded-2xl
                             border
-                            border-[#E8DFD0]
-                            bg-[#FFFDF9]
+                            border-[#E5E5E5]
+                            bg-[#FFFFFF]
                             px-6
                             py-4
-                            shadow-[0_24px_60px_rgba(75,56,36,0.2)]
+                            shadow-[0_24px_60px_rgba(0,0,0,0.2)]
                             sm:-translate-x-0
                             sm:left-auto
                             sm:right-6
@@ -726,18 +740,18 @@ const Hero = () => {
                                 ))}
                             </div>
 
-                            <div className="text-xs font-bold text-[#2B2623]">
-                                {companyInfo.rating} / 5
+                            <div className="text-xs font-bold text-[#000000]">
+                                4.9 / 5
                             </div>
                         </div>
 
                         <div className="text-right">
-                            <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#564D44]">
-                                Next pickup
+                            <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#404040]">
+                                {t("heroNextPickup")}
                             </div>
 
                             <div className="mt-0.5 text-xs font-bold text-[#E01E31]">
-                                {heroData.badge_text.secondary}
+                                {t("heroScheduleToday")}
                             </div>
                         </div>
                     </div>
@@ -755,19 +769,19 @@ const Hero = () => {
                             gap-2
                             rounded-full
                             border
-                            border-[#E8DFD0]
-                            bg-[#FFFDF9]
+                            border-[#E5E5E5]
+                            bg-[#FFFFFF]
                             px-4
                             py-2
-                            shadow-[0_14px_34px_rgba(75,56,36,0.16)]
+                            shadow-[0_14px_34px_rgba(0,0,0,0.16)]
                             sm:flex
                             lg:-left-8
                         "
                     >
                         <RiTimeFill className="h-4 w-4 text-[#E01E31]" />
 
-                        <span className="text-xs font-bold text-[#2B2623]">
-                            {companyInfo.availability}
+                        <span className="text-xs font-bold text-[#000000]">
+                            24/7
                         </span>
                     </div>
                 </div>
@@ -788,7 +802,7 @@ const Hero = () => {
                     flex-col
                     items-center
                     gap-1
-                    text-[#786E60]
+                    text-[#737373]
                     transition-colors
                     hover:text-[#E01E31]
                     sm:bottom-8
@@ -796,7 +810,7 @@ const Hero = () => {
                 aria-label="Scroll down"
             >
                 <span className="text-[10px] font-bold uppercase tracking-[0.2em]">
-                    Scroll
+                    {t("heroScroll")}
                 </span>
                 <RiArrowDownLine className="h-4 w-4 animate-bounce" />
             </button>

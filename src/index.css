@@ -6,14 +6,14 @@
   :root {
     --brand: #E01E31;
     --brand-dark: #C11324;
-    --brand-soft: #FCE7E5;
-    --ink: #2B2623;
-    --muted: #564D44;
-    --faint: #786E60;
-    --cream: #F8F4EE;
-    --tan: #F1E9DC;
-    --card: #FFFDF9;
-    --line: #E8DFD0;
+    --brand-soft: #FEF2F2;
+    --ink: #000000;
+    --muted: #404040;
+    --faint: #737373;
+    --cream: #FFFFFF;
+    --tan: #F5F5F5;
+    --card: #FFFFFF;
+    --line: #E5E5E5;
     --gold: #E3A13C;
   }
 
@@ -54,14 +54,14 @@
 }
 
 ::selection {
-  background: rgba(224, 30, 49, 0.14);
+  background: rgba(224, 30, 49, 0.15);
   color: var(--ink);
 }
 
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #D6CBB9; border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: #BFAE96; }
+::-webkit-scrollbar-thumb { background: #D4D4D4; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #A3A3A3; }
 
 @media (prefers-reduced-motion: reduce) {
   html {
