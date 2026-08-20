@@ -8,74 +8,151 @@ import {
 } from "react-icons/ri";
 import { gsap } from "../../lib/gsap";
 import { heroData, companyInfo } from "../../data/siteData";
-import Hero3D from "./Hero3D";
 
 const Hero = () => {
     const sectionRef = useRef<HTMLElement>(null);
 
     const scrollTo = (id: string) => {
         const element = document.getElementById(id);
-
         if (!element) return;
-
         const offset = 90;
-
         window.scrollTo({
-            top:
-                element.getBoundingClientRect().top +
-                window.scrollY -
-                offset,
+            top: element.getBoundingClientRect().top + window.scrollY - offset,
             behavior: "smooth",
         });
     };
 
     useLayoutEffect(() => {
         const section = sectionRef.current;
-
         if (!section) return;
-
-        if (
-            window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        ) {
-            return;
-        }
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
         const ctx = gsap.context(() => {
-            gsap.fromTo(
-                "[data-hero-text]",
-                { x: -30, opacity: 0 },
-                {
-                    x: 0,
-                    opacity: 1,
-                    duration: 0.8,
-                    ease: "power3.out",
-                }
+            const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+            // Badge slides in
+            tl.fromTo(
+                "[data-hero-badge]",
+                { y: -20, opacity: 0, scale: 0.9 },
+                { y: 0, opacity: 1, scale: 1, duration: 0.6 }
             );
 
-            gsap.fromTo(
-                "[data-hero-card]",
-                { x: 30, scale: 0.96, opacity: 0 },
-                {
-                    x: 0,
-                    scale: 1,
-                    opacity: 1,
-                    duration: 0.9,
-                    delay: 0.1,
-                    ease: "power3.out",
-                }
+            // H1 main line
+            tl.fromTo(
+                "[data-hero-line-1]",
+                { y: 40, opacity: 0, rotateX: 15 },
+                { y: 0, opacity: 1, rotateX: 0, duration: 0.7 },
+                "-=0.3"
             );
 
-            gsap.fromTo(
-                "[data-hero-float]",
+            // H1 highlight line
+            tl.fromTo(
+                "[data-hero-line-2]",
+                { y: 40, opacity: 0, rotateX: 15 },
+                { y: 0, opacity: 1, rotateX: 0, duration: 0.7 },
+                "-=0.45"
+            );
+
+            // SVG underline draws
+            tl.fromTo(
+                "[data-hero-underline] path",
+                { strokeDasharray: 300, strokeDashoffset: 300 },
+                { strokeDashoffset: 0, duration: 0.8, ease: "power2.inOut" },
+                "-=0.3"
+            );
+
+            // Description
+            tl.fromTo(
+                "[data-hero-desc]",
+                { y: 20, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.6 },
+                "-=0.4"
+            );
+
+            // Buttons stagger
+            tl.fromTo(
+                "[data-hero-btn]",
+                { y: 20, opacity: 0, scale: 0.95 },
+                { y: 0, opacity: 1, scale: 1, duration: 0.5, stagger: 0.12 },
+                "-=0.3"
+            );
+
+            // Stats chips stagger
+            tl.fromTo(
+                "[data-hero-stat]",
+                { y: 25, opacity: 0, scale: 0.92 },
+                { y: 0, opacity: 1, scale: 1, duration: 0.5, stagger: 0.1 },
+                "-=0.25"
+            );
+
+            // Trust strip
+            tl.fromTo(
+                "[data-hero-trust]",
                 { y: 15, opacity: 0 },
-                {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.6,
-                    delay: 0.9,
-                    ease: "power3.out",
-                }
+                { y: 0, opacity: 1, duration: 0.5 },
+                "-=0.2"
             );
+
+            // Hero image card
+            tl.fromTo(
+                "[data-hero-card]",
+                { x: 40, scale: 0.94, opacity: 0 },
+                { x: 0, scale: 1, opacity: 1, duration: 0.9, ease: "power2.out" },
+                0.3
+            );
+
+            // Floating cards
+            tl.fromTo(
+                "[data-hero-float]",
+                { y: 20, opacity: 0, scale: 0.9 },
+                { y: 0, opacity: 1, scale: 1, duration: 0.6, stagger: 0.15 },
+                "-=0.4"
+            );
+
+            // Continuous floating animation for decorative shapes
+            gsap.to("[data-float-slow]", {
+                y: -8,
+                duration: 3,
+                ease: "sine.inOut",
+                yoyo: true,
+                repeat: -1,
+            });
+
+            gsap.to("[data-float-med]", {
+                y: -12,
+                rotation: 5,
+                duration: 2.5,
+                ease: "sine.inOut",
+                yoyo: true,
+                repeat: -1,
+            });
+
+            gsap.to("[data-float-fast]", {
+                y: -6,
+                x: 4,
+                rotation: -3,
+                duration: 2,
+                ease: "sine.inOut",
+                yoyo: true,
+                repeat: -1,
+            });
+
+            // Scroll indicator bounce
+            gsap.fromTo(
+                "[data-hero-scroll]",
+                { opacity: 0 },
+                { opacity: 1, duration: 0.6, delay: 2.5 }
+            );
+
+            // LL watermark subtle pulse
+            gsap.to("[data-hero-watermark]", {
+                scale: 1.02,
+                opacity: 0.55,
+                duration: 4,
+                ease: "sine.inOut",
+                yoyo: true,
+                repeat: -1,
+            });
         }, section);
 
         return () => ctx.revert();
@@ -122,6 +199,7 @@ const Hero = () => {
             {/* Decorative dot cluster */}
             <div
                 aria-hidden="true"
+                data-float-slow
                 className="
                     pointer-events-none
                     absolute
@@ -139,18 +217,15 @@ const Hero = () => {
                 {Array.from({ length: 9 }).map((_, i) => (
                     <div
                         key={i}
-                        className="
-                            h-1.5
-                            w-1.5
-                            rounded-full
-                            bg-[#E01E31]
-                        "
+                        className="h-1.5 w-1.5 rounded-full bg-[#E01E31]"
                     />
                 ))}
             </div>
 
+            {/* Large tan circle */}
             <div
                 aria-hidden="true"
+                data-float-med
                 className="
                     pointer-events-none
                     absolute
@@ -165,8 +240,10 @@ const Hero = () => {
                 "
             />
 
+            {/* Ring */}
             <div
                 aria-hidden="true"
+                data-float-fast
                 className="
                     pointer-events-none
                     absolute
@@ -182,9 +259,10 @@ const Hero = () => {
                 "
             />
 
-            {/* Floating decorative shapes */}
+            {/* Floating diamond */}
             <div
                 aria-hidden="true"
+                data-float-med
                 className="
                     pointer-events-none
                     absolute
@@ -203,8 +281,10 @@ const Hero = () => {
                 <div className="h-5 w-5 sm:h-6 sm:w-6" />
             </div>
 
+            {/* Cross shape */}
             <div
                 aria-hidden="true"
+                data-float-slow
                 className="
                     pointer-events-none
                     absolute
@@ -222,8 +302,10 @@ const Hero = () => {
                 </svg>
             </div>
 
+            {/* Small circle */}
             <div
                 aria-hidden="true"
+                data-float-fast
                 className="
                     pointer-events-none
                     absolute
@@ -252,8 +334,6 @@ const Hero = () => {
                     lg:gap-20
                 "
             >
-                {/* 3D Object */}
-                <Hero3D />
                 <div
                     data-hero-text
                     className="relative z-10 mx-auto w-full max-w-2xl text-center lg:mx-0 lg:text-left"
@@ -261,6 +341,7 @@ const Hero = () => {
                     {/* LL watermark */}
                     <div
                         aria-hidden="true"
+                        data-hero-watermark
                         className="
                             pointer-events-none
                             absolute
@@ -281,7 +362,9 @@ const Hero = () => {
                         LL
                     </div>
 
+                    {/* Badge */}
                     <div
+                        data-hero-badge
                         className="
                             relative
                             mb-7
@@ -302,10 +385,10 @@ const Hero = () => {
                         "
                     >
                         <RiHeart3Fill className="h-3.5 w-3.5" />
-
                         {heroData.badge.text}
                     </div>
 
+                    {/* Heading */}
                     <h1
                         className="
                             relative
@@ -321,14 +404,18 @@ const Hero = () => {
                             xl:text-[88px]
                         "
                     >
-                        {heroData.title.main}
-                        <br />
+                        <span data-hero-line-1 className="block">
+                            {heroData.title.main}
+                        </span>
 
                         <span className="relative inline-block text-[#E01E31]">
-                            {heroData.title.highlight}
+                            <span data-hero-line-2 className="block">
+                                {heroData.title.highlight}
+                            </span>
 
                             <svg
                                 aria-hidden="true"
+                                data-hero-underline
                                 viewBox="0 0 220 14"
                                 className="
                                     absolute
@@ -353,7 +440,9 @@ const Hero = () => {
                         </span>
                     </h1>
 
+                    {/* Description */}
                     <p
+                        data-hero-desc
                         className="
                             relative
                             mx-auto
@@ -369,6 +458,7 @@ const Hero = () => {
                         {heroData.description}
                     </p>
 
+                    {/* Buttons */}
                     <div
                         className="
                             relative
@@ -383,6 +473,7 @@ const Hero = () => {
                     >
                         <button
                             type="button"
+                            data-hero-btn
                             onClick={() => scrollTo("contact")}
                             className="
                                 flex
@@ -407,12 +498,12 @@ const Hero = () => {
                             "
                         >
                             {heroData.buttons.primary.text}
-
                             <RiArrowRightLine className="h-4 w-4" />
                         </button>
 
                         <button
                             type="button"
+                            data-hero-btn
                             onClick={() => scrollTo("services")}
                             className="
                                 flex
@@ -438,7 +529,6 @@ const Hero = () => {
                             "
                         >
                             {heroData.buttons.secondary.text}
-
                             <RiArrowRightLine className="h-4 w-4" />
                         </button>
                     </div>
@@ -460,6 +550,7 @@ const Hero = () => {
                         {heroData.stats.map((stat, index) => (
                             <div
                                 key={index}
+                                data-hero-stat
                                 className="
                                     flex
                                     flex-col
@@ -495,6 +586,7 @@ const Hero = () => {
                     {/* Trust strip */}
                     <button
                         type="button"
+                        data-hero-trust
                         onClick={() => scrollTo("partners")}
                         className="
                             relative
@@ -540,6 +632,7 @@ const Hero = () => {
                     </button>
                 </div>
 
+                {/* Image card */}
                 <div
                     data-hero-card
                     className="relative mx-auto w-full max-w-[560px]"
@@ -570,7 +663,6 @@ const Hero = () => {
                     </div>
 
                     <div className="relative overflow-hidden rounded-[36px] bg-[#EFE6D8] p-5 sm:p-7">
-                        {/* Decorative arch frame ring */}
                         <div
                             aria-hidden="true"
                             className="
@@ -590,8 +682,7 @@ const Hero = () => {
                                     src={heroData.image.src}
                                     alt={heroData.image.alt}
                                     style={{
-                                        filter:
-                                            "sepia(0.14) saturate(1.08) contrast(1.02)",
+                                        filter: "sepia(0.14) saturate(1.08) contrast(1.02)",
                                     }}
                                     className="absolute inset-0 h-full w-full object-cover"
                                 />
@@ -599,6 +690,7 @@ const Hero = () => {
                         </div>
                     </div>
 
+                    {/* Rating float card */}
                     <div
                         data-hero-float
                         className="
@@ -626,14 +718,12 @@ const Hero = () => {
                     >
                         <div className="flex items-center gap-3">
                             <div className="flex shrink-0 items-center gap-0.5">
-                                {Array.from({ length: 5 }).map(
-                                    (_, index) => (
-                                        <RiStarFill
-                                            key={index}
-                                            className="h-4 w-4 text-[#E3A13C]"
-                                        />
-                                    )
-                                )}
+                                {Array.from({ length: 5 }).map((_, index) => (
+                                    <RiStarFill
+                                        key={index}
+                                        className="h-4 w-4 text-[#E3A13C]"
+                                    />
+                                ))}
                             </div>
 
                             <div className="text-xs font-bold text-[#2B2623]">
@@ -652,6 +742,7 @@ const Hero = () => {
                         </div>
                     </div>
 
+                    {/* Time float card */}
                     <div
                         data-hero-float
                         className="
@@ -685,6 +776,7 @@ const Hero = () => {
             {/* Scroll down indicator */}
             <button
                 type="button"
+                data-hero-scroll
                 onClick={() => scrollTo("services")}
                 className="
                     pointer-events-auto

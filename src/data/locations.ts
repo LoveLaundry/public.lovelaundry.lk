@@ -1,5 +1,5 @@
 // Location data for Love Laundry map
-// Update coordinates with exact values when available
+// Update coordinates with exact shop addresses when available
 
 export interface Location {
     id: string;
@@ -16,10 +16,9 @@ export const mainLaundry: Location = {
     id: "main",
     name: "Love Laundry - Main Centre",
     type: "laundry",
-    // TODO: Replace with exact coordinates
-    lat: 7.9731,
-    lng: 79.8242,
-    address: "Chilaw, Sri Lanka",
+    lat: 7.5758,
+    lng: 79.7953,
+    address: "Chilaw, Puttalam District, Sri Lanka",
     phone: "+94700000000",
     hours: "Mon - Sat: 8:00 AM - 6:00 PM",
 };
@@ -29,50 +28,49 @@ export const shopLocations: Location[] = [
         id: "shop-madampe",
         name: "Love Laundry - Madampe",
         type: "shop",
-        // TODO: Replace with exact shop coordinates
-        lat: 7.948,
-        lng: 79.817,
-        address: "Madampe, Sri Lanka",
+        lat: 7.4979,
+        lng: 79.8381,
+        address: "Madampe, Puttalam District",
     },
     {
         id: "shop-mahawewa",
         name: "Love Laundry - Mahawewa",
         type: "shop",
-        lat: 7.953,
-        lng: 79.798,
-        address: "Mahawewa, Sri Lanka",
+        lat: 7.5139,
+        lng: 79.9207,
+        address: "Mahawewa, Puttalam District",
     },
     {
         id: "shop-kottaramulla",
         name: "Love Laundry - Kottaramulla",
         type: "shop",
-        lat: 7.932,
-        lng: 79.835,
-        address: "Kottaramulla, Sri Lanka",
+        lat: 7.382,
+        lng: 79.8749,
+        address: "Kottaramulla, Puttalam District",
     },
     {
         id: "shop-dunakadeniya",
         name: "Love Laundry - Dunakadeniya",
         type: "shop",
-        lat: 7.962,
-        lng: 79.848,
-        address: "Dunakadeniya, Sri Lanka",
+        lat: 7.365,
+        lng: 79.855,
+        address: "Dunakadeniya, Puttalam District",
     },
     {
         id: "shop-bibiladeniya",
         name: "Love Laundry - Bibiladeniya",
         type: "shop",
-        lat: 7.944,
-        lng: 79.842,
-        address: "Bibiladeniya, Sri Lanka",
+        lat: 7.4529,
+        lng: 79.9435,
+        address: "Bibiladeniya, Puttalam District",
     },
     {
         id: "shop-wennappuwa",
         name: "Love Laundry - Wennappuwa",
         type: "shop",
-        lat: 7.972,
-        lng: 79.882,
-        address: "Wennappuwa, Sri Lanka",
+        lat: 7.3467,
+        lng: 79.8367,
+        address: "Wennappuwa, Puttalam District",
     },
 ];
 

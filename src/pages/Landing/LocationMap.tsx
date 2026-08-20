@@ -5,6 +5,12 @@ import {
     RiLoader4Line,
     RiMapPinLine,
     RiShoppingBag3Line,
+    RiSearchLine,
+    RiCloseLine,
+    RiArrowRightLine,
+    RiMapPinAddLine,
+    RiStore2Line,
+    RiAppsLine,
 } from "react-icons/ri";
 import { useReveal } from "../../hooks/useReveal";
 import {
@@ -23,6 +29,22 @@ const MapContent = () => {
     const [selectedLocation, setSelectedLocation] = useState<Location | null>(
         null
     );
+    const [searchQuery, setSearchQuery] = useState("");
+    const [activeFilter, setActiveFilter] = useState<"all" | "main" | "shops">(
+        "all"
+    );
+
+    const filteredLocations = allLocations.filter((loc) => {
+        const matchesSearch =
+            searchQuery.trim() === "" ||
+            loc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            loc.address.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesFilter =
+            activeFilter === "all" ||
+            (activeFilter === "main" && loc.id === mainLaundry.id) ||
+            (activeFilter === "shops" && loc.id !== mainLaundry.id);
+        return matchesSearch && matchesFilter;
+    });
 
     // Initialize map
     useEffect(() => {
@@ -61,13 +83,13 @@ const MapContent = () => {
                 className: "custom-marker",
                 html: `<div class="marker-main">
                     <div class="marker-pin-main">
-                        <span class="marker-ll">LL</span>
+                        <img src="./assets/icon.png" alt="Love Laundry" class="marker-icon-img" />
                     </div>
                     <div class="marker-pulse"></div>
                 </div>`,
-                iconSize: [48, 64],
-                iconAnchor: [24, 64],
-                popupAnchor: [0, -68],
+                iconSize: [52, 68],
+                iconAnchor: [26, 68],
+                popupAnchor: [0, -72],
             });
 
             const shopIcon = leaflet.divIcon({
@@ -263,10 +285,15 @@ const MapContent = () => {
         [map]
     );
 
+    const openDirections = (loc: Location) => {
+        const url = `https://www.google.com/maps/dir/?api=1&destination=${loc.lat},${loc.lng}`;
+        window.open(url, "_blank", "noopener,noreferrer");
+    };
+
     return (
         <>
             {/* Location List Sidebar */}
-            <div className="flex flex-col gap-2 lg:w-80 lg:shrink-0">
+            <div className="flex flex-col gap-3 lg:w-[340px] lg:shrink-0">
                 {/* Find Nearest Button */}
                 <button
                     type="button"
@@ -302,92 +329,246 @@ const MapContent = () => {
                     {loadingGeo ? "Finding..." : "Find Nearest to Me"}
                 </button>
 
-                {/* Nearest Result */}
+                {/* Nearest Result - Gradient Card */}
                 {nearest && (
-                    <div
-                        className="
-                            rounded-xl
-                            border
-                            border-[#E01E31]/30
-                            bg-[#FCE7E5]
-                            px-4
-                            py-3
-                        "
-                    >
-                        <div className="text-[11px] font-bold uppercase tracking-wider text-[#E01E31]">
-                            Nearest Location
+                    <div className="nearest-result-card group relative overflow-hidden rounded-xl border border-[#E01E31]/20 p-4">
+                        <div className="absolute inset-0 bg-gradient-to-br from-[#E01E31] via-[#c91a2b] to-[#9e1521] opacity-[0.08] transition-opacity duration-300 group-hover:opacity-[0.12]" />
+                        <div className="relative flex items-start gap-3">
+                            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#E01E31] text-white shadow-md shadow-[#E01E31]/30">
+                                <RiNavigationLine className="h-4 w-4" />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                                <div className="text-[10px] font-bold uppercase tracking-widest text-[#E01E31]">
+                                    Nearest to You
+                                </div>
+                                <div className="mt-0.5 truncate font-display text-sm font-semibold text-[#2B2623]">
+                                    {nearest.name}
+                                </div>
+                                <div className="mt-0.5 truncate text-xs text-[#786E60]">
+                                    {nearest.address}
+                                </div>
+                            </div>
                         </div>
-                        <div className="mt-1 font-display text-sm font-semibold text-[#2B2623]">
-                            {nearest.name}
-                        </div>
+                        <button
+                            type="button"
+                            onClick={() => openDirections(nearest)}
+                            className="
+                                relative
+                                mt-3
+                                flex
+                                w-full
+                                items-center
+                                justify-center
+                                gap-1.5
+                                rounded-lg
+                                border
+                                border-[#E01E31]/20
+                                bg-white/80
+                                py-2
+                                text-xs
+                                font-semibold
+                                text-[#E01E31]
+                                backdrop-blur-sm
+                                transition-all
+                                duration-200
+                                hover:border-[#E01E31]/40
+                                hover:bg-[#FCE7E5]
+                            "
+                        >
+                            <RiArrowRightLine className="h-3.5 w-3.5" />
+                            Get Directions
+                        </button>
                     </div>
                 )}
 
-                {/* Location List */}
-                <div className="flex flex-col gap-1.5 overflow-y-auto lg:max-h-[440px]">
-                    {/* Main Laundry */}
-                    <button
-                        type="button"
-                        onClick={() => centerOn(mainLaundry)}
-                        className={`
-                            flex items-center gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-200
-                            ${
-                                selectedLocation?.id === mainLaundry.id
-                                    ? "border-[#E01E31]/50 bg-[#FCE7E5] shadow-sm"
-                                    : "border-[#E8DFD0] bg-[#F8F4EE] hover:border-[#E01E31]/30 hover:bg-white"
-                            }
-                        `}
-                    >
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#E01E31] text-white">
-                            <RiMapPin2Line className="h-5 w-5" />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                            <div className="truncate text-sm font-semibold text-[#2B2623]">
-                                {mainLaundry.name}
-                            </div>
-                            <div className="truncate text-xs text-[#786E60]">
-                                Main Centre
-                            </div>
-                        </div>
-                    </button>
-
-                    {/* Divider */}
-                    <div className="my-1 flex items-center gap-2 px-2">
-                        <div className="h-px flex-1 bg-[#E8DFD0]" />
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-[#A99F90]">
-                            Collection Points
-                        </span>
-                        <div className="h-px flex-1 bg-[#E8DFD0]" />
-                    </div>
-
-                    {/* Shops */}
-                    {shopLocations.map((shop) => (
+                {/* Search Bar */}
+                <div className="relative">
+                    <RiSearchLine className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#A99F90]" />
+                    <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder="Search locations..."
+                        className="
+                            w-full
+                            rounded-xl
+                            border
+                            border-[#E8DFD0]
+                            bg-[#F8F4EE]
+                            py-2.5
+                            pl-10
+                            pr-10
+                            text-sm
+                            text-[#2B2623]
+                            placeholder-[#A99F90]
+                            outline-none
+                            transition-all
+                            duration-200
+                            focus:border-[#E01E31]/40
+                            focus:bg-white
+                            focus:shadow-[0_0_0_3px_rgba(224,30,49,0.08)]
+                        "
+                    />
+                    {searchQuery && (
                         <button
-                            key={shop.id}
                             type="button"
-                            onClick={() => centerOn(shop)}
+                            onClick={() => setSearchQuery("")}
+                            className="
+                                absolute
+                                right-3
+                                top-1/2
+                                -translate-y-1/2
+                                rounded-full
+                                p-0.5
+                                text-[#A99F90]
+                                transition-colors
+                                hover:bg-[#E8DFD0]
+                                hover:text-[#564D44]
+                            "
+                        >
+                            <RiCloseLine className="h-4 w-4" />
+                        </button>
+                    )}
+                </div>
+
+                {/* Filter Tabs */}
+                <div className="flex gap-1 rounded-xl bg-[#F1E9DC] p-1">
+                    {(
+                        [
+                            { key: "all", label: "All", icon: RiAppsLine },
+                            { key: "main", label: "Main", icon: RiMapPin2Line },
+                            { key: "shops", label: "Shops", icon: RiStore2Line },
+                        ] as const
+                    ).map((tab) => (
+                        <button
+                            key={tab.key}
+                            type="button"
+                            onClick={() => setActiveFilter(tab.key)}
                             className={`
-                                flex items-center gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-200
+                                flex flex-1 items-center justify-center gap-1.5 rounded-lg px-3 py-2
+                                text-xs font-semibold transition-all duration-200
                                 ${
-                                    selectedLocation?.id === shop.id
-                                        ? "border-[#E01E31]/50 bg-[#FCE7E5] shadow-sm"
-                                        : "border-[#E8DFD0] bg-[#F8F4EE] hover:border-[#E01E31]/30 hover:bg-white"
+                                    activeFilter === tab.key
+                                        ? "bg-white text-[#E01E31] shadow-sm"
+                                        : "text-[#786E60] hover:text-[#2B2623]"
                                 }
                             `}
                         >
-                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#E01E31]/10 text-[#E01E31]">
-                                <RiShoppingBag3Line className="h-5 w-5" />
-                            </div>
-                            <div className="min-w-0 flex-1">
-                                <div className="truncate text-sm font-semibold text-[#2B2623]">
-                                    {shop.name}
-                                </div>
-                                <div className="truncate text-xs text-[#786E60]">
-                                    {shop.address}
-                                </div>
-                            </div>
+                            <tab.icon className="h-3.5 w-3.5" />
+                            {tab.label}
                         </button>
                     ))}
+                </div>
+
+                {/* Location Count */}
+                <div className="flex items-center justify-between px-1">
+                    <span className="text-xs font-medium text-[#786E60]">
+                        {filteredLocations.length === allLocations.length
+                            ? `${allLocations.length} locations`
+                            : `${filteredLocations.length} of ${allLocations.length} locations`}
+                    </span>
+                    {(searchQuery || activeFilter !== "all") && (
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setSearchQuery("");
+                                setActiveFilter("all");
+                            }}
+                            className="text-xs font-semibold text-[#E01E31] transition-colors hover:text-[#C11324]"
+                        >
+                            Clear filters
+                        </button>
+                    )}
+                </div>
+
+                {/* Location List */}
+                <div className="location-list flex flex-col gap-1.5 overflow-y-auto lg:max-h-[340px]">
+                    {filteredLocations.length === 0 ? (
+                        /* Empty State */
+                        <div className="flex flex-col items-center justify-center py-10 text-center">
+                            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#F1E9DC]">
+                                <RiMapPinAddLine className="h-7 w-7 text-[#A99F90]" />
+                            </div>
+                            <div className="mt-3 text-sm font-semibold text-[#2B2623]">
+                                No locations found
+                            </div>
+                            <div className="mt-1 text-xs text-[#786E60]">
+                                Try adjusting your search or filter
+                            </div>
+                        </div>
+                    ) : (
+                        filteredLocations.map((loc) => {
+                            const isMain = loc.id === mainLaundry.id;
+                            const isSelected = selectedLocation?.id === loc.id;
+
+                            return (
+                                <div key={loc.id} className="relative">
+                                    <button
+                                        type="button"
+                                        onClick={() => centerOn(loc)}
+                                        className={`
+                                            flex w-full items-center gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-200
+                                            ${
+                                                isSelected
+                                                    ? "border-[#E01E31]/50 bg-[#FCE7E5] shadow-sm"
+                                                    : "border-[#E8DFD0] bg-[#F8F4EE] hover:border-[#E01E31]/30 hover:bg-white"
+                                            }
+                                        `}
+                                    >
+                                        {isSelected && (
+                                            <div className="absolute left-1.5 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-[#E01E31] shadow-[0_0_4px_rgba(224,30,49,0.5)]" />
+                                        )}
+                                        <div
+                                            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
+                                                isMain
+                                                    ? "bg-[#E01E31] text-white"
+                                                    : "bg-[#E01E31]/10 text-[#E01E31]"
+                                            }`}
+                                        >
+                                            {isMain ? (
+                                                <RiMapPin2Line className="h-5 w-5" />
+                                            ) : (
+                                                <RiShoppingBag3Line className="h-5 w-5" />
+                                            )}
+                                        </div>
+                                        <div className="min-w-0 flex-1">
+                                            <div className="truncate text-sm font-semibold text-[#2B2623]">
+                                                {loc.name}
+                                            </div>
+                                            <div className="truncate text-xs text-[#786E60]">
+                                                {isMain ? "Main Centre" : loc.address}
+                                            </div>
+                                        </div>
+                                        {isSelected && (
+                                            <button
+                                                type="button"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    openDirections(loc);
+                                                }}
+                                                className="
+                                                    shrink-0
+                                                    rounded-lg
+                                                    border
+                                                    border-[#E01E31]/20
+                                                    bg-white
+                                                    p-2
+                                                    text-[#E01E31]
+                                                    transition-all
+                                                    duration-200
+                                                    hover:border-[#E01E31]/40
+                                                    hover:bg-[#FCE7E5]
+                                                "
+                                                title="Get Directions"
+                                            >
+                                                <RiArrowRightLine className="h-4 w-4" />
+                                            </button>
+                                        )}
+                                    </button>
+                                </div>
+                            );
+                        })
+                    )}
                 </div>
             </div>
         </>
@@ -561,8 +742,8 @@ const LocationMap = () => {
                     }
 
                     .marker-pin-main {
-                        width: 44px;
-                        height: 44px;
+                        width: 48px;
+                        height: 48px;
                         background: #E01E31;
                         border-radius: 50% 50% 50% 0;
                         transform: rotate(-45deg);
@@ -573,13 +754,12 @@ const LocationMap = () => {
                         border: 3px solid white;
                     }
 
-                    .marker-ll {
+                    .marker-icon-img {
                         transform: rotate(45deg);
-                        color: white;
-                        font-family: 'Fraunces', serif;
-                        font-weight: 800;
-                        font-size: 14px;
-                        letter-spacing: -0.5px;
+                        width: 26px;
+                        height: 26px;
+                        object-fit: contain;
+                        border-radius: 4px;
                     }
 
                     .marker-pulse {
@@ -587,8 +767,8 @@ const LocationMap = () => {
                         top: 0;
                         left: 50%;
                         transform: translateX(-50%);
-                        width: 44px;
-                        height: 44px;
+                        width: 48px;
+                        height: 48px;
                         border-radius: 50%;
                         background: rgba(224,30,49,0.2);
                         animation: pulse 2s ease-out infinite;
@@ -755,6 +935,21 @@ const LocationMap = () => {
                     .location-list::-webkit-scrollbar-thumb {
                         background: #E8DFD0;
                         border-radius: 4px;
+                    }
+
+                    /* Nearest result card */
+                    .nearest-result-card {
+                        background: linear-gradient(135deg, #FFFDF9 0%, #FCE7E5 100%);
+                        transition: all 0.3s ease;
+                    }
+
+                    .nearest-result-card:hover {
+                        box-shadow: 0 4px 16px rgba(224,30,49,0.12);
+                    }
+
+                    /* Search input focus animation */
+                    .search-input:focus {
+                        outline: none;
                     }
                 `}</style>
             </div>

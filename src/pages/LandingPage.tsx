@@ -17,6 +17,7 @@ import Commercial from "./Landing/Commercial";
 import Partners from "./Landing/Partners";
 import Process from "./Landing/Process";
 import WhyLoveLaundry from "./Landing/WhyLoveLaundry";
+import JoinWithUs from "./Landing/JoinWithUs";
 import Testimonials from "./Landing/Testimonials";
 import LocationMap from "./Landing/LocationMap";
 import Contact from "./Landing/Contact";
@@ -102,6 +103,7 @@ const LandingPage = () => {
             <Partners />
             <Process />
             <WhyLoveLaundry />
+            <JoinWithUs />
             <Testimonials />
             <LocationMap />
             <Contact />

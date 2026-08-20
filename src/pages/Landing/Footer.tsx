@@ -131,6 +131,14 @@ const Footer = () => {
 
                         <button
                             type="button"
+                            onClick={() => scrollTo("careers")}
+                            className="transition hover:text-[#E01E31]"
+                        >
+                            Careers
+                        </button>
+
+                        <button
+                            type="button"
                             onClick={() => scrollTo("contact")}
                             className="transition hover:text-[#E01E31]"
                         >

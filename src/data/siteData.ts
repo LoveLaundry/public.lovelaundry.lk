@@ -11,6 +11,10 @@ import {
     RiHotelLine,
     RiBuildingLine,
     RiScales3Line,
+    RiUserStarLine,
+    RiMoneyRupeeCircleLine,
+    RiTeamLine,
+    RiAwardLine,
 } from "react-icons/ri";
 import type { IconType } from "react-icons";
 
@@ -461,6 +465,65 @@ export const contactSection = {
             text: "WhatsApp Us",
             href: `https://wa.me/${companyInfo.whatsapp.replace(/\+/g, "")}`,
         },
+    },
+};
+
+// Join With Us / Hiring Section Data
+export interface JobOpening {
+    title: string;
+    type: string;
+    description: string;
+    icon: IconType;
+}
+
+export const jobOpenings: JobOpening[] = [
+    {
+        title: "Delivery Driver",
+        type: "Full-Time",
+        description:
+            "Pick up and deliver laundry to customers across the district. Must have a valid license and reliable vehicle.",
+        icon: RiTruckLine,
+    },
+    {
+        title: "Machine Operator",
+        type: "Full-Time",
+        description:
+            "Operate industrial washing and drying machines. Training provided for the right candidate.",
+        icon: RiScales3Line,
+    },
+    {
+        title: "Ironer / Presser",
+        type: "Full-Time / Part-Time",
+        description:
+            "Press and finish garments to professional standards. Experience with commercial irons preferred.",
+        icon: RiSparklingLine,
+    },
+    {
+        title: "Collection Agent",
+        type: "Part-Time",
+        description:
+            "Visit homes and hotels to collect laundry orders. Great communication skills needed.",
+        icon: RiUserStarLine,
+    },
+];
+
+export const hiringSection = {
+    badge: "Join Our Team",
+    title: {
+        main: "Grow with",
+        highlight: "Love Laundry.",
+    },
+    description:
+        "We're building a team of passionate people who take pride in delivering quality. Join us and build a career you'll love.",
+    perks: [
+        { icon: RiMoneyRupeeCircleLine, text: "Competitive pay" },
+        { icon: RiTeamLine, text: "Friendly team environment" },
+        { icon: RiAwardLine, text: "Training & growth opportunities" },
+        { icon: RiTimeLine, text: "Flexible schedules available" },
+    ],
+    cta: {
+        text: "Apply via WhatsApp",
+        href: `https://wa.me/${companyInfo.whatsapp.replace(/\+/g, "")}?text=${encodeURIComponent("Hi Love Laundry, I'm interested in joining your team!")}`,
     },
 };
 
