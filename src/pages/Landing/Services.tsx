@@ -12,7 +12,7 @@ const Services = () => {
         { titleKey: "serviceWashTitle", subtitleKey: "serviceWashSubtitle", descKey: "serviceWashDesc" },
         { titleKey: "serviceDryTitle", subtitleKey: "serviceDrySubtitle", descKey: "serviceDryDesc" },
         { titleKey: "serviceIronTitle", subtitleKey: "serviceIronSubtitle", descKey: "serviceIronDesc" },
-        { titleKey: "serviceFoldTitle", subtitleKey: "serviceFoldSubtitle", descKey: "serviceFoldDesc" },
+        { titleKey: "servicePickupTitle", subtitleKey: "servicePickupSubtitle", descKey: "servicePickupDesc" },
     ];
 
     return (
