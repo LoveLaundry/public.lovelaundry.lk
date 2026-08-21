@@ -18,19 +18,21 @@ import {
 } from "react-icons/ri";
 import type { IconType } from "react-icons";
 
-// Company Information
+import { COMPANY } from "./constants";
+
+// Re-export for backward compatibility
 export const companyInfo = {
-    name: "Love Laundry",
-    tagline: "Fresh. Clean. Delivered with love.",
-    description: "Professional Laundry Service",
-    phone: "+94700000000",
-    whatsapp: "+94700000000",
-    email: "info@lovelaundry.lk",
-    address: "Colombo, Sri Lanka",
-    rating: "4.9",
-    serviceCount: "10+",
-    availability: "24/7",
-    customerCount: "200+",
+    name: COMPANY.name,
+    tagline: COMPANY.tagline,
+    description: COMPANY.description,
+    phone: COMPANY.phoneFull,
+    whatsapp: COMPANY.whatsappFull,
+    email: COMPANY.email,
+    address: COMPANY.address.full,
+    rating: COMPANY.stats.rating,
+    serviceCount: COMPANY.stats.serviceCount,
+    availability: COMPANY.stats.availability,
+    customerCount: COMPANY.stats.customerCount,
 };
 
 // Hero Section Data
@@ -526,13 +528,3 @@ export const hiringSection = {
         href: `https://wa.me/${companyInfo.whatsapp.replace(/\+/g, "")}?text=${encodeURIComponent("Hi Love Laundry, I'm interested in joining your team!")}`,
     },
 };
-
-// Navigation Data
-export const navigationItems = [
-    { id: "home", label: "Home" },
-    { id: "services", label: "Services" },
-    { id: "commercial", label: "Commercial" },
-    { id: "process", label: "How It Works" },
-    { id: "about", label: "Why Us" },
-    { id: "contact", label: "Contact" },
-];
