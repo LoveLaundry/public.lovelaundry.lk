@@ -9,9 +9,9 @@ const Commercial = () => {
     const cardsRef = useReveal<HTMLDivElement>({ y: 30, stagger: 0.12 });
 
     const commercialKeys = [
-        { titleKey: "commercialService1Title", subtitleKey: "commercialService1Subtitle", descKey: "commercialService1Desc" },
-        { titleKey: "commercialService2Title", subtitleKey: "commercialService2Subtitle", descKey: "commercialService2Desc" },
-        { titleKey: "commercialService3Title", subtitleKey: "commercialService3Subtitle", descKey: "commercialService3Desc" },
+        { titleKey: "commercialHotelTitle", subtitleKey: "commercialHotelSubtitle", descKey: "commercialHotelDesc" },
+        { titleKey: "commercialCompTitle", subtitleKey: "commercialCompSubtitle", descKey: "commercialCompDesc" },
+        { titleKey: "commercialBulkTitle", subtitleKey: "commercialBulkSubtitle", descKey: "commercialBulkDesc" },
     ];
 
     return (
