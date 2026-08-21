@@ -84,6 +84,7 @@ const sin: Record<string, string> = {
     partnersClose: "වසන්න",
     partnersYears: "වසර හවුල්කරු",
     partnersDuration: "හවුල්කාරිත්ව කාලය",
+    partnersMore: "…තවත් හෝටල්, නිවාඩු සහ විලා ශ්‍රී ලංකාව පුරා.",
 
     // Process
     processBadge: "යා හැක්කේ කෙසේද",
@@ -181,6 +182,9 @@ const sin: Record<string, string> = {
     mapClearFilters: "පෙරහන් මකන්න",
     mapLocations: "ස්ථාන",
     mapNoResults: "ස්ථාන හමු නොවීය",
+    mapTryAdjust: "ඔබේ සෙවීම හෝ පෙරහන වෙනස් කර බලන්න",
+    mapCollectionPoint: "එකතු කිරීමේ ස්ථානය",
+    mapYourLocation: "ඔබේ ස්ථානය",
     mapSearchPlaceholder: "ස්ථාන සොයන්න...",
     mapFilterAll: "සියල්ල",
     mapFilterMain: "ප්‍රධාන",
@@ -212,6 +216,12 @@ const sin: Record<string, string> = {
     chatPlaceholder: "පණිවිඩයක් ටයිප් කරන්න...",
     chatPowered: "ලව් ලෝන්ඩ්‍රි මඟින් බලගැන්වේ",
     chatWelcome: "ආයුබෝවන්! මම ලව් ලෝන්ඩ්‍රි සහායකයා. අපගේ සේවා, මිල ගණන්, එකතු කිරීම සහ බෙදා දීම, ස්ථාන, සහ තවත් බොහෝ දේ ගැන මට ඔබට උදව් කළ හැකිය. මට කෙසේ උදව් කළ හැකිද?",
+    chatQuickServices: "සේවා",
+    chatQuickPricing: "මිල ගණන්",
+    chatQuickLocations: "ස්ථාන",
+    chatQuickHours: "වේලාවන්",
+    chatClose: "චැටය වසන්න",
+    chatOpen: "චැටය විවෘත කරන්න",
 
     // ActionBar
     actionHome: "මුල් පිටුව",

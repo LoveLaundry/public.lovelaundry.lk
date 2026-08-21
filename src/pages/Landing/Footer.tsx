@@ -1,4 +1,3 @@
-import { companyInfo } from "../../data/siteData";
 import { useLanguage } from "../../i18n";
 
 const Footer = () => {
@@ -60,7 +59,7 @@ const Footer = () => {
                                         text-white
                                     "
                                 >
-                                    {companyInfo.name}
+                                    {t("companyName")}
                                 </div>
 
                                 <div
@@ -73,7 +72,7 @@ const Footer = () => {
                                         text-[#A3A3A3]
                                     "
                                 >
-                                    {companyInfo.tagline}
+                                    {t("companyTagline")}
                                 </div>
                             </div>
                         </div>
@@ -165,10 +164,10 @@ const Footer = () => {
                     "
                 >
                     <p>
-                        © {new Date().getFullYear()} {companyInfo.name}. {t("footerRights")}
+                        © {new Date().getFullYear()} {t("companyName")}. {t("footerRights")}
                     </p>
 
-                    <p>{companyInfo.tagline}</p>
+                    <p>{t("companyTagline")}</p>
                 </div>
             </div>
         </footer>

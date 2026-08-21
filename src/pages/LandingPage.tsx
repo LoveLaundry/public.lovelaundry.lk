@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
     RiHome5Line,
     RiServiceLine,
@@ -10,6 +10,7 @@ import {
 } from "react-icons/ri";
 
 import type { ActionType } from "../types/action";
+import { useLanguage } from "../i18n";
 import Navbar from "./Landing/Navbar";
 import Hero from "./Landing/Hero";
 import Services from "./Landing/Services";
@@ -26,45 +27,50 @@ import ActionBar from "../components/ActionBar";
 import ChatWidget from "../components/ChatWidget";
 
 
-const actions: ActionType[] = [
-    {
-        id: "home",
-        label: "Home",
-        icon: RiHome5Line,
-    },
-    {
-        id: "services",
-        label: "Services",
-        icon: RiServiceLine,
-    },
-    {
-        id: "commercial",
-        label: "Commercial",
-        icon: RiBuildingLine,
-    },
-    {
-        id: "process",
-        label: "How It Works",
-        icon: RiListCheck3,
-    },
-    {
-        id: "about",
-        label: "Why Us",
-        icon: RiInformationLine,
-    },
-    {
-        id: "locations",
-        label: "Locations",
-        icon: RiMapPinLine,
-    },
-    {
-        id: "contact",
-        label: "Contact",
-        icon: RiPhoneLine,
-    },
-];
-
 const LandingPage = () => {
+    const { t } = useLanguage();
+
+    const actions: ActionType[] = useMemo(
+        () => [
+            {
+                id: "home",
+                label: t("actionHome"),
+                icon: RiHome5Line,
+            },
+            {
+                id: "services",
+                label: t("actionServices"),
+                icon: RiServiceLine,
+            },
+            {
+                id: "commercial",
+                label: t("actionCommercial"),
+                icon: RiBuildingLine,
+            },
+            {
+                id: "process",
+                label: t("actionHowItWorks"),
+                icon: RiListCheck3,
+            },
+            {
+                id: "about",
+                label: t("actionWhyUs"),
+                icon: RiInformationLine,
+            },
+            {
+                id: "locations",
+                label: t("actionLocations"),
+                icon: RiMapPinLine,
+            },
+            {
+                id: "contact",
+                label: t("actionContact"),
+                icon: RiPhoneLine,
+            },
+        ],
+        [t]
+    );
+
     const [selectedItem, setSelectedItem] =
         useState<ActionType | null>(actions[0]);
 
@@ -92,7 +98,7 @@ const LandingPage = () => {
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
-    }, []);
+    }, [actions]);
 
     return (
         <main className="min-h-screen overflow-x-hidden bg-white text-[#000000]">

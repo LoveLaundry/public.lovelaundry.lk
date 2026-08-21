@@ -84,6 +84,7 @@ const en = {
     partnersClose: "Close",
     partnersYears: "Years Partner",
     partnersDuration: "Partnership Duration",
+    partnersMore: "…and more hotels, resorts & villas across Sri Lanka.",
 
     // Process
     processBadge: "How It Works",
@@ -181,6 +182,9 @@ const en = {
     mapClearFilters: "Clear filters",
     mapLocations: "locations",
     mapNoResults: "No locations found",
+    mapTryAdjust: "Try adjusting your search or filter",
+    mapCollectionPoint: "Collection Point",
+    mapYourLocation: "Your Location",
     mapSearchPlaceholder: "Search locations...",
     mapFilterAll: "All",
     mapFilterMain: "Main",
@@ -212,6 +216,12 @@ const en = {
     chatPlaceholder: "Type a message...",
     chatPowered: "Powered by Love Laundry",
     chatWelcome: "Hi there! I'm the Love Laundry assistant. I can help you with our services, pricing, pickup & delivery, locations, and more. How can I help?",
+    chatQuickServices: "Services",
+    chatQuickPricing: "Pricing",
+    chatQuickLocations: "Locations",
+    chatQuickHours: "Hours",
+    chatClose: "Close chat",
+    chatOpen: "Open chat",
 
     // ActionBar
     actionHome: "Home",

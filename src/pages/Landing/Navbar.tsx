@@ -6,7 +6,6 @@ import {
     RiArrowRightLine,
 } from "react-icons/ri";
 import type { ActionType } from "../../types/action";
-import { companyInfo } from "../../data/siteData";
 import { useLanguage } from "../../i18n";
 
 interface NavbarProps {
@@ -98,11 +97,11 @@ const Navbar = ({ actions }: NavbarProps) => {
 
                         <div className="min-w-0 text-left">
                             <div className="truncate text-[14px] font-bold leading-tight tracking-tight text-[#000000] sm:text-[15px]">
-                                {companyInfo.name}
+                                {t("companyName")}
                             </div>
 
                             <div className="hidden text-[8px] font-semibold uppercase tracking-[0.15em] text-[#737373] min-[400px]:block sm:text-[9px] sm:tracking-[0.18em]">
-                                {companyInfo.description}
+                                {t("companyDescription")}
                             </div>
                         </div>
                     </button>

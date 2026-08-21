@@ -149,7 +149,7 @@ const ChatWidget = () => {
             <button
                 type="button"
                 onClick={() => setIsOpen((prev) => !prev)}
-                aria-label={isOpen ? "Close chat" : "Open chat"}
+                aria-label={isOpen ? t("chatClose") : t("chatOpen")}
                 className="
                     fixed
                     bottom-6
@@ -300,16 +300,21 @@ const ChatWidget = () => {
 
                     {/* Quick Replies */}
                     <div className="flex gap-2 overflow-x-auto border-t border-[#E5E5E5] px-4 py-2.5">
-                        {["Services", "Pricing", "Locations", "Hours"].map((q) => (
+                        {[
+                            { value: "Services", label: t("chatQuickServices") },
+                            { value: "Pricing", label: t("chatQuickPricing") },
+                            { value: "Locations", label: t("chatQuickLocations") },
+                            { value: "Hours", label: t("chatQuickHours") },
+                        ].map(({ value, label }) => (
                             <button
-                                key={q}
+                                key={value}
                                 type="button"
                                 onClick={() => {
-                                    setInput(q);
+                                    setInput(label);
                                     setTimeout(() => {
                                         const userMsg: Message = {
                                             id: crypto.randomUUID(),
-                                            text: q,
+                                            text: label,
                                             sender: "user",
                                             timestamp: new Date(),
                                         };
@@ -319,7 +324,7 @@ const ChatWidget = () => {
                                         setTimeout(() => {
                                             const botMsg: Message = {
                                                 id: crypto.randomUUID(),
-                                                text: getBotResponse(q),
+                                                text: getBotResponse(value),
                                                 sender: "bot",
                                                 timestamp: new Date(),
                                             };
@@ -346,7 +351,7 @@ const ChatWidget = () => {
                                     hover:text-[#E01E31]
                                 "
                             >
-                                {q}
+                                {label}
                             </button>
                         ))}
                     </div>

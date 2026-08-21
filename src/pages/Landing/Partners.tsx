@@ -158,7 +158,7 @@ const Partners = () => {
                     data-reveal
                     className="mt-8 text-center text-sm font-semibold text-[#737373]"
                 >
-                    …and more hotels, resorts & villas across Sri Lanka.
+                    {t("partnersMore")}
                 </p>
             </div>
 
@@ -311,7 +311,7 @@ const Partners = () => {
                                     </div>
                                     <div className="font-display text-lg font-bold text-[#000000]">
                                         {selected.years}{" "}
-                                        {selected.years === 1 ? "Year" : "Years"}
+                                        {t("partnersYears")}
                                     </div>
                                 </div>
                             </div>

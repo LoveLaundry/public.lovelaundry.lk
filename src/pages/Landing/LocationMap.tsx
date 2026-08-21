@@ -48,6 +48,10 @@ const MapContent = () => {
         return matchesSearch && matchesFilter;
     });
 
+    const mainCentreLabel = t("mapMainCentre");
+    const collectionPointLabel = t("mapCollectionPoint");
+    const yourLocationLabel = t("mapYourLocation");
+
     // Initialize map
     useEffect(() => {
         let cancelled = false;
@@ -117,7 +121,7 @@ const MapContent = () => {
 
             const mainPopup = `
                 <div class="popup-content">
-                    <div class="popup-badge popup-badge-main">Main Centre</div>
+                    <div class="popup-badge popup-badge-main">${mainCentreLabel}</div>
                     <h3 class="popup-title">${mainLaundry.name}</h3>
                     <p class="popup-address">${mainLaundry.address}</p>
                     ${mainLaundry.phone ? `<a href="tel:${mainLaundry.phone}" class="popup-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg> ${mainLaundry.phone}</a>` : ""}
@@ -137,7 +141,7 @@ const MapContent = () => {
 
                 const popup = `
                     <div class="popup-content">
-                        <div class="popup-badge popup-badge-shop">Collection Point</div>
+                        <div class="popup-badge popup-badge-shop">${collectionPointLabel}</div>
                         <h3 class="popup-title">${shop.name}</h3>
                         <p class="popup-address">${shop.address}</p>
                     </div>
@@ -224,7 +228,7 @@ const MapContent = () => {
                 L.marker(userLatLng, { icon: userIcon })
                     .addTo(map)
                     .bindPopup(
-                        `<div class="popup-content"><div class="popup-badge popup-badge-user">Your Location</div></div>`,
+                        `<div class="popup-content"><div class="popup-badge popup-badge-user">${yourLocationLabel}</div></div>`,
                         { className: "custom-popup" }
                     )
                     .openPopup();
@@ -275,7 +279,7 @@ const MapContent = () => {
             },
             { enableHighAccuracy: true, timeout: 10000 }
         );
-    }, [map, L, routeLine]);
+    }, [map, L, routeLine, yourLocationLabel]);
 
     // Center on a location
     const centerOn = useCallback(
@@ -495,7 +499,7 @@ const MapContent = () => {
                                 {t("mapNoResults")}
                             </div>
                             <div className="mt-1 text-xs text-[#737373]">
-                                Try adjusting your search or filter
+                                {t("mapTryAdjust")}
                             </div>
                         </div>
                     ) : (
@@ -561,7 +565,7 @@ const MapContent = () => {
                                                     hover:border-[#E01E31]/40
                                                     hover:bg-[#FEF2F2]
                                                 "
-                                                title="Get Directions"
+                                                title={t("mapGetDirections")}
                                             >
                                                 <RiArrowRightLine className="h-4 w-4" />
                                             </button>
