@@ -12,7 +12,8 @@ import { useLanguage } from "../../i18n";
 
 const Partners = () => {
     const { t } = useLanguage();
-    const cardsRef = useReveal<HTMLDivElement>({ x: -40, y: 0, stagger: 0.06 });
+    const gridRef = useReveal<HTMLDivElement>({ x: -40, y: 0, stagger: 0.06 });
+    const moreRef = useReveal<HTMLDivElement>({ y: 20 });
     const [selected, setSelected] = useState<Partner | null>(null);
 
     return (
@@ -39,7 +40,7 @@ const Partners = () => {
                 />
 
                 <div
-                    ref={cardsRef}
+                    ref={gridRef}
                     className="
                         mt-12
                         grid
@@ -154,13 +155,14 @@ const Partners = () => {
                     ))}
                 </div>
 
-                <p
-                    ref={cardsRef}
-                    data-reveal
-                    className="mt-8 text-center text-sm font-semibold text-[#737373]"
-                >
-                    {t("partnersMore")}
-                </p>
+                <div ref={moreRef}>
+                    <p
+                        data-reveal
+                        className="mt-8 text-center text-sm font-semibold text-[#737373]"
+                    >
+                        {t("partnersMore")}
+                    </p>
+                </div>
             </div>
 
             {/* Partner Detail Modal */}

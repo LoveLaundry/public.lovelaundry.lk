@@ -38,7 +38,7 @@ const BOT_RESPONSES: Record<string, string[]> = {
         "We're available 24/7 for WhatsApp bookings!\n\nPickup & delivery hours:\n• Mon–Sat: 8 AM – 7 PM\n• Sunday: 9 AM – 5 PM",
     ],
     contact: [
-        "Reach us at:\n\n📞 Phone: +94 70 000 0000\n💬 WhatsApp: +94 70 000 0000\n📧 Email: info@lovelaundry.lk",
+        "Reach us at:\n\n📞 Phone: +94 77 420 0919\n💬 WhatsApp: +94 77 420 0919\n📧 Email: lovelaundry01@gmail.com",
     ],
     commercial: [
         "Yes! We serve hotels, restaurants, spas, and businesses. Our commercial services include Hotel Linen, Commercial Laundry, and Bulk Processing.\n\nWe partner with 9 hotels including Goldi Sands, Amagi, and Camelot. Contact us for a custom quote!",

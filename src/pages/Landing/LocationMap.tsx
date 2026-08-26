@@ -610,9 +610,9 @@ const LocationMap = () => {
                     bg-[radial-gradient(70%_60%_at_0%_0%,rgba(224,30,49,0.16),transparent_60%)]
                 "
             />
-            <div className="relative mx-auto w-full max-w-[1440px]">
+            <div ref={sectionRef} className="relative mx-auto w-full max-w-[1440px]">
                 {/* Section Header */}
-                <div ref={sectionRef} data-reveal className="mb-10 sm:mb-14">
+                <div data-reveal className="mb-10 sm:mb-14">
                     <span
                         className="
                             inline-flex
@@ -652,7 +652,6 @@ const LocationMap = () => {
 
                 {/* Map + Sidebar */}
                 <div
-                    ref={sectionRef}
                     data-reveal
                     className="
                         flex
