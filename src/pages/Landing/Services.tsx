@@ -47,6 +47,7 @@ const Services = () => {
                     badge={t("servicesBadge")}
                     main={t("servicesTitleMain")}
                     highlight={t("servicesTitleHighlight")}
+                    centered
                 />
 
                 <div

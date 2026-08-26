@@ -34,6 +34,7 @@ const Commercial = () => {
                     main={t("commercialTitleMain")}
                     highlight={t("commercialTitleHighlight")}
                     description={t("commercialDescription")}
+                    centered
                 />
 
                 <div

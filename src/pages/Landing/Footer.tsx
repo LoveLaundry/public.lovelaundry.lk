@@ -1,4 +1,13 @@
+import {
+    RiFacebookLine,
+    RiInstagramLine,
+    RiWhatsappLine,
+    RiTiktokLine,
+    RiArrowRightLine,
+} from "react-icons/ri";
 import { useLanguage } from "../../i18n";
+import { COMPANY } from "../../data/constants";
+import { partnersSection } from "../../data/siteData";
 
 const Footer = () => {
     const { t } = useLanguage();
@@ -8,8 +17,74 @@ const Footer = () => {
         });
     };
 
+    const socials = [
+        { icon: RiFacebookLine, href: COMPANY.social.facebook, label: "Facebook" },
+        { icon: RiInstagramLine, href: COMPANY.social.instagram, label: "Instagram" },
+        { icon: RiTiktokLine, href: COMPANY.social.tiktok, label: "TikTok" },
+        { icon: RiWhatsappLine, href: COMPANY.whatsappLink, label: "WhatsApp" },
+    ].filter((s) => s.href);
+
     return (
-        <footer className="bg-[#000000] border-t border-[#E01E31]/20">
+        <footer className="bg-[#0C0708] border-t border-[#E01E31]/20">
+            {/* WhatsApp CTA strip */}
+            <div className="border-b border-white/10">
+                <div
+                    className="
+                        mx-auto
+                        flex
+                        w-full
+                        max-w-[1440px]
+                        flex-col
+                        items-center
+                        gap-4
+                        px-5
+                        py-8
+                        sm:flex-row
+                        sm:justify-between
+                        sm:px-8
+                        lg:px-10
+                    "
+                >
+                    <div className="text-center sm:text-left">
+                        <div className="font-display text-lg font-semibold tracking-tight text-white sm:text-xl">
+                            {t("footerCtaTitle")}
+                        </div>
+                        <p className="mt-0.5 text-sm text-white/60">
+                            {t("footerCtaSub")}
+                        </p>
+                    </div>
+
+                    <a
+                        href={COMPANY.whatsappLink}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="
+                            flex
+                            shrink-0
+                            items-center
+                            gap-2.5
+                            rounded-full
+                            bg-[#E01E31]
+                            px-7
+                            py-3.5
+                            text-sm
+                            font-bold
+                            text-white
+                            shadow-[0_12px_30px_rgba(224,30,49,0.4)]
+                            transition-all
+                            duration-200
+                            hover:-translate-y-0.5
+                            hover:bg-[#C11324]
+                            hover:shadow-[0_16px_38px_rgba(224,30,49,0.55)]
+                        "
+                    >
+                        <RiWhatsappLine className="h-5 w-5" />
+                        {t("contactWhatsapp")}
+                        <RiArrowRightLine className="h-4 w-4" />
+                    </a>
+                </div>
+            </div>
+
             <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
                 <div
                     className="
@@ -146,6 +221,84 @@ const Footer = () => {
                             {t("footerContact")}
                         </button>
                     </nav>
+
+                    {socials.length > 0 && (
+                        <div className="flex items-center gap-2.5">
+                            {socials.map((social) => {
+                                const Icon = social.icon;
+                                return (
+                                    <a
+                                        key={social.label}
+                                        href={social.href}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        aria-label={social.label}
+                                        className="
+                                            flex
+                                            h-10
+                                            w-10
+                                            items-center
+                                            justify-center
+                                            rounded-full
+                                            border
+                                            border-white/10
+                                            bg-white/5
+                                            text-white/80
+                                            transition-all
+                                            duration-200
+                                            hover:-translate-y-0.5
+                                            hover:border-[#E01E31]/40
+                                            hover:bg-[#E01E31]
+                                            hover:text-white
+                                        "
+                                    >
+                                        <Icon className="h-4.5 w-4.5" />
+                                    </a>
+                                );
+                            })}
+                        </div>
+                    )}
+                </div>
+
+                {/* Trusted by partner strip */}
+                <div className="flex flex-col items-center gap-5 border-t border-white/10 py-8 sm:flex-row sm:justify-between">
+                    <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#737373]">
+                        {t("footerTrustedBy")}
+                    </span>
+
+                    <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+                        {partnersSection.partners.slice(0, 6).map((partner) => (
+                            <div
+                                key={partner.name}
+                                className="
+                                    flex
+                                    h-12
+                                    w-12
+                                    items-center
+                                    justify-center
+                                    overflow-hidden
+                                    rounded-xl
+                                    border
+                                    border-white/10
+                                    bg-white/5
+                                "
+                                title={partner.name}
+                            >
+                                {partner.image ? (
+                                    <img
+                                        src={partner.image}
+                                        alt={partner.name}
+                                        loading="lazy"
+                                        className="h-full w-full object-cover"
+                                    />
+                                ) : (
+                                    <span className="text-[10px] font-bold text-white/70">
+                                        {partner.name.charAt(0)}
+                                    </span>
+                                )}
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
                 <div

@@ -23,6 +23,7 @@ import Testimonials from "./Landing/Testimonials";
 import LocationMap from "./Landing/LocationMap";
 import Contact from "./Landing/Contact";
 import Footer from "./Landing/Footer";
+import BookingBanner from "./Landing/BookingBanner";
 import ActionBar from "../components/ActionBar";
 import ChatWidget from "../components/ChatWidget";
 
@@ -105,11 +106,13 @@ const LandingPage = () => {
 
             <Navbar actions={actions}/>
             <Hero />
+            <BookingBanner />
             <Services />
             <Commercial />
             <Partners />
             <Process />
             <WhyLoveLaundry />
+            <BookingBanner />
             <JoinWithUs />
             <Testimonials />
             <LocationMap />

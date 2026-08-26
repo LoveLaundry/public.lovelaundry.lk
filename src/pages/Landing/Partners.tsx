@@ -35,6 +35,7 @@ const Partners = () => {
                     main={t("partnersTitleMain")}
                     highlight={t("partnersTitleHighlight")}
                     description={t("partnersDescription")}
+                    centered
                 />
 
                 <div

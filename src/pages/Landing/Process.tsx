@@ -35,6 +35,7 @@ const Process = () => {
                     badge={t("processBadge")}
                     main={t("processTitleMain")}
                     highlight={t("processTitleHighlight")}
+                    centered
                 />
 
                 <div
