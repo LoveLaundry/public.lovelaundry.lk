@@ -7,82 +7,27 @@ import {
     RiUser3Line,
 } from "react-icons/ri";
 import { useLanguage } from "../i18n";
-import { fetchBotReply } from "../lib/chatApi";
+import {
+    getChatIds,
+    sendGuestMessage,
+    fetchConversation,
+    type ServerMessage,
+} from "../lib/chatApi";
 
-interface Message {
+interface LocalMessage {
     id: string;
     text: string;
-    sender: "bot" | "user";
-    timestamp: Date;
-}
-
-const BOT_RESPONSES: Record<string, string[]> = {
-    greeting: [
-        "Hello! Welcome to Love Laundry. How can I help you today?",
-        "Hey there! Need help with laundry? I'm here for you.",
-        "Hi! Thanks for reaching out to Love Laundry. What can I do for you?",
-    ],
-    services: [
-        "We offer 4 main services:\n\n1. Wash & Fold — Everyday laundry\n2. Ironing — Crisp, pressed clothes\n3. Dry Cleaning — Suits, dresses, delicates\n4. Pickup & Delivery — We collect and return to your door\n\nWould you like to know more about any of these?",
-    ],
-    pricing: [
-        "Our general pricing:\n\n• Wash & Fold: From Rs. 200/kg\n• Ironing: From Rs. 50/piece\n• Dry Cleaning: From Rs. 300/piece\n\nFor an exact quote, call us or WhatsApp!",
-    ],
-    pickup: [
-        "We offer free pickup and delivery! Here's how:\n\n1. Call or WhatsApp us to schedule\n2. We collect your laundry\n3. We wash, fold/iron, and deliver back fresh!\n\nTypical turnaround: 24–48 hours.",
-    ],
-    locations: [
-        "Our main centre is in Chilaw. We also have collection points in Madampe, Mahawewa, Kottaramulla, Dunakadeniya, Bibiladeniya, and Wennappuwa.\n\nScroll down on our website to see all locations on the map!",
-    ],
-    hours: [
-        "We're available 24/7 for WhatsApp bookings!\n\nPickup & delivery hours:\n• Mon–Sat: 8 AM – 7 PM\n• Sunday: 9 AM – 5 PM",
-    ],
-    contact: [
-        "Reach us at:\n\n📞 Phone: +94 70 000 0000\n💬 WhatsApp: +94 70 000 0000\n📧 Email: info@lovelaundry.lk",
-    ],
-    commercial: [
-        "Yes! We serve hotels, restaurants, spas, and businesses. Our commercial services include Hotel Linen, Commercial Laundry, and Bulk Processing.\n\nWe partner with 9 hotels including Goldi Sands, Amagi, and Camelot. Contact us for a custom quote!",
-    ],
-    careers: [
-        "We're hiring! Current openings:\n\n• Delivery Driver\n• Machine Operator\n• Ironer / Presser\n• Collection Agent\n\nBenefits include competitive pay, training, and flexible schedules. Send us a WhatsApp message to apply!",
-    ],
-    quality: [
-        "We treat every garment with professional care! Professional-grade equipment, separate handling for delicates, quality inspection before delivery, and a 4.9/5 customer rating.",
-    ],
-};
-
-const FALLBACK = [
-    "I'm not sure I understand that. Could you rephrase?\n\nI can help with services, pricing, pickup/delivery, locations, hours, commercial services, or job openings.",
-];
-
-function classifyIntent(text: string): string {
-    const lower = text.toLowerCase();
-    if (/\b(hi|hello|hey|good\s*(morning|evening)|sup|howdy)\b/.test(lower)) return "greeting";
-    if (/\b(service|offer|provide|wash|fold|iron|dry\s*clean)\b/.test(lower)) return "services";
-    if (/\b(how\s*much|price|cost|rate|charge|fee|tariff)\b/.test(lower)) return "pricing";
-    if (/\b(pick\s*up|deliver|collect|drop\s*off|schedule|book|turnaround)\b/.test(lower)) return "pickup";
-    if (/\b(where|location|address|branch|chilaw|madampe|mahawewa|find\s*you)\b/.test(lower)) return "locations";
-    if (/\b(hour|open|close|time|schedule|when)\b/.test(lower)) return "hours";
-    if (/\b(contact|phone|whatsapp|call|email|number|reach)\b/.test(lower)) return "contact";
-    if (/\b(hotel|business|commercial|bulk|restaurant|spa|gym|corporate)\b/.test(lower)) return "commercial";
-    if (/\b(job|hiring|work|career|team|employ|vacancy|apply)\b/.test(lower)) return "careers";
-    if (/\b(quality|care|safe|damage|delicate|stain|silk)\b/.test(lower)) return "quality";
-    return "fallback";
-}
-
-function getBotResponse(userMessage: string): string {
-    const intent = classifyIntent(userMessage);
-    const responses = BOT_RESPONSES[intent] || FALLBACK;
-    return responses[Math.floor(Math.random() * responses.length)];
+    sender: "guest" | "bot" | "admin";
+    senderName?: string | null;
 }
 
 const ChatWidget = () => {
     const { t, lang } = useLanguage();
     const [isOpen, setIsOpen] = useState(false);
-    const [messages, setMessages] = useState<Message[]>([]);
+    const [messages, setMessages] = useState<LocalMessage[]>([]);
     const [input, setInput] = useState("");
     const [isTyping, setIsTyping] = useState(false);
-    const [hasGreeted, setHasGreeted] = useState(false);
+    const [assignedAdmin, setAssignedAdmin] = useState<string | null>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -94,71 +39,131 @@ const ChatWidget = () => {
         scrollToBottom();
     }, [messages, scrollToBottom]);
 
+    // Ensure a conversation exists for this visitor.
     useEffect(() => {
-        if (isOpen && !hasGreeted) {
-            const welcome: Message = {
-                id: crypto.randomUUID(),
-                text: t("chatWelcome"),
-                sender: "bot",
-                timestamp: new Date(),
-            };
-            setMessages([welcome]);
-            setHasGreeted(true);
-            setTimeout(() => inputRef.current?.focus(), 300);
-        }
-    }, [isOpen, hasGreeted, t]);
+        getChatIds();
+    }, []);
 
-    const getReply = useCallback(
-        async (text: string): Promise<string> => {
+    // Poll the conversation for admin replies / takeover status while open.
+    useEffect(() => {
+        if (!isOpen) return;
+        const { conversationId, guestId } = getChatIds();
+        let active = true;
+        const poll = async () => {
             try {
-                return await fetchBotReply(text, lang);
+                const state = await fetchConversation(conversationId, guestId);
+                if (!active) return;
+                setMessages(
+                    state.messages.map((m: ServerMessage) => ({
+                        id: m.id,
+                        text: m.text,
+                        sender: m.sender,
+                        senderName: m.sender_name ?? undefined,
+                    })),
+                );
+                setAssignedAdmin(state.assigned_admin_name);
             } catch {
-                // Backend unreachable — fall back to the local rule-based bot.
-                return getBotResponse(text);
+                // Keep whatever we have; ignore transient network errors.
+            }
+        };
+        poll();
+        const interval = setInterval(poll, 4000);
+        return () => {
+            active = false;
+            clearInterval(interval);
+        };
+    }, [isOpen]);
+
+    useEffect(() => {
+        if (isOpen) setTimeout(() => inputRef.current?.focus(), 300);
+    }, [isOpen]);
+
+    const sendMessage = useCallback(
+        async (text: string) => {
+            const trimmed = text.trim();
+            if (!trimmed) return;
+
+            const { conversationId, guestId } = getChatIds();
+            const optimistic: LocalMessage = {
+                id: crypto.randomUUID(),
+                text: trimmed,
+                sender: "guest",
+            };
+            setMessages((prev) => [...prev, optimistic]);
+            setInput("");
+            setIsTyping(true);
+
+            try {
+                const state = await sendGuestMessage(
+                    conversationId,
+                    guestId,
+                    trimmed,
+                    lang as "en" | "sin",
+                );
+                setMessages(
+                    state.messages.map((m: ServerMessage) => ({
+                        id: m.id,
+                        text: m.text,
+                        sender: m.sender,
+                        senderName: m.sender_name ?? undefined,
+                    })),
+                );
+                setAssignedAdmin(state.assigned_admin_name);
+            } catch {
+                // Backend unreachable — show a friendly local fallback.
+                const fallback: LocalMessage = {
+                    id: crypto.randomUUID(),
+                    text: "Thanks for reaching out! Our team will get back to you shortly. If it's urgent, WhatsApp us at +94 77 420 0919.",
+                    sender: "bot",
+                };
+                setMessages((prev) => [...prev, fallback]);
+            } finally {
+                setIsTyping(false);
             }
         },
-        [lang]
+        [lang],
     );
-
-    const sendMessage = useCallback(async () => {
-        const text = input.trim();
-        if (!text) return;
-
-        const userMsg: Message = {
-            id: crypto.randomUUID(),
-            text,
-            sender: "user",
-            timestamp: new Date(),
-        };
-
-        setMessages((prev) => [...prev, userMsg]);
-        setInput("");
-        setIsTyping(true);
-
-        const delay = 600 + Math.random() * 800;
-        setTimeout(async () => {
-            const botResponse = await getReply(text);
-            const botMsg: Message = {
-                id: crypto.randomUUID(),
-                text: botResponse,
-                sender: "bot",
-                timestamp: new Date(),
-            };
-            setMessages((prev) => [...prev, botMsg]);
-            setIsTyping(false);
-        }, delay);
-    }, [input, getReply]);
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
-            sendMessage();
+            sendMessage(input);
         }
+    };
+
+    const handleQuickReply = (label: string, value: string) => {
+        setInput(label);
+        setTimeout(() => sendMessage(value), 50);
+    };
+
+    const renderMessage = (msg: LocalMessage) => {
+        if (msg.sender === "guest") {
+            return (
+                <div key={msg.id} className="flex justify-end">
+                    <div className="max-w-[80%] whitespace-pre-line rounded-2xl rounded-br-md bg-[#E01E31] px-4 py-3 text-[13px] leading-relaxed text-white">
+                        {msg.text}
+                    </div>
+                </div>
+            );
+        }
+        const isAdmin = msg.sender === "admin";
+        return (
+            <div key={msg.id} className="flex justify-start">
+                <div className="mr-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#FEF2F2] text-[#E01E31]">
+                    {isAdmin ? <RiUser3Line className="h-3.5 w-3.5" /> : <RiRobot2Line className="h-3.5 w-3.5" />}
+                </div>
+                <div className="max-w-[80%] whitespace-pre-line rounded-2xl rounded-bl-md bg-[#F5F5F5] px-4 py-3 text-[13px] leading-relaxed text-[#000000]">
+                    <p className="mb-0.5 text-[10px] font-semibold text-[#737373]">
+                        {isAdmin ? `Admin ${msg.senderName ?? ""}`.trim() : "Love Laundry Bot"}
+                    </p>
+                    {msg.text}
+                </div>
+            </div>
+        );
     };
 
     return (
         <>
-            {/* Floating Button */}
             <button
                 type="button"
                 onClick={() => setIsOpen((prev) => !prev)}
@@ -197,8 +202,6 @@ const ChatWidget = () => {
                 ) : (
                     <RiChat1Line className="h-6 w-6 sm:h-7 sm:w-7" />
                 )}
-
-                {/* Notification dot */}
                 {!isOpen && (
                     <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center">
                         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-40" />
@@ -207,7 +210,6 @@ const ChatWidget = () => {
                 )}
             </button>
 
-            {/* Chat Panel */}
             {isOpen && (
                 <div
                     className="
@@ -232,18 +234,21 @@ const ChatWidget = () => {
                     "
                     style={{ height: "min(520px, calc(100vh - 160px))" }}
                 >
-                    {/* Header */}
                     <div className="flex items-center gap-3 bg-[#E01E31] px-5 py-4">
                         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20">
-                            <RiRobot2Line className="h-5 w-5 text-white" />
+                            {assignedAdmin ? (
+                                <RiUser3Line className="h-5 w-5 text-white" />
+                            ) : (
+                                <RiRobot2Line className="h-5 w-5 text-white" />
+                            )}
                         </div>
                         <div className="flex-1">
-                            <div className="text-sm font-bold text-white">
-                                {t("chatTitle")}
-                            </div>
+                            <div className="text-sm font-bold text-white">{t("chatTitle")}</div>
                             <div className="flex items-center gap-1.5 text-[11px] text-white/80">
                                 <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
-                                {t("chatOnline")}
+                                {assignedAdmin
+                                    ? `Chatting with ${assignedAdmin}`
+                                    : t("chatOnline")}
                             </div>
                         </div>
                         <button
@@ -255,46 +260,26 @@ const ChatWidget = () => {
                         </button>
                     </div>
 
-                    {/* Messages */}
-                    <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
-                        {messages.map((msg) => (
-                            <div
-                                key={msg.id}
-                                className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
-                            >
-                                {msg.sender === "bot" && (
-                                    <div className="mr-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#FEF2F2] text-[#E01E31]">
-                                        <RiRobot2Line className="h-3.5 w-3.5" />
-                                    </div>
-                                )}
+                    {assignedAdmin && (
+                        <div className="bg-[#FEF2F2] px-5 py-2 text-center text-[11px] font-medium text-[#E01E31]">
+                            You're now chatting with {assignedAdmin} from Love Laundry.
+                        </div>
+                    )}
 
-                                <div
-                                    className={`
-                                        max-w-[80%]
-                                        whitespace-pre-line
-                                        rounded-2xl
-                                        px-4
-                                        py-3
-                                        text-[13px]
-                                        leading-relaxed
-                                        ${msg.sender === "user"
-                                            ? "rounded-br-md bg-[#E01E31] text-white"
-                                            : "rounded-bl-md bg-[#F5F5F5] text-[#000000]"
-                                        }
-                                    `}
-                                >
-                                    {msg.text}
+                    <div className="flex-1 space-y-4 overflow-y-auto px-4 py-4">
+                        {messages.length === 0 ? (
+                            <div className="flex justify-start">
+                                <div className="mr-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#FEF2F2] text-[#E01E31]">
+                                    <RiRobot2Line className="h-3.5 w-3.5" />
                                 </div>
-
-                                {msg.sender === "user" && (
-                                    <div className="ml-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#E01E31] text-white">
-                                        <RiUser3Line className="h-3.5 w-3.5" />
-                                    </div>
-                                )}
+                                <div className="max-w-[80%] whitespace-pre-line rounded-2xl rounded-bl-md bg-[#F5F5F5] px-4 py-3 text-[13px] leading-relaxed text-[#000000]">
+                                    {t("chatWelcome")}
+                                </div>
                             </div>
-                        ))}
+                        ) : (
+                            messages.map(renderMessage)
+                        )}
 
-                        {/* Typing indicator */}
                         {isTyping && (
                             <div className="flex justify-start">
                                 <div className="mr-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#FEF2F2] text-[#E01E31]">
@@ -307,11 +292,9 @@ const ChatWidget = () => {
                                 </div>
                             </div>
                         )}
-
                         <div ref={messagesEndRef} />
                     </div>
 
-                    {/* Quick Replies */}
                     <div className="flex gap-2 overflow-x-auto border-t border-[#E5E5E5] px-4 py-2.5">
                         {[
                             { value: "Services", label: t("chatQuickServices") },
@@ -322,30 +305,7 @@ const ChatWidget = () => {
                             <button
                                 key={value}
                                 type="button"
-                                onClick={async () => {
-                                    setInput(label);
-                                    setTimeout(async () => {
-                                        const userMsg: Message = {
-                                            id: crypto.randomUUID(),
-                                            text: label,
-                                            sender: "user",
-                                            timestamp: new Date(),
-                                        };
-                                        setMessages((prev) => [...prev, userMsg]);
-                                        setInput("");
-                                        setIsTyping(true);
-                                        setTimeout(async () => {
-                                            const botMsg: Message = {
-                                                id: crypto.randomUUID(),
-                                                text: await getReply(value),
-                                                sender: "bot",
-                                                timestamp: new Date(),
-                                            };
-                                            setMessages((prev) => [...prev, botMsg]);
-                                            setIsTyping(false);
-                                        }, 600 + Math.random() * 800);
-                                    }, 50);
-                                }}
+                                onClick={() => handleQuickReply(label, value)}
                                 className="
                                     shrink-0
                                     rounded-full
@@ -369,7 +329,6 @@ const ChatWidget = () => {
                         ))}
                     </div>
 
-                    {/* Input */}
                     <div className="flex items-center gap-2 border-t border-[#E5E5E5] px-4 py-3">
                         <input
                             ref={inputRef}
@@ -396,10 +355,9 @@ const ChatWidget = () => {
                                 focus:bg-white
                             "
                         />
-
                         <button
                             type="button"
-                            onClick={sendMessage}
+                            onClick={() => sendMessage(input)}
                             disabled={!input.trim()}
                             className="
                                 flex
@@ -423,7 +381,6 @@ const ChatWidget = () => {
                         </button>
                     </div>
 
-                    {/* Footer */}
                     <div className="border-t border-[#E5E5E5] px-4 py-2 text-center text-[10px] text-[#A3A3A3]">
                         {t("chatPowered")}
                     </div>
