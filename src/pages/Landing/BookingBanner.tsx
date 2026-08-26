@@ -79,22 +79,6 @@ const BookingBanner = () => {
                             >
                                 {t("bookTitle")}
                             </h3>
-                            <span
-                                className="
-                                    rounded-full
-                                    bg-white
-                                    px-3
-                                    py-1
-                                    text-[11px]
-                                    font-bold
-                                    uppercase
-                                    tracking-[0.1em]
-                                    text-[#E01E31]
-                                    shadow-sm
-                                "
-                            >
-                                {t("bookSave")}
-                            </span>
                         </div>
 
                         <p className="mt-1.5 text-sm text-white/85 sm:text-base">

@@ -26,7 +26,6 @@ const sin: Record<string, string> = {
     heroNextPickup: "ඊළඟ එකතු කිරීම",
     heroScheduleToday: "අදම වෙන් කරන්න",
     heroScroll: "ස්ක්‍රෝල් කරන්න",
-    heroSaveBadge: "15% ඉතිරි කරන්න",
 
     // Services
     servicesBadge: "අපගේ සේවා",
@@ -203,8 +202,7 @@ const sin: Record<string, string> = {
 
     // Booking Banner
     bookTitle: "WhatsApp ඔස්සේ ඇණවුම් කරන්න",
-    bookSave: "15% ඉතිරි කරන්න",
-    bookDesc: "දුරකථන ඇඟවීමේ කාලය ඉවර කරන්න — අපට පණිවිඩයක් යවන්න සහ ඔබේ පළමු ඇණවුමේ 15% ඉතිරි කරන්න.",
+    bookDesc: "WhatsApp එකෙන් අපට පණිවිඩයක් යවන්න, අපි ඔබේ එකතු කිරීම විනාඩි කිහිපයකින් සැකස් කරමු.",
     bookCta: "WhatsApp හි කතා කරන්න",
     bookTrusted: "පරිශීලකයින් 200+ ක් කැමති · 4.9★",
 

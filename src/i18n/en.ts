@@ -26,7 +26,6 @@ const en = {
     heroNextPickup: "Next pickup",
     heroScheduleToday: "Schedule yours today",
     heroScroll: "Scroll",
-    heroSaveBadge: "Save 15%",
 
     // Services
     servicesBadge: "Our Services",
@@ -203,8 +202,7 @@ const en = {
 
     // Booking Banner
     bookTitle: "Book via WhatsApp",
-    bookSave: "Save 15%",
-    bookDesc: "Skip the phone tag — message us and save 15% on your first order.",
+    bookDesc: "Message us on WhatsApp and we'll arrange your pickup in minutes.",
     bookCta: "Chat on WhatsApp",
     bookTrusted: "Loved by 200+ customers · 4.9★",
 

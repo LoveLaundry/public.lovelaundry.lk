@@ -1,5 +1,4 @@
 import { useLanguage } from "../../i18n";
-import { COMPANY } from "../../data/constants";
 import { useReveal } from "../../hooks/useReveal";
 import heroVideo from "../../assets/videos/web.mp4";
 import {
@@ -9,13 +8,11 @@ import {
     RiStarFill,
     RiTimeFill,
     RiShoppingBasket2Line,
-    RiWhatsappLine,
 } from "react-icons/ri";
 
 const Hero = () => {
     const { t } = useLanguage();
     const textRef = useReveal<HTMLDivElement>({ y: 28, stagger: 0.09 });
-    const cardRef = useReveal<HTMLDivElement>({ y: 30, x: 30, duration: 0.9 });
 
     const scrollTo = (id: string) => {
         const element = document.getElementById(id);
@@ -66,26 +63,6 @@ const Hero = () => {
                 lg:pt-40
             "
         >
-            {/* Warm brand glow (keeps red theme) */}
-            <div
-                aria-hidden="true"
-                className="
-                    pointer-events-none
-                    absolute
-                    inset-0
-                    bg-[radial-gradient(110%_90%_at_85%_0%,rgba(224,30,49,0.45),transparent_55%)]
-                "
-            />
-            <div
-                aria-hidden="true"
-                className="
-                    pointer-events-none
-                    absolute
-                    inset-0
-                    bg-[radial-gradient(80%_80%_at_0%_100%,rgba(227,161,60,0.18),transparent_55%)]
-                "
-            />
-
             {/* Full-bleed background video */}
             <video
                 aria-hidden="true"
@@ -137,21 +114,11 @@ const Hero = () => {
                 "
             />
 
-            <div
-                className="
-                    relative
-                    mx-auto
-                    grid
-                    w-full
-                    max-w-[1440px]
-                    items-center
-                    gap-14
-                    lg:grid-cols-[1.05fr_0.95fr]
-                    lg:gap-16
-                "
-            >
-                {/* Text column */}
-                <div ref={textRef} className="relative z-10">
+            <div className="relative mx-auto w-full max-w-[1440px]">
+                <div
+                    ref={textRef}
+                    className="relative z-10 max-w-2xl"
+                >
                     <div
                         data-reveal
                         className="
@@ -355,152 +322,6 @@ const Hero = () => {
                             </div>
                         ))}
                     </div>
-                </div>
-
-                {/* Image card column */}
-                <div
-                    ref={cardRef}
-                    data-reveal
-                    className="relative mx-auto w-full max-w-[540px]"
-                >
-                    <div
-                        aria-hidden="true"
-                        className="
-                            absolute
-                            -right-4
-                            -top-4
-                            hidden
-                            h-48
-                            w-48
-                            rounded-[36px]
-                            bg-gradient-to-br
-                            from-[#E01E31]
-                            to-[#C11324]
-                            shadow-[0_20px_60px_rgba(224,30,49,0.35)]
-                            sm:block
-                            lg:-right-8
-                            lg:-top-8
-                        "
-                    >
-                        <div className="absolute inset-0 flex items-center justify-center opacity-20">
-                            <span className="font-display text-7xl font-bold text-white sm:text-8xl">
-                                LL
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="relative overflow-hidden rounded-[36px] border border-white/10 bg-gradient-to-br from-[#1A0E10] to-[#2A1114] p-5 shadow-[0_30px_80px_rgba(0,0,0,0.5)] sm:p-7">
-                        <div
-                            aria-hidden="true"
-                            className="
-                                pointer-events-none
-                                absolute
-                                inset-3
-                                rounded-[28px]
-                                border
-                                border-[#E01E31]/20
-                                sm:inset-5
-                                sm:rounded-[30px]
-                            "
-                        />
-                        <div className="relative overflow-hidden rounded-t-full">
-                            <div className="relative aspect-[1/1.15]">
-                                <img
-                                    src="./assets/images/love-laundry-hero.png"
-                                    alt="Love Laundry pickup and laundry service"
-                                    style={{
-                                        filter: "sepia(0.14) saturate(1.08) contrast(1.02)",
-                                    }}
-                                    className="absolute inset-0 h-full w-full object-cover"
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Rating float card */}
-                    <div
-                        className="
-                            absolute
-                            -bottom-7
-                            left-1/2
-                            flex
-                            w-[calc(100%-2.5rem)]
-                            max-w-[400px]
-                            -translate-x-1/2
-                            items-center
-                            justify-between
-                            gap-3
-                            rounded-2xl
-                            border
-                            border-white/10
-                            bg-[#0C0708]
-                            px-7
-                            py-5
-                            shadow-[0_20px_60px_rgba(0,0,0,0.5)]
-                            sm:left-auto
-                            sm:right-6
-                            sm:-translate-x-0
-                        "
-                    >
-                        <div className="flex items-center gap-3">
-                            <div className="flex shrink-0 items-center gap-0.5">
-                                {Array.from({ length: 5 }).map((_, index) => (
-                                    <RiStarFill
-                                        key={index}
-                                        className="h-4 w-4 text-[#E3A13C]"
-                                    />
-                                ))}
-                            </div>
-
-                            <div className="text-xs font-bold text-white">
-                                4.9 / 5
-                            </div>
-                        </div>
-
-                        <div className="text-right">
-                            <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-white/60">
-                                {t("heroNextPickup")}
-                            </div>
-
-                            <div className="mt-0.5 text-xs font-bold text-[#E01E31]">
-                                {t("heroScheduleToday")}
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* WhatsApp save float card */}
-                    <a
-                        href={COMPANY.whatsappLink}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="
-                            absolute
-                            -left-3
-                            top-8
-                            hidden
-                            rotate-[-8deg]
-                            items-center
-                            gap-2
-                            rounded-full
-                            border
-                            border-[#E01E31]/40
-                            bg-[#E01E31]
-                            px-4
-                            py-2
-                            text-white
-                            shadow-[0_14px_34px_rgba(224,30,49,0.5)]
-                            transition-transform
-                            duration-300
-                            hover:scale-105
-                            sm:flex
-                            lg:-left-10
-                        "
-                    >
-                        <RiWhatsappLine className="h-4 w-4" />
-                        <span className="text-xs font-bold">
-                            {t("heroSaveBadge")}
-                        </span>
-                    </a>
                 </div>
             </div>
 
