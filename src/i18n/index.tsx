@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react";
 import en from "./en";
 import sin from "./sin";
 
@@ -28,6 +28,12 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
         setLang(l);
         try { localStorage.setItem("ll-lang", l); } catch { /* ignore */ }
     }, []);
+
+    useEffect(() => {
+        const root = document.documentElement;
+        root.lang = lang;
+        root.classList.toggle("lang-sin", lang === "sin");
+    }, [lang]);
 
     const t = useCallback(
         (key: string): string => {
