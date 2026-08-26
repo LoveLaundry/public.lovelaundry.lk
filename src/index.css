@@ -28,7 +28,7 @@
   /* Sinhala renders with a taller fallback font; scale the root down so it
      visually matches the English (Cabin) metrics. */
   html.lang-sin {
-    font-size: 0.9em;
+    font-size: 0.85em;
   }
 
   body {
