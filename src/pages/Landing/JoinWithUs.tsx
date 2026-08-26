@@ -20,11 +20,11 @@ const JoinWithUs = () => {
                 bg-[#000000]
                 bg-[radial-gradient(ellipse_60%_50%_at_50%_100%,rgba(224,30,49,0.12),transparent_70%)]
                 px-4
-                py-16
+                py-12
                 sm:px-6
-                sm:py-22
+                sm:py-16
                 lg:px-8
-                lg:py-26
+                lg:py-20
             "
         >
             {/* Decorative elements */}
@@ -241,7 +241,7 @@ const JoinWithUs = () => {
                         bg-white/5
                         p-6
                         sm:p-8
-                        lg:mt-16
+                        lg:mt-14
                         lg:flex-row
                         lg:items-center
                         lg:justify-between

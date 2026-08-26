@@ -14,11 +14,11 @@ const Testimonials = () => {
                 relative
                 bg-gradient-to-b from-white via-[#FEF2F2]/30 to-white
                 px-4
-                py-16
+                py-12
                 sm:px-6
-                sm:py-24
+                sm:py-16
                 lg:px-8
-                lg:py-28
+                lg:py-20
             "
         >
             {/* Warm gradient accent */}

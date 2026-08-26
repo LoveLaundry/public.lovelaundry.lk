@@ -43,11 +43,11 @@ const Process = () => {
                 <div
                     ref={stepsRef}
                     className="
-                        mt-10
+                        mt-12
                         flex
                         flex-col
                         gap-4
-                        sm:mt-12
+                        sm:mt-14
                         sm:flex-row
                         sm:flex-wrap
                         lg:flex-nowrap

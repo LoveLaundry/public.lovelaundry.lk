@@ -224,7 +224,7 @@ const Services = () => {
                         sm:flex-row
                         sm:justify-between
                         sm:text-left
-                        lg:mt-16
+                        lg:mt-14
                     "
                 >
                     <div>
