@@ -6,7 +6,7 @@ import SectionHeader from "./SectionHeader";
 
 const Services = () => {
     const { t } = useLanguage();
-    const cardsRef = useReveal<HTMLDivElement>({ y: 30, stagger: 0.1 });
+    const cardsRef = useReveal<HTMLDivElement>({ x: 40, y: 0, stagger: 0.1 });
 
     const serviceKeys = [
         { titleKey: "serviceWashTitle", subtitleKey: "serviceWashSubtitle", descKey: "serviceWashDesc" },

@@ -6,7 +6,7 @@ import SectionHeader from "./SectionHeader";
 
 const Commercial = () => {
     const { t } = useLanguage();
-    const cardsRef = useReveal<HTMLDivElement>({ y: 30, stagger: 0.12 });
+    const cardsRef = useReveal<HTMLDivElement>({ x: 40, y: 0, stagger: 0.12 });
 
     const commercialKeys = [
         { titleKey: "commercialHotelTitle", subtitleKey: "commercialHotelSubtitle", descKey: "commercialHotelDesc" },
@@ -19,7 +19,8 @@ const Commercial = () => {
             id="commercial"
             className="
                 relative
-                bg-white
+                overflow-hidden
+                bg-[#0C0708]
                 px-4
                 py-12
                 sm:px-6
@@ -28,6 +29,17 @@ const Commercial = () => {
                 lg:py-20
             "
         >
+            {/* Warm brand glow */}
+            <div
+                aria-hidden="true"
+                className="
+                    pointer-events-none
+                    absolute
+                    inset-0
+                    bg-[radial-gradient(70%_60%_at_100%_0%,rgba(224,30,49,0.18),transparent_60%)]
+                "
+            />
+
             <div className="relative mx-auto w-full max-w-[1440px]">
                 <SectionHeader
                     badge={t("commercialBadge")}
@@ -35,15 +47,16 @@ const Commercial = () => {
                     highlight={t("commercialTitleHighlight")}
                     description={t("commercialDescription")}
                     centered
+                    dark
                 />
 
                 <div
                     ref={cardsRef}
                     className="
-                        mt-12
+                        mt-10
                         grid
-                        gap-5
-                        sm:mt-14
+                        gap-4
+                        sm:mt-12
                         sm:grid-cols-2
                         lg:grid-cols-3
                     "
@@ -61,15 +74,15 @@ const Commercial = () => {
                                     overflow-hidden
                                     rounded-3xl
                                     border
-                                    border-[#E5E5E5]
-                                    bg-[#FFFFFF]
+                                    border-white/10
+                                    bg-white/5
                                     p-8
                                     transition-all
                                     duration-300
-                                    shadow-[0_2px_16px_rgba(0,0,0,0.05)]
+                                    shadow-[0_2px_16px_rgba(0,0,0,0.2)]
                                     hover:-translate-y-1.5
                                     hover:border-[#E01E31]/40
-                                    hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)]
+                                    hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)]
                                 "
                             >
                                 <div
@@ -115,7 +128,7 @@ const Commercial = () => {
                                             text-2xl
                                             font-bold
                                             tracking-tight
-                                            text-[#E5E5E5]
+                                            text-white/10
                                         "
                                     >
                                         0{index + 1}
@@ -142,7 +155,7 @@ const Commercial = () => {
                                         text-xl
                                         font-semibold
                                         tracking-tight
-                                        text-[#000000]
+                                        text-white
                                         sm:text-2xl
                                     "
                                 >
@@ -154,7 +167,7 @@ const Commercial = () => {
                                         mt-3
                                         text-sm
                                         leading-6
-                                        text-[#404040]
+                                        text-white/65
                                     "
                                 >
                                     {t(commercialKeys[index].descKey)}
@@ -175,16 +188,16 @@ const Commercial = () => {
                                         items-center
                                         gap-2
                                         rounded-full
-                                        bg-[#000000]
+                                        bg-white
                                         px-5
                                         py-2.5
                                         text-xs
                                         font-bold
-                                        text-[#FFFFFF]
+                                        text-[#E01E31]
                                         transition-all
                                         duration-200
                                         group-hover:gap-3
-                                        group-hover:bg-[#E01E31]
+                                        group-hover:bg-[#FFF4F4]
                                     "
                                 >
                                     {t("commercialGetQuote")}

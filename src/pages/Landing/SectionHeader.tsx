@@ -6,6 +6,7 @@ interface SectionHeaderProps {
     highlight?: string;
     description?: string;
     centered?: boolean;
+    dark?: boolean;
 }
 
 const SectionHeader = ({
@@ -14,8 +15,13 @@ const SectionHeader = ({
     highlight,
     description,
     centered = false,
+    dark = false,
 }: SectionHeaderProps) => {
     const headerRef = useReveal<HTMLDivElement>({ y: 25 });
+
+    const titleColor = dark ? "text-white" : "text-[#000000]";
+    const descColor = dark ? "text-white/65" : "text-[#404040]";
+    const pillBg = dark ? "bg-[#E01E31]/15" : "bg-[#FEF2F2]";
 
     if (centered) {
         return (
@@ -25,14 +31,14 @@ const SectionHeader = ({
                 className="mx-auto max-w-3xl text-center"
             >
                 <span
-                    className="
+                    className={`
                         inline-flex
                         items-center
                         gap-2.5
                         rounded-full
                         border
                         border-[#E01E31]/20
-                        bg-[#FEF2F2]
+                        ${pillBg}
                         px-4
                         py-1.5
                         text-[11px]
@@ -41,23 +47,23 @@ const SectionHeader = ({
                         tracking-[0.18em]
                         text-[#E01E31]
                         sm:text-xs
-                    "
+                    `}
                 >
                     {badge}
                 </span>
 
                 <h2
-                    className="
+                    className={`
                         font-display
                         mt-5
                         text-4xl
                         font-semibold
                         leading-[1.05]
                         tracking-[-0.02em]
-                        text-[#000000]
+                        ${titleColor}
                         sm:text-5xl
                         lg:text-6xl
-                    "
+                    `}
                 >
                     {main}
                     {highlight ? (
@@ -67,15 +73,15 @@ const SectionHeader = ({
 
                 {description ? (
                     <p
-                        className="
+                        className={`
                             mx-auto
                             mt-5
                             max-w-xl
                             text-sm
                             leading-8
-                            text-[#404040]
+                            ${descColor}
                             sm:text-base
-                        "
+                        `}
                     >
                         {description}
                     </p>
@@ -108,17 +114,17 @@ const SectionHeader = ({
             </span>
 
             <h2
-                className="
+                className={`
                     font-display
                     mt-5
                     text-4xl
                     font-semibold
                     leading-[1.05]
                     tracking-[-0.02em]
-                    text-[#000000]
+                    ${titleColor}
                     sm:text-5xl
                     lg:text-6xl
-                "
+                `}
             >
                 {main}
 
@@ -129,14 +135,14 @@ const SectionHeader = ({
 
             {description ? (
                 <p
-                    className="
+                    className={`
                         mt-5
                         max-w-xl
                         text-sm
                         leading-8
-                        text-[#404040]
+                        ${descColor}
                         sm:text-base
-                    "
+                    `}
                 >
                     {description}
                 </p>

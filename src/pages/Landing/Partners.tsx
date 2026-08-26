@@ -12,7 +12,7 @@ import { useLanguage } from "../../i18n";
 
 const Partners = () => {
     const { t } = useLanguage();
-    const cardsRef = useReveal<HTMLDivElement>({ y: 20, stagger: 0.06 });
+    const cardsRef = useReveal<HTMLDivElement>({ x: -40, y: 0, stagger: 0.06 });
     const [selected, setSelected] = useState<Partner | null>(null);
 
     return (

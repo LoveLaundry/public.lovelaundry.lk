@@ -5,7 +5,7 @@ import SectionHeader from "./SectionHeader";
 
 const Testimonials = () => {
     const { t } = useLanguage();
-    const cardsRef = useReveal<HTMLDivElement>({ y: 30, stagger: 0.1 });
+    const cardsRef = useReveal<HTMLDivElement>({ x: 40, y: 0, stagger: 0.1 });
 
     return (
         <section
