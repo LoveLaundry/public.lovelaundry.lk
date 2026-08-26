@@ -1,19 +1,18 @@
-import { useLayoutEffect, useRef } from "react";
+import { useLanguage } from "../../i18n";
+import { useReveal } from "../../hooks/useReveal";
+import heroVideo from "../../assets/videos/web.mp4";
 import {
-    RiArrowDownLine,
     RiArrowRightLine,
+    RiArrowDownLine,
     RiHeart3Fill,
     RiStarFill,
     RiTimeFill,
     RiShoppingBasket2Line,
-    RiTimeLine,
 } from "react-icons/ri";
-import { gsap } from "../../lib/gsap";
-import { useLanguage } from "../../i18n";
 
 const Hero = () => {
-    const sectionRef = useRef<HTMLElement>(null);
     const { t } = useLanguage();
+    const textRef = useReveal<HTMLDivElement>({ y: 28, stagger: 0.09 });
 
     const scrollTo = (id: string) => {
         const element = document.getElementById(id);
@@ -37,399 +36,140 @@ const Hero = () => {
             label: t("heroStatRating"),
         },
         {
-            icon: RiTimeLine,
+            icon: RiTimeFill,
             value: "24/7",
             label: t("heroStatConvenience"),
         },
     ];
 
-    useLayoutEffect(() => {
-        const section = sectionRef.current;
-        if (!section) return;
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-        const ctx = gsap.context(() => {
-            const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-            // Badge slides in
-            tl.fromTo(
-                "[data-hero-badge]",
-                { y: -20, opacity: 0, scale: 0.9 },
-                { y: 0, opacity: 1, scale: 1, duration: 0.6 }
-            );
-
-            // H1 main line
-            tl.fromTo(
-                "[data-hero-line-1]",
-                { y: 40, opacity: 0, rotateX: 15 },
-                { y: 0, opacity: 1, rotateX: 0, duration: 0.7 },
-                "-=0.3"
-            );
-
-            // H1 highlight line
-            tl.fromTo(
-                "[data-hero-line-2]",
-                { y: 40, opacity: 0, rotateX: 15 },
-                { y: 0, opacity: 1, rotateX: 0, duration: 0.7 },
-                "-=0.45"
-            );
-
-            // SVG underline draws
-            tl.fromTo(
-                "[data-hero-underline] path",
-                { strokeDasharray: 300, strokeDashoffset: 300 },
-                { strokeDashoffset: 0, duration: 0.8, ease: "power2.inOut" },
-                "-=0.3"
-            );
-
-            // Description
-            tl.fromTo(
-                "[data-hero-desc]",
-                { y: 20, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.6 },
-                "-=0.4"
-            );
-
-            // Buttons stagger
-            tl.fromTo(
-                "[data-hero-btn]",
-                { y: 20, opacity: 0, scale: 0.95 },
-                { y: 0, opacity: 1, scale: 1, duration: 0.5, stagger: 0.12 },
-                "-=0.3"
-            );
-
-            // Stats chips stagger
-            tl.fromTo(
-                "[data-hero-stat]",
-                { y: 25, opacity: 0, scale: 0.92 },
-                { y: 0, opacity: 1, scale: 1, duration: 0.5, stagger: 0.1 },
-                "-=0.25"
-            );
-
-            // Trust strip
-            tl.fromTo(
-                "[data-hero-trust]",
-                { y: 15, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.5 },
-                "-=0.2"
-            );
-
-            // Hero image card
-            tl.fromTo(
-                "[data-hero-card]",
-                { x: 40, scale: 0.94, opacity: 0 },
-                { x: 0, scale: 1, opacity: 1, duration: 0.9, ease: "power2.out" },
-                0.3
-            );
-
-            // Floating cards
-            tl.fromTo(
-                "[data-hero-float]",
-                { y: 20, opacity: 0, scale: 0.9 },
-                { y: 0, opacity: 1, scale: 1, duration: 0.6, stagger: 0.15 },
-                "-=0.4"
-            );
-
-            // Continuous floating animation for decorative shapes
-            gsap.to("[data-float-slow]", {
-                y: -8,
-                duration: 3,
-                ease: "sine.inOut",
-                yoyo: true,
-                repeat: -1,
-            });
-
-            gsap.to("[data-float-med]", {
-                y: -12,
-                rotation: 5,
-                duration: 2.5,
-                ease: "sine.inOut",
-                yoyo: true,
-                repeat: -1,
-            });
-
-            gsap.to("[data-float-fast]", {
-                y: -6,
-                x: 4,
-                rotation: -3,
-                duration: 2,
-                ease: "sine.inOut",
-                yoyo: true,
-                repeat: -1,
-            });
-
-            // LL watermark subtle pulse
-            gsap.to("[data-hero-watermark]", {
-                scale: 1.02,
-                opacity: 0.55,
-                duration: 4,
-                ease: "sine.inOut",
-                yoyo: true,
-                repeat: -1,
-            });
-        }, section);
-
-        return () => ctx.revert();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     return (
         <section
-            ref={sectionRef}
             id="home"
             className="
                 relative
+                flex
+                min-h-[92vh]
+                items-center
                 overflow-hidden
-                bg-[#FFFFFF]
+                bg-[#0C0708]
                 px-4
-                pb-20
-                pt-28
+                pb-24
+                pt-32
                 sm:px-6
-                sm:pb-24
-                sm:pt-32
+                sm:pb-28
+                sm:pt-36
                 lg:px-8
-                lg:pb-28
-                lg:pt-36
+                lg:pb-32
+                lg:pt-40
             "
         >
-            {/* Red accent line */}
-            <div
+            {/* Full-bleed background video */}
+            <video
                 aria-hidden="true"
-                className="pointer-events-none absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#E01E31] to-transparent"
-            />
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster="./assets/images/love-laundry-hero.png"
+                className="
+                    pointer-events-none
+                    absolute
+                    inset-0
+                    h-full
+                    w-full
+                    object-cover
+                "
+            >
+                <source src={heroVideo} type="video/mp4" />
+            </video>
 
-            {/* Dramatic red gradient blob */}
+            {/* Brand-red wash to keep theme + boost text contrast */}
             <div
                 aria-hidden="true"
                 className="
                     pointer-events-none
                     absolute
                     inset-0
-                    bg-[radial-gradient(ellipse_50%_50%_at_15%_20%,rgba(224,30,49,0.08),transparent_60%)]
+                    bg-[radial-gradient(110%_90%_at_85%_0%,rgba(224,30,49,0.32),transparent_55%)]
+                "
+            />
+            <div
+                aria-hidden="true"
+                className="
+                    pointer-events-none
+                    absolute
+                    inset-0
+                    bg-[radial-gradient(80%_80%_at_0%_100%,rgba(227,161,60,0.14),transparent_55%)]
                 "
             />
 
-            {/* Decorative dot cluster */}
+            {/* Dark vignette / contrast gradient */}
             <div
                 aria-hidden="true"
-                data-float-slow
                 className="
                     pointer-events-none
                     absolute
-                    left-6
-                    top-36
-                    grid
-                    grid-cols-3
-                    gap-2.5
-                    opacity-50
-                    sm:left-12
-                    sm:top-44
-                    lg:left-16
-                "
-            >
-                {Array.from({ length: 9 }).map((_, i) => (
-                    <div
-                        key={i}
-                        className="h-2 w-2 rounded-full bg-[#E01E31]"
-                    />
-                ))}
-            </div>
-
-            {/* Large tan circle */}
-            <div
-                aria-hidden="true"
-                data-float-med
-                className="
-                    pointer-events-none
-                    absolute
-                    -left-32
-                    top-40
-                    h-72
-                    w-72
-                    rounded-full
-                    bg-[#E01E31]/[0.04]
-                    sm:h-96
-                    sm:w-96
+                    inset-0
+                    bg-[linear-gradient(180deg,rgba(12,7,8,0.55),rgba(12,7,8,0.35)_30%,rgba(12,7,8,0.45)_65%,rgba(12,7,8,0.92))]
                 "
             />
 
-            {/* Ring */}
-            <div
-                aria-hidden="true"
-                data-float-fast
-                className="
-                    pointer-events-none
-                    absolute
-                    -right-20
-                    -top-20
-                    h-64
-                    w-64
-                    rounded-full
-                    border-[18px]
-                    border-[#E01E31]/10
-                    sm:h-80
-                    sm:w-80
-                "
-            />
-
-            {/* Floating diamond */}
-            <div
-                aria-hidden="true"
-                data-float-med
-                className="
-                    pointer-events-none
-                    absolute
-                    right-[18%]
-                    top-[22%]
-                    hidden
-                    rotate-45
-                    border
-                    border-[#E01E31]/30
-                    bg-[#E01E31]/[0.08]
-                    sm:block
-                    lg:right-[15%]
-                    lg:top-[18%]
-                "
-            >
-                <div className="h-7 w-7 sm:h-7 sm:w-7" />
-            </div>
-
-            {/* Cross shape */}
-            <div
-                aria-hidden="true"
-                data-float-slow
-                className="
-                    pointer-events-none
-                    absolute
-                    left-[8%]
-                    top-[55%]
-                    hidden
-                    text-[#E01E31]/20
-                    sm:block
-                    lg:left-[6%]
-                "
-            >
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <line x1="10" y1="0" x2="10" y2="20" stroke="currentColor" strokeWidth="2" />
-                    <line x1="0" y1="10" x2="20" y2="10" stroke="currentColor" strokeWidth="2" />
-                </svg>
-            </div>
-
-            {/* Small circle */}
-            <div
-                aria-hidden="true"
-                data-float-fast
-                className="
-                    pointer-events-none
-                    absolute
-                    right-[10%]
-                    bottom-[15%]
-                    hidden
-                    h-3
-                    w-3
-                    rounded-full
-                    border-2
-                    border-[#E01E31]/20
-                    sm:block
-                "
-            />
-
-            <div
-                className="
-                    relative
-                    mx-auto
-                    grid
-                    w-full
-                    max-w-[1440px]
-                    items-center
-                    gap-16
-                    lg:grid-cols-[1fr_1.05fr]
-                    lg:gap-20
-                "
-            >
+            <div className="relative mx-auto w-full max-w-[1440px]">
                 <div
-                    data-hero-text
-                    className="relative z-10 mx-auto w-full max-w-2xl text-center lg:mx-0 lg:text-left"
+                    ref={textRef}
+                    className="relative z-10 max-w-2xl"
                 >
-                    {/* LL watermark */}
                     <div
-                        aria-hidden="true"
-                        data-hero-watermark
+                        data-reveal
                         className="
-                            pointer-events-none
-                            absolute
-                            -left-6
-                            -top-10
-                            select-none
-                            font-display
-                            text-[200px]
-                            font-bold
-                            leading-none
-                            tracking-tight
-                            text-[#E01E31]/[0.04]
-                            sm:text-[260px]
-                            lg:-left-10
-                            lg:text-[320px]
-                        "
-                    >
-                        LL
-                    </div>
-
-                    {/* Badge */}
-                    <div
-                        data-hero-badge
-                        className="
-                            relative
-                            mb-7
                             inline-flex
                             items-center
                             gap-2.5
                             rounded-full
-                            bg-[#E01E31]
+                            border
+                            border-white/15
+                            bg-white/5
                             px-4
                             py-2
                             text-[11px]
                             font-bold
                             uppercase
-                            tracking-[0.14em]
+                            tracking-[0.16em]
                             text-white
-                            shadow-[0_0_20px_rgba(224,30,49,0.3),0_8px_20px_rgba(224,30,49,0.28)]
+                            backdrop-blur-sm
                             sm:text-xs
                         "
                     >
-                        <RiHeart3Fill className="h-3.5 w-3.5" />
+                        <RiHeart3Fill className="h-3.5 w-3.5 text-[#E01E31]" />
                         {t("heroBadge")}
                     </div>
 
-                    {/* Heading */}
                     <h1
                         className="
-                            relative
                             font-display
-                            text-[50px]
+                            mt-6
+                            text-[46px]
                             font-semibold
                             leading-[1.02]
                             tracking-[-0.02em]
-                            text-[#000000]
+                            text-white
                             sm:text-6xl
                             md:text-7xl
-                            lg:text-[76px]
+                            lg:text-[78px]
                             xl:text-[88px]
                         "
                     >
-                        <span data-hero-line-1 className="block">
+                        <span data-reveal className="block">
                             {t("heroTitleMain")}
                         </span>
-
-                        <span className="relative inline-block text-[#E01E31]">
-                            <span data-hero-line-2 className="block">
-                                {t("heroTitleHighlight")}
-                            </span>
-
+                        <span
+                            data-reveal
+                            className="relative inline-block text-[#E01E31]"
+                        >
+                            {t("heroTitleHighlight")}
                             <svg
                                 aria-hidden="true"
-                                data-hero-underline
-                                viewBox="0 0 220 14"
+                                viewBox="0 0 240 14"
                                 className="
                                     absolute
                                     -bottom-1
@@ -442,51 +182,43 @@ const Hero = () => {
                                 preserveAspectRatio="none"
                             >
                                 <path
-                                    d="M4 10 C 60 2, 160 2, 216 8"
+                                    d="M4 10 C 70 2, 170 2, 236 8"
                                     fill="none"
-                                    stroke="#E01E31"
+                                    stroke="#E3A13C"
                                     strokeWidth="6"
                                     strokeLinecap="round"
-                                    opacity="0.4"
+                                    opacity="0.85"
                                 />
                             </svg>
                         </span>
                     </h1>
 
-                    {/* Description */}
                     <p
-                        data-hero-desc
+                        data-reveal
                         className="
-                            relative
-                            mx-auto
                             mt-7
                             max-w-xl
                             text-base
                             leading-8
-                            text-[#404040]
+                            text-white/70
                             sm:text-lg
-                            lg:mx-0
                         "
                     >
                         {t("heroDescription")}
                     </p>
 
-                    {/* Buttons */}
                     <div
+                        data-reveal
                         className="
-                            relative
                             mt-9
                             flex
                             flex-col
                             gap-3
                             sm:flex-row
-                            sm:justify-center
-                            lg:justify-start
                         "
                     >
                         <button
                             type="button"
-                            data-hero-btn
                             onClick={() => scrollTo("contact")}
                             className="
                                 flex
@@ -501,12 +233,12 @@ const Hero = () => {
                                 text-sm
                                 font-bold
                                 text-white
-                                shadow-[0_14px_34px_rgba(224,30,49,0.34)]
+                                shadow-[0_14px_34px_rgba(224,30,49,0.4)]
                                 transition-all
                                 duration-200
                                 hover:-translate-y-0.5
                                 hover:bg-[#C11324]
-                                hover:shadow-[0_18px_44px_rgba(224,30,49,0.45)]
+                                hover:shadow-[0_18px_44px_rgba(224,30,49,0.55)]
                                 sm:w-auto
                             "
                         >
@@ -516,7 +248,6 @@ const Hero = () => {
 
                         <button
                             type="button"
-                            data-hero-btn
                             onClick={() => scrollTo("services")}
                             className="
                                 flex
@@ -527,17 +258,18 @@ const Hero = () => {
                                 gap-2.5
                                 rounded-full
                                 border-2
-                                border-[#000000]
-                                bg-[#FFFFFF]
+                                border-white/30
+                                bg-white/5
                                 px-9
                                 text-sm
                                 font-bold
-                                text-[#000000]
+                                text-white
+                                backdrop-blur-sm
                                 transition-all
                                 duration-200
                                 hover:-translate-y-0.5
-                                hover:bg-[#000000]
-                                hover:text-[#FFFFFF]
+                                hover:border-white/60
+                                hover:bg-white/10
                                 sm:w-auto
                             "
                         >
@@ -546,260 +278,58 @@ const Hero = () => {
                         </button>
                     </div>
 
-                    {/* Stats chips */}
+                    {/* Stats */}
                     <div
+                        data-reveal
                         className="
-                            relative
-                            mx-auto
                             mt-12
                             grid
                             max-w-xl
                             grid-cols-3
                             gap-3
                             sm:gap-4
-                            lg:mx-0
                         "
                     >
                         {stats.map((stat, index) => (
                             <div
                                 key={index}
-                                data-hero-stat
                                 className="
-                                    relative
                                     flex
                                     flex-col
-                                    items-center
+                                    items-start
                                     gap-2
                                     rounded-2xl
                                     border
-                                    border-[#E5E5E5]/80
-                                    bg-white
-                                    px-3
+                                    border-white/10
+                                    bg-white/5
+                                    px-4
                                     py-5
-                                    shadow-[0_4px_24px_rgba(0,0,0,0.06)]
-                                    sm:px-4
-                                    lg:items-start
-                                    lg:px-5
-                                    transition-all
-                                    duration-300
-                                    hover:shadow-[0_8px_32px_rgba(0,0,0,0.1)]
-                                    hover:-translate-y-0.5
+                                    backdrop-blur-sm
+                                    sm:px-5
                                 "
                             >
-                                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#E01E31]/10 text-[#E01E31]">
+                                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#E01E31]/20 text-[#E01E31]">
                                     <stat.icon className="h-5 w-5" />
                                 </div>
 
-                                <div className="font-display text-2xl font-bold tracking-tight text-[#000000] sm:text-3xl">
+                                <div className="font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
                                     {stat.value}
                                 </div>
 
-                                <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#404040] sm:text-[11px]">
+                                <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-white/60 sm:text-[11px]">
                                     {stat.label}
                                 </div>
                             </div>
                         ))}
                     </div>
-
-                    {/* Trust strip */}
-                    <button
-                        type="button"
-                        data-hero-trust
-                        onClick={() => scrollTo("partners")}
-                        className="
-                            relative
-                            mx-auto
-                            mt-8
-                            inline-flex
-                            items-center
-                            gap-3
-                            rounded-full
-                            border
-                            border-[#E5E5E5]
-                            bg-white
-                            px-6
-                            py-3
-                            shadow-[0_4px_16px_rgba(0,0,0,0.06)]
-                            transition-all
-                            duration-200
-                            hover:border-[#E01E31]/30
-                            hover:shadow-[0_8px_24px_rgba(0,0,0,0.1)]
-                            sm:mt-9
-                            lg:mx-0
-                        "
-                    >
-                        <div className="flex -space-x-2">
-                            <div className="h-5 w-5 rounded-full border-2 border-white bg-[#E01E31]/10" />
-                            <div className="h-5 w-5 rounded-full border-2 border-white bg-[#FEF2F2]" />
-                            <div className="h-5 w-5 rounded-full border-2 border-white bg-[#E5E5E5]" />
-                        </div>
-
-                        <span className="hidden text-[11px] font-bold text-[#000000] sm:inline sm:text-xs">
-                            {t("heroTrustDesktop")}
-                        </span>
-
-                        <span className="text-[11px] font-bold text-[#000000] sm:hidden sm:text-xs">
-                            {t("heroTrustStrip")}
-                        </span>
-
-                        <span className="hidden text-[10px] text-[#737373] lg:inline">
-                            {t("heroMore")}
-                        </span>
-
-                        <RiArrowRightLine className="h-3 w-3 text-[#E01E31]" />
-                    </button>
-                </div>
-
-                {/* Image card */}
-                <div
-                    data-hero-card
-                    className="relative mx-auto w-full max-w-[560px]"
-                >
-                    <div
-                        aria-hidden="true"
-                        className="
-                            absolute
-                            -right-3
-                            -top-3
-                            hidden
-                            h-48
-                            w-48
-                            rounded-[36px]
-                            bg-gradient-to-br
-                            from-[#E01E31]
-                            to-[#C11324]
-                            shadow-[0_20px_60px_rgba(224,30,49,0.25)]
-                            sm:block
-                            lg:-right-6
-                            lg:-top-6
-                        "
-                    >
-                        <div className="absolute inset-0 flex items-center justify-center opacity-15">
-                            <span className="font-display text-7xl font-bold text-white sm:text-8xl">
-                                LL
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="relative overflow-hidden rounded-[36px] bg-gradient-to-br from-[#F5F5F5] to-[#FEF2F2] p-5 sm:p-7">
-                        <div
-                            aria-hidden="true"
-                            className="
-                                pointer-events-none
-                                absolute
-                                inset-3
-                                rounded-[28px]
-                                border
-                                border-[#E01E31]/10
-                                sm:inset-5
-                                sm:rounded-[30px]
-                            "
-                        />
-                        <div className="relative overflow-hidden rounded-t-full">
-                            <div className="relative aspect-[1/1.15]">
-                                <img
-                                    src="./assets/images/love-laundry-hero.png"
-                                    alt="Love Laundry pickup and laundry service"
-                                    style={{
-                                        filter: "sepia(0.14) saturate(1.08) contrast(1.02)",
-                                    }}
-                                    className="absolute inset-0 h-full w-full object-cover"
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Rating float card */}
-                    <div
-                        data-hero-float
-                        className="
-                            absolute
-                            -bottom-7
-                            left-1/2
-                            flex
-                            w-[calc(100%-2.5rem)]
-                            max-w-[400px]
-                            -translate-x-1/2
-                            items-center
-                            justify-between
-                            gap-3
-                            rounded-2xl
-                            border
-                            border-[#E5E5E5]
-                            bg-[#FFFFFF]
-                            px-7
-                            py-5
-                            shadow-[0_20px_60px_rgba(0,0,0,0.15)]
-                            sm:-translate-x-0
-                            sm:left-auto
-                            sm:right-6
-                        "
-                    >
-                        <div className="flex items-center gap-3">
-                            <div className="flex shrink-0 items-center gap-0.5">
-                                {Array.from({ length: 5 }).map((_, index) => (
-                                    <RiStarFill
-                                        key={index}
-                                        className="h-4 w-4 text-[#E3A13C]"
-                                    />
-                                ))}
-                            </div>
-
-                            <div className="text-xs font-bold text-[#000000]">
-                                4.9 / 5
-                            </div>
-                        </div>
-
-                        <div className="text-right">
-                            <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#404040]">
-                                {t("heroNextPickup")}
-                            </div>
-
-                            <div className="mt-0.5 text-xs font-bold text-[#E01E31]">
-                                {t("heroScheduleToday")}
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Time float card */}
-                    <div
-                        data-hero-float
-                        className="
-                            absolute
-                            -left-3
-                            top-8
-                            hidden
-                            rotate-[-8deg]
-                            items-center
-                            gap-2
-                            rounded-full
-                            border
-                            border-[#E5E5E5]
-                            bg-[#FFFFFF]
-                            px-4
-                            py-2
-                            shadow-[0_14px_34px_rgba(0,0,0,0.16)]
-                            sm:flex
-                            lg:-left-8
-                        "
-                    >
-                        <div className="h-2 w-2 rounded-full bg-[#E01E31]" />
-                        <RiTimeFill className="h-4 w-4 text-[#E01E31]" />
-
-                        <span className="text-xs font-bold text-[#000000]">
-                            24/7
-                        </span>
-                    </div>
                 </div>
             </div>
 
-            {/* Scroll down indicator */}
+            {/* Scroll indicator */}
             <button
                 type="button"
-                data-hero-scroll
                 onClick={() => scrollTo("services")}
                 className="
-                    pointer-events-auto
                     absolute
                     bottom-6
                     left-1/2
@@ -808,7 +338,7 @@ const Hero = () => {
                     flex-col
                     items-center
                     gap-1
-                    text-[#737373]
+                    text-white/60
                     transition-colors
                     hover:text-[#E01E31]
                     sm:bottom-8

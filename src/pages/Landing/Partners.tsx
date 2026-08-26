@@ -12,7 +12,7 @@ import { useLanguage } from "../../i18n";
 
 const Partners = () => {
     const { t } = useLanguage();
-    const cardsRef = useReveal<HTMLDivElement>({ y: 20, stagger: 0.06 });
+    const cardsRef = useReveal<HTMLDivElement>({ x: -40, y: 0, stagger: 0.06 });
     const [selected, setSelected] = useState<Partner | null>(null);
 
     return (
@@ -22,11 +22,11 @@ const Partners = () => {
                 relative
                 bg-[#FFFFFF]
                 px-4
-                py-16
+                py-12
                 sm:px-6
-                sm:py-24
+                sm:py-16
                 lg:px-8
-                lg:py-28
+                lg:py-20
             "
         >
             <div className="relative mx-auto w-full max-w-[1440px]">
@@ -35,6 +35,7 @@ const Partners = () => {
                     main={t("partnersTitleMain")}
                     highlight={t("partnersTitleHighlight")}
                     description={t("partnersDescription")}
+                    centered
                 />
 
                 <div

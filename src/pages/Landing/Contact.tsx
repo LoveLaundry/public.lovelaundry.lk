@@ -20,12 +20,11 @@ const Contact = () => {
                 overflow-hidden
                 bg-[#000000]
                 px-4
-                pb-20
-                pt-4
+                py-12
                 sm:px-6
-                sm:pb-24
+                sm:py-16
                 lg:px-8
-                lg:pb-28
+                lg:py-20
             "
         >
             <div className="relative mx-auto w-full max-w-[1440px]">

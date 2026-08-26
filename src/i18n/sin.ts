@@ -200,6 +200,12 @@ const sin: Record<string, string> = {
     contactCustomers: "පාරිභෝගිකයින්",
     contactRating: "ශ්‍රේණිගත කිරීම",
 
+    // Booking Banner
+    bookTitle: "WhatsApp ඔස්සේ ඇණවුම් කරන්න",
+    bookDesc: "WhatsApp එකෙන් අපට පණිවිඩයක් යවන්න, අපි ඔබේ එකතු කිරීම විනාඩි කිහිපයකින් සැකස් කරමු.",
+    bookCta: "WhatsApp හි කතා කරන්න",
+    bookTrusted: "පරිශීලකයින් 200+ ක් කැමති · 4.9★",
+
     // Footer
     footerHome: "මුල් පිටුව",
     footerServices: "සේවා",
@@ -209,6 +215,9 @@ const sin: Record<string, string> = {
     footerCareers: "වෘත්තිය",
     footerContact: "සම්බන්ධ වන්න",
     footerRights: "සියලුම හිමිකම් ඇවිරිණි.",
+    footerCtaTitle: "洗衣 දෙන දෙන?",
+    footerCtaSub: "WhatsApp එකෙන් අපට පණිවිඩයක් යවන්න — අපි වහාම පිළිතුරු දෙමු.",
+    footerTrustedBy: "මහත් දැඩි නිවාස වලින් විශ්වාස කරනු ලබන",
 
     // Chat Widget
     chatTitle: "ලව් ලෝන්ඩ්‍රි සහායක",

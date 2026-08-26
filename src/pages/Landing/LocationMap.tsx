@@ -590,15 +590,26 @@ const LocationMap = () => {
             id="locations"
             className="
                 relative
-                bg-white
+                overflow-hidden
+                bg-[#0C0708]
                 px-4
-                py-16
+                py-12
                 sm:px-6
-                sm:py-24
+                sm:py-16
                 lg:px-8
-                lg:py-28
+                lg:py-20
             "
         >
+            {/* Warm brand glow */}
+            <div
+                aria-hidden="true"
+                className="
+                    pointer-events-none
+                    absolute
+                    inset-0
+                    bg-[radial-gradient(70%_60%_at_0%_0%,rgba(224,30,49,0.16),transparent_60%)]
+                "
+            />
             <div className="relative mx-auto w-full max-w-[1440px]">
                 {/* Section Header */}
                 <div ref={sectionRef} data-reveal className="mb-10 sm:mb-14">
@@ -626,7 +637,7 @@ const LocationMap = () => {
                             font-semibold
                             leading-[1.1]
                             tracking-[-0.02em]
-                            text-[#000000]
+                            text-white
                             sm:text-4xl
                             lg:text-5xl
                         "
@@ -634,7 +645,7 @@ const LocationMap = () => {
                         {t("mapTitle")}
                         <span className="text-[#E01E31]"> {t("mapTitleHighlight")}</span>
                     </h2>
-                    <p className="mt-4 max-w-xl text-sm leading-relaxed text-[#404040] sm:text-base">
+                    <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/65 sm:text-base">
                         {t("mapDescription")}
                     </p>
                 </div>
@@ -650,9 +661,11 @@ const LocationMap = () => {
                         overflow-hidden
                         rounded-3xl
                         border
-                        border-[#E5E5E5]
+                        border-white/10
                         bg-white
-                        shadow-[0_16px_48px_rgba(0,0,0,0.08)]
+                        p-2
+                        shadow-[0_16px_48px_rgba(0,0,0,0.3)]
+                        sm:p-3
                         lg:flex-row
                     "
                 >

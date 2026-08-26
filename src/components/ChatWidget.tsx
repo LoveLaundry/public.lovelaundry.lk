@@ -7,6 +7,7 @@ import {
     RiUser3Line,
 } from "react-icons/ri";
 import { useLanguage } from "../i18n";
+import { fetchBotReply } from "../lib/chatApi";
 
 interface Message {
     id: string;
@@ -76,7 +77,7 @@ function getBotResponse(userMessage: string): string {
 }
 
 const ChatWidget = () => {
-    const { t } = useLanguage();
+    const { t, lang } = useLanguage();
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState("");
@@ -107,7 +108,19 @@ const ChatWidget = () => {
         }
     }, [isOpen, hasGreeted, t]);
 
-    const sendMessage = useCallback(() => {
+    const getReply = useCallback(
+        async (text: string): Promise<string> => {
+            try {
+                return await fetchBotReply(text, lang);
+            } catch {
+                // Backend unreachable — fall back to the local rule-based bot.
+                return getBotResponse(text);
+            }
+        },
+        [lang]
+    );
+
+    const sendMessage = useCallback(async () => {
         const text = input.trim();
         if (!text) return;
 
@@ -123,8 +136,8 @@ const ChatWidget = () => {
         setIsTyping(true);
 
         const delay = 600 + Math.random() * 800;
-        setTimeout(() => {
-            const botResponse = getBotResponse(text);
+        setTimeout(async () => {
+            const botResponse = await getReply(text);
             const botMsg: Message = {
                 id: crypto.randomUUID(),
                 text: botResponse,
@@ -134,7 +147,7 @@ const ChatWidget = () => {
             setMessages((prev) => [...prev, botMsg]);
             setIsTyping(false);
         }, delay);
-    }, [input]);
+    }, [input, getReply]);
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === "Enter" && !e.shiftKey) {
@@ -309,9 +322,9 @@ const ChatWidget = () => {
                             <button
                                 key={value}
                                 type="button"
-                                onClick={() => {
+                                onClick={async () => {
                                     setInput(label);
-                                    setTimeout(() => {
+                                    setTimeout(async () => {
                                         const userMsg: Message = {
                                             id: crypto.randomUUID(),
                                             text: label,
@@ -321,10 +334,10 @@ const ChatWidget = () => {
                                         setMessages((prev) => [...prev, userMsg]);
                                         setInput("");
                                         setIsTyping(true);
-                                        setTimeout(() => {
+                                        setTimeout(async () => {
                                             const botMsg: Message = {
                                                 id: crypto.randomUUID(),
-                                                text: getBotResponse(value),
+                                                text: await getReply(value),
                                                 sender: "bot",
                                                 timestamp: new Date(),
                                             };

@@ -6,7 +6,7 @@ import SectionHeader from "./SectionHeader";
 
 const Process = () => {
     const { t } = useLanguage();
-    const stepsRef = useReveal<HTMLDivElement>({ y: 30, stagger: 0.1 });
+    const stepsRef = useReveal<HTMLDivElement>({ x: -40, y: 0, stagger: 0.1 });
 
     const stepKeys = [
         { titleKey: "processStep1Title", textKey: "processStep1Text" },
@@ -20,14 +20,15 @@ const Process = () => {
             id="process"
             className="
                 relative
-                bg-[#FFFFFF]
-                bg-[radial-gradient(circle_at_80%_50%,rgba(224,30,49,0.04),transparent_50%)]
+                overflow-hidden
+                bg-[#0C0708]
+                bg-[radial-gradient(circle_at_80%_50%,rgba(224,30,49,0.14),transparent_50%)]
                 px-4
-                py-16
+                py-12
                 sm:px-6
-                sm:py-24
+                sm:py-16
                 lg:px-8
-                lg:py-28
+                lg:py-20
             "
         >
             <div className="relative mx-auto w-full max-w-[1440px]">
@@ -35,6 +36,8 @@ const Process = () => {
                     badge={t("processBadge")}
                     main={t("processTitleMain")}
                     highlight={t("processTitleHighlight")}
+                    centered
+                    dark
                 />
 
                 <div
@@ -43,7 +46,7 @@ const Process = () => {
                         mt-12
                         flex
                         flex-col
-                        gap-5
+                        gap-4
                         sm:mt-14
                         sm:flex-row
                         sm:flex-wrap
@@ -63,15 +66,15 @@ const Process = () => {
                                     overflow-hidden
                                     rounded-3xl
                                     border
-                                    border-[#E5E5E5]
-                                    bg-[#FFFFFF]
+                                    border-white/10
+                                    bg-white/5
                                     p-7
-                                    shadow-[0_2px_12px_rgba(0,0,0,0.06)]
+                                    shadow-[0_2px_12px_rgba(0,0,0,0.2)]
                                     transition-all
                                     duration-300
                                     hover:-translate-y-1.5
                                     hover:border-[#E01E31]/40
-                                    hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)]
+                                    hover:shadow-[0_12px_32px_rgba(0,0,0,0.4)]
                                 "
                             >
                                 <div
@@ -86,10 +89,10 @@ const Process = () => {
                                         font-bold
                                         leading-none
                                         tracking-tight
-                                        text-[#F5F5F5]
+                                        text-white/10
                                         transition-colors
                                         duration-300
-                                        group-hover:text-[#FEF2F2]
+                                        group-hover:text-[#E01E31]/20
                                     "
                                 >
                                     {step.number}
@@ -131,7 +134,7 @@ const Process = () => {
                                         text-xl
                                         font-semibold
                                         tracking-tight
-                                        text-[#000000]
+                                        text-white
                                     "
                                 >
                                     {t(stepKeys[index].titleKey)}
@@ -142,7 +145,7 @@ const Process = () => {
                                         mt-2
                                         text-sm
                                         leading-6
-                                        text-[#404040]
+                                        text-white/65
                                     "
                                 >
                                     {t(stepKeys[index].textKey)}
@@ -162,7 +165,7 @@ const Process = () => {
                                         lg:flex
                                     "
                                 >
-                                    <div className="h-0 w-full border-t-2 border-dashed border-[#E01E31]/15" />
+                                    <div className="h-0 w-full border-t-2 border-dashed border-[#E01E31]/20" />
                                 </div>
                             );
                             return [card, separator];
@@ -174,30 +177,30 @@ const Process = () => {
                 {/* Bottom CTA */}
                 <div
                     className="
-                        mt-12
+                        mt-10
                         flex
                         flex-col
                         items-center
                         gap-4
                         rounded-2xl
                         border
-                        border-[#E5E5E5]
-                        bg-[#FFFFFF]
+                        border-white/10
+                        bg-white/5
                         px-6
                         py-8
                         text-center
-                        shadow-[0_4px_20px_rgba(0,0,0,0.08)]
+                        shadow-[0_4px_20px_rgba(0,0,0,0.2)]
                         sm:flex-row
                         sm:justify-between
                         sm:text-left
-                        lg:mt-16
+                        lg:mt-14
                     "
                 >
                     <div>
-                        <h3 className="font-display text-lg font-semibold text-[#000000]">
+                        <h3 className="font-display text-lg font-semibold text-white">
                             {t("processCtaTitle")}
                         </h3>
-                        <p className="mt-1 text-sm text-[#404040]">
+                        <p className="mt-1 text-sm text-white/65">
                             {t("processCtaSub")}
                         </p>
                     </div>
