@@ -22,11 +22,11 @@ const Services = () => {
                 relative
                 bg-[#FAFAFA]
                 px-4
-                py-16
+                py-12
                 sm:px-6
-                sm:py-24
+                sm:py-16
                 lg:px-8
-                lg:py-28
+                lg:py-20
             "
         >
             {/* Subtle dot pattern */}

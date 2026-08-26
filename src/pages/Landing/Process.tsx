@@ -23,11 +23,11 @@ const Process = () => {
                 bg-[#FFFFFF]
                 bg-[radial-gradient(circle_at_80%_50%,rgba(224,30,49,0.04),transparent_50%)]
                 px-4
-                py-16
+                py-12
                 sm:px-6
-                sm:py-24
+                sm:py-16
                 lg:px-8
-                lg:py-28
+                lg:py-20
             "
         >
             <div className="relative mx-auto w-full max-w-[1440px]">
