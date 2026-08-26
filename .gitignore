@@ -16,8 +16,6 @@ dist-ssr
 .env
 .env.*
 !.env.example
-bot/.env
-bot/dist
 
 
 # Editor directories and files
