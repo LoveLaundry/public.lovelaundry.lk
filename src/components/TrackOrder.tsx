@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { X, Package, Search, Check } from "react-icons/ri"
+import { RiCloseLine, RiArchiveLine, RiSearchLine } from "react-icons/ri"
 import { fetchOrderTracking, type OrderTracking } from "../lib/orderApi"
 
 const STAGE_LABELS: Record<string, string> = {
@@ -85,7 +85,7 @@ export default function TrackOrder({ open, onClose }: TrackOrderProps) {
             <div className="flex items-center justify-between px-5 py-4 border-b border-[#F2F2F2]">
               <div className="flex items-center gap-2">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#FEF2F2] text-[#E01E31]">
-                  <Package className="h-4 w-4" />
+                  <RiArchiveLine className="h-4 w-4" />
                 </div>
                 <h3 className="text-[15px] font-semibold text-[#111827]">
                   Track your order
@@ -96,7 +96,7 @@ export default function TrackOrder({ open, onClose }: TrackOrderProps) {
                 className="p-1.5 rounded-lg hover:bg-[#F5F5F5] cursor-pointer"
                 aria-label="Close"
               >
-                <X className="h-4 w-4 text-[#737373]" />
+                <RiCloseLine className="h-4 w-4 text-[#737373]" />
               </button>
             </div>
 
@@ -120,7 +120,7 @@ export default function TrackOrder({ open, onClose }: TrackOrderProps) {
                   {loading ? (
                     <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent" />
                   ) : (
-                    <Search className="h-4 w-4" />
+                    <RiSearchLine className="h-4 w-4" />
                   )}
                   Track
                 </button>
