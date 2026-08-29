@@ -4,9 +4,11 @@ import {
     RiMenuLine,
     RiCloseLine,
     RiArrowRightLine,
+    RiTruckLine,
 } from "react-icons/ri";
 import type { ActionType } from "../../types/action";
 import { useLanguage } from "../../i18n";
+import TrackOrder from "../../components/TrackOrder";
 
 interface NavbarProps {
     actions: ActionType[];
@@ -14,6 +16,7 @@ interface NavbarProps {
 
 const Navbar = ({ actions }: NavbarProps) => {
     const [open, setOpen] = useState(false);
+    const [trackOpen, setTrackOpen] = useState(false);
     const { t, lang, setLang } = useLanguage();
     const [activeSection, setActiveSection] = useState(
         actions[0]?.id ?? "home"
@@ -153,6 +156,15 @@ const Navbar = ({ actions }: NavbarProps) => {
                                 );
                             })}
                         </div>
+
+                        <button
+                            type="button"
+                            onClick={() => setTrackOpen(true)}
+                            className="ml-2 hidden items-center gap-1.5 rounded-full border border-[#E5E5E5] bg-[#FFFFFF] px-3.5 py-2 text-[12px] font-bold text-[#404040] transition-all duration-200 hover:border-[#F3C7CE] hover:bg-[#FEF2F2] hover:text-[#E01E31] lg:flex lg:px-4 lg:py-2.5 lg:text-[13px]"
+                        >
+                            <RiTruckLine className="h-3.5 w-3.5 lg:h-4 lg:w-4" />
+                            Track Order
+                        </button>
 
                         <button
                             type="button"
@@ -357,6 +369,17 @@ const Navbar = ({ actions }: NavbarProps) => {
                                     <div className="p-1">
                                         <button
                                             type="button"
+                                            onClick={() => setTrackOpen(true)}
+                                            className="flex w-full items-center justify-center gap-2 rounded-lg border border-[#E5E5E5] bg-white px-4 py-3 text-sm font-bold text-[#E01E31] transition hover:bg-[#FEF2F2] sm:py-3.5"
+                                        >
+                                            <RiTruckLine className="h-4 w-4" />
+                                            Track Order
+                                        </button>
+                                    </div>
+
+                                    <div className="p-1">
+                                        <button
+                                            type="button"
                                             onClick={() =>
                                                 scrollTo("contact")
                                             }
@@ -411,6 +434,8 @@ const Navbar = ({ actions }: NavbarProps) => {
                     </AnimatePresence>
                 </div>
             </div>
+
+            <TrackOrder open={trackOpen} onClose={() => setTrackOpen(false)} />
         </header>
     );
 };
