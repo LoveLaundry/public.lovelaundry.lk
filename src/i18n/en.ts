@@ -200,6 +200,12 @@ const en = {
     contactCustomers: "Customers",
     contactRating: "Rating",
 
+    // Booking Banner
+    bookTitle: "Book via WhatsApp",
+    bookDesc: "Message us on WhatsApp and we'll arrange your pickup in minutes.",
+    bookCta: "Chat on WhatsApp",
+    bookTrusted: "Loved by 200+ customers · 4.9★",
+
     // Footer
     footerHome: "Home",
     footerServices: "Services",
@@ -209,6 +215,9 @@ const en = {
     footerCareers: "Careers",
     footerContact: "Contact",
     footerRights: "All rights reserved.",
+    footerCtaTitle: "Ready to hand off the laundry?",
+    footerCtaSub: "Message us on WhatsApp — we reply fast.",
+    footerTrustedBy: "Trusted by leading hotels",
 
     // Chat Widget
     chatTitle: "Love Laundry Assistant",

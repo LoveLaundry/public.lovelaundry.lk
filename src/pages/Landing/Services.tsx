@@ -6,7 +6,7 @@ import SectionHeader from "./SectionHeader";
 
 const Services = () => {
     const { t } = useLanguage();
-    const cardsRef = useReveal<HTMLDivElement>({ y: 30, stagger: 0.1 });
+    const cardsRef = useReveal<HTMLDivElement>({ x: 40, y: 0, stagger: 0.1 });
 
     const serviceKeys = [
         { titleKey: "serviceWashTitle", subtitleKey: "serviceWashSubtitle", descKey: "serviceWashDesc" },
@@ -22,11 +22,11 @@ const Services = () => {
                 relative
                 bg-[#FAFAFA]
                 px-4
-                py-16
+                py-12
                 sm:px-6
-                sm:py-24
+                sm:py-16
                 lg:px-8
-                lg:py-28
+                lg:py-20
             "
         >
             {/* Subtle dot pattern */}
@@ -47,6 +47,7 @@ const Services = () => {
                     badge={t("servicesBadge")}
                     main={t("servicesTitleMain")}
                     highlight={t("servicesTitleHighlight")}
+                    centered
                 />
 
                 <div
@@ -223,7 +224,7 @@ const Services = () => {
                         sm:flex-row
                         sm:justify-between
                         sm:text-left
-                        lg:mt-16
+                        lg:mt-14
                     "
                 >
                     <div>
