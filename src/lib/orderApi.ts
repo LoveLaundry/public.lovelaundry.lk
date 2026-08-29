@@ -37,11 +37,17 @@ function baseUrl(): string {
 export async function fetchOrderTracking(
   orderId: string,
 ): Promise<OrderTracking> {
-  const url = `${baseUrl()}/quotations/${encodeURIComponent(orderId)}/tracking`
-  const res = await fetch(url)
-  if (!res.ok) {
-    if (res.status === 404) throw new Error("We couldn't find an order with that ID.")
-    throw new Error(`Tracking unavailable (${res.status})`)
+  const byOrder = `${baseUrl()}/quotations/${encodeURIComponent(orderId)}/tracking`
+  let res = await fetch(byOrder)
+  if (res.ok) return (await res.json()) as OrderTracking
+
+  // Fall back to treating the input as a scanned QR tag code.
+  if (res.status === 404) {
+    const byTag = `${baseUrl()}/tags/${encodeURIComponent(orderId)}/tracking`
+    res = await fetch(byTag)
+    if (res.ok) return (await res.json()) as OrderTracking
   }
-  return (await res.json()) as OrderTracking
+
+  if (res.status === 404) throw new Error("We couldn't find an order with that ID or tag.")
+  throw new Error(`Tracking unavailable (${res.status})`)
 }
