@@ -19,7 +19,7 @@ export const mainLaundry: Location = {
     lat: 7.5758,
     lng: 79.7953,
     address: "Chilaw, Puttalam District, Sri Lanka",
-    phone: "+94700000000",
+    phone: "+94774200919",
     hours: "Mon - Sat: 8:00 AM - 6:00 PM",
 };
 

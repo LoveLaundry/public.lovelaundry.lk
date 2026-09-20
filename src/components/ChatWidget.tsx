@@ -113,7 +113,7 @@ const ChatWidget = () => {
                 // Backend unreachable — show a friendly local fallback.
                 const fallback: LocalMessage = {
                     id: crypto.randomUUID(),
-                    text: "Thanks for reaching out! Our team will get back to you shortly. If it's urgent, WhatsApp us at +94 77 420 0919.",
+                    text: "Thanks for reaching out! Our team will get back to you shortly. If it's urgent, WhatsApp us at +94 77 4200 919.",
                     sender: "bot",
                 };
                 setMessages((prev) => [...prev, fallback]);

@@ -3,8 +3,8 @@ const sin: Record<string, string> = {
     companyName: "ලව් ලෝන්ඩ්‍රි",
     companyTagline: "නැවුම්. පිරිසිදු. ආදරයෙන් බෙදා දෙනවා.",
     companyDescription: "වෘත්තීය ලෝන්ඩ්‍රි සේවාව",
-    phone: "+94700000000",
-    whatsapp: "+94700000000",
+    phone: "+94774200919",
+    whatsapp: "+94774200919",
     email: "info@lovelaundry.lk",
 
     // Navbar

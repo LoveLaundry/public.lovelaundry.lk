@@ -3,8 +3,8 @@ const en = {
     companyName: "Love Laundry",
     companyTagline: "Fresh. Clean. Delivered with love.",
     companyDescription: "Professional Laundry Service",
-    phone: "+94700000000",
-    whatsapp: "+94700000000",
+    phone: "+94774200919",
+    whatsapp: "+94774200919",
     email: "info@lovelaundry.lk",
 
     // Navbar
