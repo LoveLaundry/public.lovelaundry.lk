@@ -4,22 +4,31 @@
 
 @theme {
   --color-brand: #E01E31;
+  --color-brand-100: #FEE2E2;
+  --color-brand-200: #FECACA;
   --color-brand-dark: #C11324;
+  --color-brand-deep: #97121F;
   --color-brand-soft: #FEF2F2;
   --color-ink: #171717;
   --color-muted: #525252;
   --color-faint: #737373;
+  --color-subtle: #A3A3A3;
   --color-surface: #FFFFFF;
   --color-surface-muted: #FAFAFA;
   --color-card: #FFFFFF;
   --color-line: #E5E5E5;
+  --color-line-strong: #D4D4D4;
   --color-accent: #E3A13C;
   --color-surface-dark: #0C0708;
   --color-on-dark: #FFFFFF;
+  --color-info: #3B82F6;
+  --color-info-soft: #EFF6FF;
 }
 
 @layer base {
   :root {
+    --font-body: 'Cabin', 'Noto Sans Sinhala', system-ui, -apple-system, sans-serif;
+    --font-display: 'Fraunces', 'Noto Sans Sinhala', Georgia, 'Times New Roman', serif;
     --brand: var(--color-brand);
     --brand-dark: var(--color-brand-dark);
     --brand-soft: var(--color-brand-soft);
@@ -31,6 +40,13 @@
     --card: var(--color-card);
     --line: var(--color-line);
     --gold: var(--color-accent);
+    --brand-rgb: 224, 30, 49;
+    --brand-dark-rgb: 193, 19, 36;
+    --accent-rgb: 227, 161, 60;
+    --info-rgb: 59, 130, 246;
+    --night-rgb: 12, 7, 8;
+    --surface-rgb: 255, 255, 255;
+    --shadow-rgb: 0, 0, 0;
     --page-gutter: clamp(1rem, 4vw, 2.5rem);
     --content-width: 80rem;
     --section-space: clamp(3.5rem, 6vw, 5rem);
@@ -52,7 +68,7 @@
   }
 
   body {
-    font-family: 'Cabin', 'Noto Sans Sinhala', system-ui, -apple-system, sans-serif;
+    font-family: var(--font-body);
     background: var(--cream);
     color: var(--ink);
     margin: 0;
@@ -100,12 +116,12 @@ main.site-page > footer > div > div[class~="mx-auto"] {
 }
 
 .font-display {
-  font-family: 'Fraunces', 'Noto Sans Sinhala', Georgia, 'Times New Roman', serif;
+  font-family: var(--font-display);
   font-variation-settings: 'opsz' 72;
 }
 
 ::selection {
-  background: rgba(224, 30, 49, 0.15);
+  background: rgba(var(--brand-rgb), 0.15);
   color: var(--ink);
 }
 

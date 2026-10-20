@@ -53,7 +53,7 @@ const Hero = () => {
                 min-h-[92vh]
                 items-center
                 overflow-hidden
-                bg-[#0C0708]
+                bg-surface-dark
                 px-4
                 pb-24
                 pt-32
@@ -93,7 +93,7 @@ const Hero = () => {
                     pointer-events-none
                     absolute
                     inset-0
-                    bg-[radial-gradient(110%_90%_at_85%_0%,rgba(224,30,49,0.32),transparent_55%)]
+                    bg-[radial-gradient(110%_90%_at_85%_0%,rgba(var(--brand-rgb),0.32),transparent_55%)]
                 "
             />
             <div
@@ -102,7 +102,7 @@ const Hero = () => {
                     pointer-events-none
                     absolute
                     inset-0
-                    bg-[radial-gradient(80%_80%_at_0%_100%,rgba(227,161,60,0.14),transparent_55%)]
+                    bg-[radial-gradient(80%_80%_at_0%_100%,rgba(var(--accent-rgb),0.14),transparent_55%)]
                 "
             />
 
@@ -113,7 +113,7 @@ const Hero = () => {
                     pointer-events-none
                     absolute
                     inset-0
-                    bg-[linear-gradient(180deg,rgba(12,7,8,0.55),rgba(12,7,8,0.35)_30%,rgba(12,7,8,0.45)_65%,rgba(12,7,8,0.92))]
+                    bg-[linear-gradient(180deg,rgba(var(--night-rgb),0.55),rgba(var(--night-rgb),0.35)_30%,rgba(var(--night-rgb),0.45)_65%,rgba(var(--night-rgb),0.92))]
                 "
             />
 
@@ -130,20 +130,20 @@ const Hero = () => {
                             gap-2.5
                             rounded-full
                             border
-                            border-white/15
-                            bg-white/5
+                            border-on-dark/15
+                            bg-on-dark/5
                             px-4
                             py-2
                             text-[11px]
                             font-bold
                             uppercase
                             tracking-[0.16em]
-                            text-white
+                            text-on-dark
                             backdrop-blur-sm
                             sm:text-xs
                         "
                     >
-                        <RiHeart3Fill className="h-3.5 w-3.5 text-[#E01E31]" />
+                        <RiHeart3Fill className="h-3.5 w-3.5 text-brand" />
                         {t("heroBadge")}
                     </div>
 
@@ -155,7 +155,7 @@ const Hero = () => {
                             font-semibold
                             leading-[1.02]
                             tracking-[-0.02em]
-                            text-white
+                            text-on-dark
                             sm:text-6xl
                             md:text-7xl
                             lg:text-[78px]
@@ -167,7 +167,7 @@ const Hero = () => {
                         </span>
                         <span
                             data-reveal
-                            className="relative inline-block text-[#E01E31]"
+                            className="relative inline-block text-brand"
                         >
                             {t("heroTitleHighlight")}
                             <svg
@@ -187,7 +187,7 @@ const Hero = () => {
                                 <path
                                     d="M4 10 C 70 2, 170 2, 236 8"
                                     fill="none"
-                                    stroke="#E3A13C"
+                                    stroke="var(--color-accent)"
                                     strokeWidth="6"
                                     strokeLinecap="round"
                                     opacity="0.85"
@@ -203,7 +203,7 @@ const Hero = () => {
                             max-w-xl
                             text-base
                             leading-8
-                            text-white/70
+                            text-on-dark/70
                             sm:text-lg
                         "
                     >
@@ -231,17 +231,17 @@ const Hero = () => {
                                 justify-center
                                 gap-2.5
                                 rounded-full
-                                bg-[#E01E31]
+                                bg-brand
                                 px-9
                                 text-sm
                                 font-bold
-                                text-white
-                                shadow-[0_14px_34px_rgba(224,30,49,0.4)]
+                                text-on-dark
+                                shadow-[0_14px_34px_rgba(var(--brand-rgb),0.4)]
                                 transition-all
                                 duration-200
                                 hover:-translate-y-0.5
-                                hover:bg-[#C11324]
-                                hover:shadow-[0_18px_44px_rgba(224,30,49,0.55)]
+                                hover:bg-brand-dark
+                                hover:shadow-[0_18px_44px_rgba(var(--brand-rgb),0.55)]
                                 sm:w-auto
                             "
                         >
@@ -261,18 +261,18 @@ const Hero = () => {
                                 gap-2.5
                                 rounded-full
                                 border-2
-                                border-white/30
-                                bg-white/5
+                                border-on-dark/30
+                                bg-on-dark/5
                                 px-9
                                 text-sm
                                 font-bold
-                                text-white
+                                text-on-dark
                                 backdrop-blur-sm
                                 transition-all
                                 duration-200
                                 hover:-translate-y-0.5
-                                hover:border-white/60
-                                hover:bg-white/10
+                                hover:border-on-dark/60
+                                hover:bg-on-dark/10
                                 sm:w-auto
                             "
                         >
@@ -303,23 +303,23 @@ const Hero = () => {
                                     gap-2
                                     rounded-2xl
                                     border
-                                    border-white/10
-                                    bg-white/5
+                                    border-on-dark/10
+                                    bg-on-dark/5
                                     px-4
                                     py-5
                                     backdrop-blur-sm
                                     sm:px-5
                                 "
                             >
-                                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#E01E31]/20 text-[#E01E31]">
+                                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand/20 text-brand">
                                     <stat.icon className="h-5 w-5" />
                                 </div>
 
-                                <div className="font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
+                                <div className="font-display text-2xl font-bold tracking-tight text-on-dark sm:text-3xl">
                                     {stat.value}
                                 </div>
 
-                                <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-white/60 sm:text-[11px]">
+                                <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-on-dark/60 sm:text-[11px]">
                                     {stat.label}
                                 </div>
                             </div>
@@ -341,9 +341,9 @@ const Hero = () => {
                     flex-col
                     items-center
                     gap-1
-                    text-white/60
+                    text-on-dark/60
                     transition-colors
-                    hover:text-[#E01E31]
+                    hover:text-brand
                     sm:bottom-8
                 "
                 aria-label="Scroll down"

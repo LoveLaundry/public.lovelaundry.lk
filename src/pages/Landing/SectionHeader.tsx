@@ -20,7 +20,7 @@ const SectionHeader = ({
     const headerRef = useReveal<HTMLDivElement>({ y: 25 });
 
     const titleColor = dark ? "text-on-dark" : "text-ink";
-    const descColor = dark ? "text-white/65" : "text-muted";
+    const descColor = dark ? "text-on-dark/65" : "text-muted";
     const pillBg = dark ? "bg-brand/15" : "bg-brand-soft";
 
     if (centered) {
@@ -107,7 +107,7 @@ const SectionHeader = ({
             >
                 <span
                     aria-hidden="true"
-                    className="h-[3px] w-10 rounded-full bg-brand shadow-[0_0_8px_rgba(224,30,49,0.4)]"
+                    className="h-[3px] w-10 rounded-full bg-brand shadow-[0_0_8px_rgba(var(--brand-rgb),0.4)]"
                 />
 
                 {badge}

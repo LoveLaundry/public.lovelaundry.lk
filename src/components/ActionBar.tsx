@@ -36,10 +36,10 @@ const ActionBar = ({
                     rounded-[18px]
                     border
                     border-red-600
-                    bg-white
+                    bg-surface
                     px-2
                     py-2
-                    shadow-[0_10px_35px_rgba(0,0,0,0.5)]
+                    shadow-[0_10px_35px_rgba(var(--shadow-rgb),0.5)]
                     sm:gap-2
                     sm:px-3
                 "

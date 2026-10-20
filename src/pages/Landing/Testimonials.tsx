@@ -12,7 +12,7 @@ const Testimonials = () => {
             id="testimonials"
             className="
                 relative
-                bg-gradient-to-b from-white via-[#FEF2F2]/30 to-white
+                bg-gradient-to-b from-surface via-brand-soft/30 to-surface
                 px-4
                 py-12
                 sm:px-6
@@ -32,7 +32,7 @@ const Testimonials = () => {
                     h-80
                     w-80
                     rounded-full
-                    bg-[#FEF2F2]
+                    bg-brand-soft
                     opacity-40
                     blur-3xl
                     sm:h-96
@@ -68,15 +68,15 @@ const Testimonials = () => {
                                 flex-col
                                 rounded-3xl
                                 border
-                                border-[#E5E5E5]
-                                bg-[#FFFFFF]
+                                border-line
+                                bg-surface
                                 p-8
-                                shadow-[0_4px_20px_rgba(0,0,0,0.06)]
+                                shadow-[0_4px_20px_rgba(var(--shadow-rgb),0.06)]
                                 transition-all
                                 duration-300
                                 hover:-translate-y-1.5
-                                hover:border-[#E01E31]/40
-                                hover:shadow-[0_12px_36px_rgba(0,0,0,0.1)]
+                                hover:border-brand/40
+                                hover:shadow-[0_12px_36px_rgba(var(--shadow-rgb),0.1)]
                             "
                         >
                             <div
@@ -88,12 +88,12 @@ const Testimonials = () => {
                                     text-6xl
                                     font-bold
                                     leading-none
-                                    text-[#E01E31]/20
+                                    text-brand/20
                                     before:absolute
                                     before:-top-2
                                     before:left-4
                                     before:text-6xl
-                                    before:text-[#E01E31]/20
+                                    before:text-brand/20
                                     before:font-display
                                 "
                             >
@@ -105,7 +105,7 @@ const Testimonials = () => {
                                     (_, index) => (
                                         <RiStarFill
                                             key={index}
-                                            className="h-[18px] w-[18px] text-[#E3A13C]"
+                                            className="h-[18px] w-[18px] text-accent"
                                         />
                                     )
                                 )}
@@ -118,7 +118,7 @@ const Testimonials = () => {
                                     text-base
                                     font-semibold
                                     leading-7
-                                    text-[#000000]
+                                    text-ink
                                 "
                             >
                                 {t(`testimonial${num}Quote`)}
@@ -132,7 +132,7 @@ const Testimonials = () => {
                                     gap-3
                                     border-t
                                     border-transparent
-                                    bg-gradient-to-r from-transparent via-[#E01E31]/20 to-transparent
+                                    bg-gradient-to-r from-transparent via-brand/20 to-transparent
                                     pt-5
                                 "
                             >
@@ -145,10 +145,10 @@ const Testimonials = () => {
                                         items-center
                                         justify-center
                                         rounded-full
-                                        bg-[#E01E31]
+                                        bg-brand
                                         text-sm
                                         font-bold
-                                        text-white
+                                        text-on-dark
                                     "
                                 >
                                     {t(`testimonial${num}Name`)
@@ -159,11 +159,11 @@ const Testimonials = () => {
                                 </div>
 
                                 <div>
-                                    <div className="text-sm font-bold text-[#000000]">
+                                    <div className="text-sm font-bold text-ink">
                                         {t(`testimonial${num}Name`)}
                                     </div>
 
-                                    <div className="mt-0.5 text-xs text-[#737373]">
+                                    <div className="mt-0.5 text-xs text-faint">
                                         {t(`testimonial${num}Service`)} ·{" "}
                                         {t(`testimonial${num}Location`)}
                                     </div>

@@ -80,7 +80,7 @@ const Navbar = ({ actions }: NavbarProps) => {
     return (
         <header className="fixed inset-x-0 top-0 z-50">
             <div className="mx-auto w-full max-w-[1440px] px-3 pt-3 sm:px-4 sm:pt-4 lg:px-6">
-                <div className="relative flex min-h-[60px] items-center justify-between rounded-full border border-line bg-surface px-3 shadow-[0_4px_20px_rgba(23,23,23,0.08)] sm:min-h-[64px] sm:px-4 md:px-5 lg:min-h-[68px]">
+                <div className="relative flex min-h-[60px] items-center justify-between rounded-full border border-line bg-surface px-3 shadow-[0_4px_20px_rgba(var(--shadow-rgb),0.08)] sm:min-h-[64px] sm:px-4 md:px-5 lg:min-h-[68px]">
 
                     <button
                         type="button"
@@ -168,12 +168,12 @@ const Navbar = ({ actions }: NavbarProps) => {
                                 py-2
                                 text-[12px]
                                 font-bold
-                                text-white
-                                shadow-[0_4px_12px_rgba(224,30,49,0.18)]
+                                text-on-dark
+                                shadow-[0_4px_12px_rgba(var(--brand-rgb),0.18)]
                                 transition-all
                                 duration-200
                                 hover:bg-brand-dark
-                                hover:shadow-[0_6px_18px_rgba(224,30,49,0.25)]
+                                hover:shadow-[0_6px_18px_rgba(var(--brand-rgb),0.25)]
                                 lg:ml-3
                                 lg:px-5
                                 lg:py-2.5
@@ -189,14 +189,14 @@ const Navbar = ({ actions }: NavbarProps) => {
                             <button
                                 type="button"
                                 onClick={() => setLang("en")}
-                                className={`min-h-10 rounded-full px-2.5 py-1 text-[11px] font-bold transition-all duration-200 lg:text-[12px] ${lang === "en" ? "bg-brand text-white shadow-sm" : "text-faint hover:text-ink"}`}
+                                className={`min-h-10 rounded-full px-2.5 py-1 text-[11px] font-bold transition-all duration-200 lg:text-[12px] ${lang === "en" ? "bg-brand text-on-dark shadow-sm" : "text-faint hover:text-ink"}`}
                             >
                                 EN
                             </button>
                             <button
                                 type="button"
                                 onClick={() => setLang("sin")}
-                                className={`min-h-10 rounded-full px-2.5 py-1 text-[11px] font-bold transition-all duration-200 lg:text-[12px] ${lang === "sin" ? "bg-brand text-white shadow-sm" : "text-faint hover:text-ink"}`}
+                                className={`min-h-10 rounded-full px-2.5 py-1 text-[11px] font-bold transition-all duration-200 lg:text-[12px] ${lang === "sin" ? "bg-brand text-on-dark shadow-sm" : "text-faint hover:text-ink"}`}
                             >
                                 සිං
                             </button>
@@ -245,7 +245,7 @@ const Navbar = ({ actions }: NavbarProps) => {
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
                                     onClick={() => setOpen(false)}
-                                    className="fixed inset-0 top-0 -z-10 bg-black/20 backdrop-blur-[2px] md:hidden"
+                                    className="fixed inset-0 top-0 -z-10 bg-ink/20 backdrop-blur-[2px] md:hidden"
                                 />
 
                                 <motion.div
@@ -280,7 +280,7 @@ const Navbar = ({ actions }: NavbarProps) => {
                                         border-line
                                         bg-surface
                                         p-2
-                                        shadow-[0_15px_40px_rgba(0,0,0,0.12)]
+                                        shadow-[0_15px_40px_rgba(var(--shadow-rgb),0.12)]
                                         md:hidden
                                     "
                                 >
@@ -330,7 +330,7 @@ const Navbar = ({ actions }: NavbarProps) => {
                                                             justify-center
                                                             rounded-lg
                                                             ${isActive
-                                                                ? "bg-brand text-white"
+                                                                ? "bg-brand text-on-dark"
                                                                 : "bg-surface-muted text-faint"
                                                             }
                                                         `}
@@ -345,7 +345,7 @@ const Navbar = ({ actions }: NavbarProps) => {
                                                     {isActive ? (
                                                         <span className="h-2 w-2 rounded-full bg-brand" />
                                                     ) : (
-                                                        <RiArrowRightLine className="h-4 w-4 text-[#D4D4D4]" />
+                                                        <RiArrowRightLine className="h-4 w-4 text-line-strong" />
                                                     )}
                                                 </button>
                                             );
@@ -372,8 +372,8 @@ const Navbar = ({ actions }: NavbarProps) => {
                                                 py-3
                                                 text-sm
                                                 font-bold
-                                                text-white
-                                                shadow-[0_4px_12px_rgba(224,30,49,0.18)]
+                                                text-on-dark
+                                                shadow-[0_4px_12px_rgba(var(--brand-rgb),0.18)]
                                                 transition
                                                 hover:bg-brand-dark
                                                 sm:py-3.5
@@ -392,14 +392,14 @@ const Navbar = ({ actions }: NavbarProps) => {
                                             <button
                                                 type="button"
                                                 onClick={() => setLang("en")}
-                                                className={`min-h-11 flex-1 rounded-md py-2.5 text-sm font-bold transition-all duration-200 ${lang === "en" ? "bg-brand text-white shadow-sm" : "text-faint"}`}
+                                                className={`min-h-11 flex-1 rounded-md py-2.5 text-sm font-bold transition-all duration-200 ${lang === "en" ? "bg-brand text-on-dark shadow-sm" : "text-faint"}`}
                                             >
                                                 EN
                                             </button>
                                             <button
                                                 type="button"
                                                 onClick={() => setLang("sin")}
-                                                className={`min-h-11 flex-1 rounded-md py-2.5 text-sm font-bold transition-all duration-200 ${lang === "sin" ? "bg-brand text-white shadow-sm" : "text-faint"}`}
+                                                className={`min-h-11 flex-1 rounded-md py-2.5 text-sm font-bold transition-all duration-200 ${lang === "sin" ? "bg-brand text-on-dark shadow-sm" : "text-faint"}`}
                                             >
                                                 සිං
                                             </button>

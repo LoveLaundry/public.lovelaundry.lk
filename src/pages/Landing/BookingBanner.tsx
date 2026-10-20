@@ -11,7 +11,7 @@ const BookingBanner = () => {
             className="
                 relative
                 overflow-hidden
-                bg-[#E01E31]
+                bg-brand
                 px-4
                 py-10
                 sm:px-6
@@ -26,7 +26,7 @@ const BookingBanner = () => {
                     pointer-events-none
                     absolute
                     inset-0
-                    bg-[radial-gradient(70%_140%_at_100%_0%,rgba(227,161,60,0.28),transparent_60%)]
+                    bg-[radial-gradient(70%_140%_at_100%_0%,rgba(var(--accent-rgb),0.28),transparent_60%)]
                 "
             />
             <div
@@ -40,7 +40,7 @@ const BookingBanner = () => {
                     w-48
                     -translate-y-1/2
                     rounded-full
-                    bg-white/10
+                    bg-on-dark/10
                 "
             />
 
@@ -61,7 +61,7 @@ const BookingBanner = () => {
                 "
             >
                 <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-5">
-                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/15 text-white sm:h-16 sm:w-16">
+                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-on-dark/15 text-on-dark sm:h-16 sm:w-16">
                         <RiWhatsappLine className="h-7 w-7 sm:h-8 sm:w-8" />
                     </div>
 
@@ -73,7 +73,7 @@ const BookingBanner = () => {
                                     text-xl
                                     font-semibold
                                     tracking-tight
-                                    text-white
+                                    text-on-dark
                                     sm:text-2xl
                                 "
                             >
@@ -81,7 +81,7 @@ const BookingBanner = () => {
                             </h3>
                         </div>
 
-                        <p className="mt-1.5 text-sm text-white/85 sm:text-base">
+                        <p className="mt-1.5 text-sm text-on-dark/85 sm:text-base">
                             {t("bookDesc")}
                         </p>
                     </div>
@@ -98,18 +98,18 @@ const BookingBanner = () => {
                             items-center
                             gap-2.5
                             rounded-full
-                            bg-white
+                            bg-surface
                             px-7
                             py-3.5
                             text-sm
                             font-bold
-                            text-[#E01E31]
-                            shadow-[0_12px_30px_rgba(0,0,0,0.18)]
+                            text-brand
+                            shadow-[0_12px_30px_rgba(var(--shadow-rgb),0.18)]
                             transition-all
                             duration-200
                             hover:-translate-y-0.5
-                            hover:bg-[#FFF4F4]
-                            hover:shadow-[0_16px_38px_rgba(0,0,0,0.24)]
+                            hover:bg-brand-soft
+                            hover:shadow-[0_16px_38px_rgba(var(--shadow-rgb),0.24)]
                         "
                     >
                         <RiWhatsappLine className="h-5 w-5" />
@@ -117,12 +117,12 @@ const BookingBanner = () => {
                         <RiArrowRightLine className="h-4 w-4" />
                     </a>
 
-                    <div className="flex items-center gap-2 text-xs font-semibold text-white/85">
+                    <div className="flex items-center gap-2 text-xs font-semibold text-on-dark/85">
                         <div className="flex items-center gap-0.5">
                             {Array.from({ length: 5 }).map((_, index) => (
                                 <RiStarFill
                                     key={index}
-                                    className="h-3.5 w-3.5 text-white"
+                                    className="h-3.5 w-3.5 text-on-dark"
                                 />
                             ))}
                         </div>

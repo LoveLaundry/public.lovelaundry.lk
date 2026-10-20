@@ -21,7 +21,7 @@ const Partners = () => {
             id="partners"
             className="
                 relative
-                bg-[#FFFFFF]
+                bg-surface
                 px-4
                 py-12
                 sm:px-6
@@ -64,15 +64,15 @@ const Partners = () => {
                                 overflow-hidden
                                 rounded-2xl
                                 border
-                                border-[#E5E5E5]
-                                bg-[#FFFFFF]
+                                border-line
+                                bg-surface
                                 text-center
                                 transition-all
                                 duration-300
                                 hover:-translate-y-1.5
-                                hover:border-[#E01E31]/40
-                                hover:bg-white
-                                hover:shadow-[0_20px_44px_rgba(0,0,0,0.14)]
+                                hover:border-brand/40
+                                hover:bg-surface
+                                hover:shadow-[0_20px_44px_rgba(var(--shadow-rgb),0.14)]
                             "
                         >
                             {partner.image ? (
@@ -105,8 +105,8 @@ const Partners = () => {
                                             items-center
                                             justify-center
                                             rounded-full
-                                            bg-[#FEF2F2]
-                                            text-[#E01E31]
+                                            bg-brand-soft
+                                            text-brand
                                         "
                                     >
                                         <RiHotelLine className="h-6 w-6" />
@@ -133,7 +133,7 @@ const Partners = () => {
                                         font-semibold
                                         leading-snug
                                         tracking-tight
-                                        text-[#000000]
+                                        text-ink
                                         sm:text-[17px]
                                     "
                                 >
@@ -145,7 +145,7 @@ const Partners = () => {
                                         font-semibold
                                         uppercase
                                         tracking-[0.16em]
-                                        text-[#737373]
+                                        text-faint
                                     "
                                 >
                                     {t("partnersYears")}
@@ -158,7 +158,7 @@ const Partners = () => {
                 <div ref={moreRef}>
                     <p
                         data-reveal
-                        className="mt-8 text-center text-sm font-semibold text-[#737373]"
+                        className="mt-8 text-center text-sm font-semibold text-faint"
                     >
                         {t("partnersMore")}
                     </p>
@@ -172,7 +172,7 @@ const Partners = () => {
                     onClick={() => setSelected(null)}
                 >
                     {/* Backdrop */}
-                    <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+                    <div className="absolute inset-0 bg-ink/50 backdrop-blur-sm" />
 
                     {/* Modal */}
                     <div
@@ -184,9 +184,9 @@ const Partners = () => {
                             overflow-hidden
                             rounded-3xl
                             border
-                            border-[#E5E5E5]
-                            bg-[#FFFFFF]
-                            shadow-[0_32px_64px_rgba(0,0,0,0.25)]
+                            border-line
+                            bg-surface
+                            shadow-[0_32px_64px_rgba(var(--shadow-rgb),0.25)]
                         "
                         onClick={(e) => e.stopPropagation()}
                     >
@@ -205,11 +205,11 @@ const Partners = () => {
                                 items-center
                                 justify-center
                                 rounded-full
-                                bg-black/40
-                                text-white
+                                bg-ink/40
+                                text-on-dark
                                 backdrop-blur-sm
                                 transition-colors
-                                hover:bg-black/60
+                                hover:bg-ink/60
                             "
                         >
                             <RiCloseLine className="h-5 w-5" />
@@ -227,7 +227,7 @@ const Partners = () => {
                                             "sepia(0.12) saturate(1.07) contrast(1.02)",
                                     }}
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent" />
 
                                 {/* Years badge */}
                                 <div
@@ -239,12 +239,12 @@ const Partners = () => {
                                         items-center
                                         gap-1.5
                                         rounded-full
-                                        bg-[#E01E31]
+                                        bg-brand
                                         px-3.5
                                         py-1.5
                                         text-xs
                                         font-bold
-                                        text-white
+                                        text-on-dark
                                         shadow-lg
                                     "
                                 >
@@ -263,19 +263,19 @@ const Partners = () => {
                                     text-xl
                                     font-bold
                                     tracking-tight
-                                    text-[#000000]
+                                    text-ink
                                     sm:text-2xl
                                 "
                             >
                                 {selected.name}
                             </h3>
 
-                            <div className="mt-2 flex items-center gap-1.5 text-sm text-[#737373]">
-                                <RiMapPin2Line className="h-4 w-4 text-[#E01E31]" />
+                            <div className="mt-2 flex items-center gap-1.5 text-sm text-faint">
+                                <RiMapPin2Line className="h-4 w-4 text-brand" />
                                 {selected.location}
                             </div>
 
-                            <p className="mt-4 text-sm leading-relaxed text-[#404040]">
+                            <p className="mt-4 text-sm leading-relaxed text-muted">
                                 {selected.description}
                             </p>
 
@@ -287,8 +287,8 @@ const Partners = () => {
                                     gap-2
                                     rounded-xl
                                     border
-                                    border-[#E5E5E5]
-                                    bg-[#FFFFFF]
+                                    border-line
+                                    bg-surface
                                     px-4
                                     py-3
                                 "
@@ -302,17 +302,17 @@ const Partners = () => {
                                         items-center
                                         justify-center
                                         rounded-full
-                                        bg-[#E01E31]
-                                        text-white
+                                        bg-brand
+                                        text-on-dark
                                     "
                                 >
                                     <RiTimeLine className="h-5 w-5" />
                                 </div>
                                 <div>
-                                    <div className="text-xs font-semibold uppercase tracking-wider text-[#737373]">
+                                    <div className="text-xs font-semibold uppercase tracking-wider text-faint">
                                         {t("partnersDuration")}
                                     </div>
-                                    <div className="font-display text-lg font-bold text-[#000000]">
+                                    <div className="font-display text-lg font-bold text-ink">
                                         {selected.years}{" "}
                                         {t("partnersYears")}
                                     </div>
