@@ -39,7 +39,7 @@ const Action = ({
                 transition-all
                 duration-200
                 focus-visible:ring-2
-                focus-visible:ring-[#ED1C24]
+                focus-visible:ring-brand
                 focus-visible:ring-offset-2
 
                 ${isPrimary
@@ -47,7 +47,7 @@ const Action = ({
                             h-[56px]
                             w-[56px]
                             rounded-[15px]
-                            bg-[#ED1C24]
+                            bg-brand
                             text-white
                             shadow-[0_7px_20px_rgba(237,28,36,0.3)]
                         `
@@ -56,14 +56,14 @@ const Action = ({
                             min-w-[52px]
                             ${isSelected
                         ? `
-                                        bg-[#ED1C24]
+                                        bg-brand
                                         text-white
                                         shadow-[0_6px_18px_rgba(237,28,36,0.28)]
                                     `
                         : `
-                                        text-[#777777]
-                                        hover:bg-[#FFF3F3]
-                                        hover:text-[#ED1C24]
+                                        text-faint
+                                        hover:bg-brand-soft
+                                        hover:text-brand
                                     `
                     }
                         `

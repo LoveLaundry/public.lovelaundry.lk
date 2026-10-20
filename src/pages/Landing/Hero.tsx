@@ -1,6 +1,7 @@
 import { useLanguage } from "../../i18n";
 import { useReveal } from "../../hooks/useReveal";
 import heroVideo from "../../assets/videos/web.mp4";
+import { useReducedMotion } from "framer-motion";
 import {
     RiArrowRightLine,
     RiArrowDownLine,
@@ -12,6 +13,7 @@ import {
 
 const Hero = () => {
     const { t } = useLanguage();
+    const prefersReducedMotion = useReducedMotion();
     const textRef = useReveal<HTMLDivElement>({ y: 28, stagger: 0.09 });
 
     const scrollTo = (id: string) => {
@@ -66,10 +68,11 @@ const Hero = () => {
             {/* Full-bleed background video */}
             <video
                 aria-hidden="true"
-                autoPlay
+                autoPlay={!prefersReducedMotion}
                 muted
                 loop
                 playsInline
+                preload={prefersReducedMotion ? "none" : "metadata"}
                 poster="./assets/images/love-laundry-hero.png"
                 className="
                     pointer-events-none

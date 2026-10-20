@@ -102,7 +102,7 @@ const LandingPage = () => {
     }, [actions]);
 
     return (
-        <main className="min-h-screen overflow-x-hidden bg-white text-[#000000]">
+        <main className="site-page min-h-screen overflow-x-hidden bg-surface text-ink">
 
             <Navbar actions={actions}/>
             <Hero />

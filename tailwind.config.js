@@ -6,18 +6,18 @@ export default {
     extend: {
       colors: {
         brand: {
-          DEFAULT: '#DC2626',
+          DEFAULT: '#E01E31',
           50: '#FEF2F2',
           100: '#FEE2E2',
           200: '#FECACA',
-          500: '#EF4444',
-          600: '#DC2626',
-          700: '#B91C1C',
+          500: '#E01E31',
+          600: '#E01E31',
+          700: '#C11324',
         },
         surface: {
           DEFAULT: '#FFFFFF',
-          muted: '#F8FAFC',
-          border: '#E2E8F0',
+          muted: '#FAFAFA',
+          border: '#E5E5E5',
         },
       },
       fontSize: {
