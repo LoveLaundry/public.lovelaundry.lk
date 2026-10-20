@@ -80,7 +80,7 @@ const Navbar = ({ actions }: NavbarProps) => {
     return (
         <header className="fixed inset-x-0 top-0 z-50">
             <div className="mx-auto w-full max-w-[1440px] px-3 pt-3 sm:px-4 sm:pt-4 lg:px-6">
-                <div className="relative flex min-h-[60px] items-center justify-between rounded-full border border-[#E5E5E5] bg-[#FFFFFF] px-3 shadow-[0_4px_20px_rgba(0,0,0,0.08)] sm:min-h-[64px] sm:px-4 md:px-5 lg:min-h-[68px]">
+                <div className="relative flex min-h-[60px] items-center justify-between rounded-full border border-line bg-surface px-3 shadow-[0_4px_20px_rgba(23,23,23,0.08)] sm:min-h-[64px] sm:px-4 md:px-5 lg:min-h-[68px]">
 
                     <button
                         type="button"
@@ -96,11 +96,11 @@ const Navbar = ({ actions }: NavbarProps) => {
                         </div>
 
                         <div className="min-w-0 text-left">
-                            <div className="truncate text-[14px] font-bold leading-tight tracking-tight text-[#000000] sm:text-[15px]">
+                            <div className="truncate text-[14px] font-bold leading-tight tracking-tight text-ink sm:text-[15px]">
                                 {t("companyName")}
                             </div>
 
-                            <div className="hidden text-[8px] font-semibold uppercase tracking-[0.15em] text-[#737373] min-[400px]:block sm:text-[9px] sm:tracking-[0.18em]">
+                            <div className="hidden text-[8px] font-semibold uppercase tracking-[0.15em] text-faint min-[400px]:block sm:text-[9px] sm:tracking-[0.18em]">
                                 {t("companyDescription")}
                             </div>
                         </div>
@@ -131,8 +131,8 @@ const Navbar = ({ actions }: NavbarProps) => {
                                             lg:px-3.5
                                             lg:text-[13px]
                                             ${isActive
-                                                ? "bg-[#FEF2F2] text-[#E01E31]"
-                                                : "text-[#404040] hover:bg-[#FEF2F2] hover:text-[#E01E31]"
+                                                ? "bg-brand-soft text-brand"
+                                                : "text-muted hover:bg-brand-soft hover:text-brand"
                                             }
                                         `}
                                     >
@@ -141,7 +141,7 @@ const Navbar = ({ actions }: NavbarProps) => {
                                         {isActive && (
                                             <motion.span
                                                 layoutId="activeNav"
-                                                className="absolute bottom-0.5 left-1/2 h-0.5 w-5 -translate-x-1/2 rounded-full bg-[#E01E31]"
+                                                className="absolute bottom-0.5 left-1/2 h-0.5 w-5 -translate-x-1/2 rounded-full bg-brand"
                                                 transition={{
                                                     type: "spring",
                                                     stiffness: 400,
@@ -163,7 +163,7 @@ const Navbar = ({ actions }: NavbarProps) => {
                                 items-center
                                 gap-1.5
                                 rounded-full
-                                bg-[#E01E31]
+                                bg-brand
                                 px-3.5
                                 py-2
                                 text-[12px]
@@ -172,7 +172,7 @@ const Navbar = ({ actions }: NavbarProps) => {
                                 shadow-[0_4px_12px_rgba(224,30,49,0.18)]
                                 transition-all
                                 duration-200
-                                hover:bg-[#C11324]
+                                hover:bg-brand-dark
                                 hover:shadow-[0_6px_18px_rgba(224,30,49,0.25)]
                                 lg:ml-3
                                 lg:px-5
@@ -185,18 +185,18 @@ const Navbar = ({ actions }: NavbarProps) => {
                             <RiArrowRightLine className="h-3.5 w-3.5 lg:h-4 lg:w-4" />
                         </button>
 
-                        <div className="ml-2 flex items-center rounded-full border border-[#E5E5E5] bg-[#FFFFFF] p-0.5 lg:ml-3">
+                        <div className="ml-2 flex items-center rounded-full border border-line bg-surface p-0.5 lg:ml-3">
                             <button
                                 type="button"
                                 onClick={() => setLang("en")}
-                                className={`rounded-full px-2.5 py-1 text-[11px] font-bold transition-all duration-200 lg:text-[12px] ${lang === "en" ? "bg-[#E01E31] text-white shadow-sm" : "text-[#737373] hover:text-[#000000]"}`}
+                                className={`min-h-10 rounded-full px-2.5 py-1 text-[11px] font-bold transition-all duration-200 lg:text-[12px] ${lang === "en" ? "bg-brand text-white shadow-sm" : "text-faint hover:text-ink"}`}
                             >
                                 EN
                             </button>
                             <button
                                 type="button"
                                 onClick={() => setLang("sin")}
-                                className={`rounded-full px-2.5 py-1 text-[11px] font-bold transition-all duration-200 lg:text-[12px] ${lang === "sin" ? "bg-[#E01E31] text-white shadow-sm" : "text-[#737373] hover:text-[#000000]"}`}
+                                className={`min-h-10 rounded-full px-2.5 py-1 text-[11px] font-bold transition-all duration-200 lg:text-[12px] ${lang === "sin" ? "bg-brand text-white shadow-sm" : "text-faint hover:text-ink"}`}
                             >
                                 සිං
                             </button>
@@ -212,24 +212,23 @@ const Navbar = ({ actions }: NavbarProps) => {
                         aria-expanded={open}
                         className="
                             flex
-                            h-9
-                            w-9
+                            h-11
+                            w-11
                             shrink-0
                             items-center
                             justify-center
                             rounded-lg
                             border
-                            border-[#E5E5E5]
-                            bg-[#FFFFFF]
-                            text-[#404040]
+                            border-line
+                            bg-surface
+                            text-muted
                             transition
-                            hover:border-[#F3C7CE]
-                            hover:bg-[#FEF2F2]
-                            hover:text-[#E01E31]
-                            sm:h-10
-                            sm:w-10
+                            hover:border-brand/30
+                            hover:bg-brand-soft
+                            hover:text-brand
                             md:hidden
                         "
+                        aria-controls="mobile-navigation"
                     >
                         {open ? (
                             <RiCloseLine className="h-5 w-5" />
@@ -268,6 +267,7 @@ const Navbar = ({ actions }: NavbarProps) => {
                                     transition={{
                                         duration: 0.18,
                                     }}
+                                    id="mobile-navigation"
                                     className="
                                         absolute
                                         left-0
@@ -277,8 +277,8 @@ const Navbar = ({ actions }: NavbarProps) => {
                                         overflow-y-auto
                                         rounded-xl
                                         border
-                                        border-[#E5E5E5]
-                                        bg-[#FFFFFF]
+                                        border-line
+                                        bg-surface
                                         p-2
                                         shadow-[0_15px_40px_rgba(0,0,0,0.12)]
                                         md:hidden
@@ -315,8 +315,8 @@ const Navbar = ({ actions }: NavbarProps) => {
                                                         sm:px-4
                                                         sm:py-3.5
                                                         ${isActive
-                                                            ? "bg-[#FEF2F2] text-[#E01E31]"
-                                                            : "text-[#000000] hover:bg-[#FEF2F2] hover:text-[#E01E31]"
+                                                            ? "bg-brand-soft text-brand"
+                                                            : "text-ink hover:bg-brand-soft hover:text-brand"
                                                         }
                                                     `}
                                                 >
@@ -330,8 +330,8 @@ const Navbar = ({ actions }: NavbarProps) => {
                                                             justify-center
                                                             rounded-lg
                                                             ${isActive
-                                                                ? "bg-[#E01E31] text-white"
-                                                                : "bg-[#F5F5F5] text-[#737373]"
+                                                                ? "bg-brand text-white"
+                                                                : "bg-surface-muted text-faint"
                                                             }
                                                         `}
                                                     >
@@ -343,7 +343,7 @@ const Navbar = ({ actions }: NavbarProps) => {
                                                     </span>
 
                                                     {isActive ? (
-                                                        <span className="h-2 w-2 rounded-full bg-[#E01E31]" />
+                                                        <span className="h-2 w-2 rounded-full bg-brand" />
                                                     ) : (
                                                         <RiArrowRightLine className="h-4 w-4 text-[#D4D4D4]" />
                                                     )}
@@ -352,7 +352,7 @@ const Navbar = ({ actions }: NavbarProps) => {
                                         })}
                                     </div>
 
-                                    <div className="my-1 h-px bg-[#F5F5F5]" />
+                                    <div className="my-1 h-px bg-surface-muted" />
 
                                     <div className="p-1">
                                         <button
@@ -367,7 +367,7 @@ const Navbar = ({ actions }: NavbarProps) => {
                                                 justify-center
                                                 gap-2
                                                 rounded-lg
-                                                bg-[#E01E31]
+                                                bg-brand
                                                 px-4
                                                 py-3
                                                 text-sm
@@ -375,7 +375,7 @@ const Navbar = ({ actions }: NavbarProps) => {
                                                 text-white
                                                 shadow-[0_4px_12px_rgba(224,30,49,0.18)]
                                                 transition
-                                                hover:bg-[#C11324]
+                                                hover:bg-brand-dark
                                                 sm:py-3.5
                                             "
                                         >
@@ -385,21 +385,21 @@ const Navbar = ({ actions }: NavbarProps) => {
                                         </button>
                                     </div>
 
-                                    <div className="my-1 h-px bg-[#F5F5F5]" />
+                                    <div className="my-1 h-px bg-surface-muted" />
 
                                     <div className="p-1">
-                                        <div className="flex items-center justify-center rounded-lg bg-[#F5F5F5] p-1">
+                                        <div className="flex items-center justify-center rounded-lg bg-surface-muted p-1">
                                             <button
                                                 type="button"
                                                 onClick={() => setLang("en")}
-                                                className={`flex-1 rounded-md py-2.5 text-sm font-bold transition-all duration-200 ${lang === "en" ? "bg-[#E01E31] text-white shadow-sm" : "text-[#737373]"}`}
+                                                className={`min-h-11 flex-1 rounded-md py-2.5 text-sm font-bold transition-all duration-200 ${lang === "en" ? "bg-brand text-white shadow-sm" : "text-faint"}`}
                                             >
                                                 EN
                                             </button>
                                             <button
                                                 type="button"
                                                 onClick={() => setLang("sin")}
-                                                className={`flex-1 rounded-md py-2.5 text-sm font-bold transition-all duration-200 ${lang === "sin" ? "bg-[#E01E31] text-white shadow-sm" : "text-[#737373]"}`}
+                                                className={`min-h-11 flex-1 rounded-md py-2.5 text-sm font-bold transition-all duration-200 ${lang === "sin" ? "bg-brand text-white shadow-sm" : "text-faint"}`}
                                             >
                                                 සිං
                                             </button>

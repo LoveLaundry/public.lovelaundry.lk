@@ -19,9 +19,9 @@ const SectionHeader = ({
 }: SectionHeaderProps) => {
     const headerRef = useReveal<HTMLDivElement>({ y: 25 });
 
-    const titleColor = dark ? "text-white" : "text-[#000000]";
-    const descColor = dark ? "text-white/65" : "text-[#404040]";
-    const pillBg = dark ? "bg-[#E01E31]/15" : "bg-[#FEF2F2]";
+    const titleColor = dark ? "text-on-dark" : "text-ink";
+    const descColor = dark ? "text-white/65" : "text-muted";
+    const pillBg = dark ? "bg-brand/15" : "bg-brand-soft";
 
     if (centered) {
         return (
@@ -37,7 +37,7 @@ const SectionHeader = ({
                         gap-2.5
                         rounded-full
                         border
-                        border-[#E01E31]/20
+                        border-brand/20
                         ${pillBg}
                         px-4
                         py-1.5
@@ -45,7 +45,7 @@ const SectionHeader = ({
                         font-bold
                         uppercase
                         tracking-[0.18em]
-                        text-[#E01E31]
+                        text-brand
                         sm:text-xs
                     `}
                 >
@@ -67,7 +67,7 @@ const SectionHeader = ({
                 >
                     {main}
                     {highlight ? (
-                        <span className="text-[#E01E31]"> {highlight}</span>
+                        <span className="text-brand"> {highlight}</span>
                     ) : null}
                 </h2>
 
@@ -101,13 +101,13 @@ const SectionHeader = ({
                     font-bold
                     uppercase
                     tracking-[0.22em]
-                    text-[#E01E31]
+                    text-brand
                     sm:text-xs
                 "
             >
                 <span
                     aria-hidden="true"
-                    className="h-[3px] w-10 rounded-full bg-[#E01E31] shadow-[0_0_8px_rgba(224,30,49,0.4)]"
+                    className="h-[3px] w-10 rounded-full bg-brand shadow-[0_0_8px_rgba(224,30,49,0.4)]"
                 />
 
                 {badge}
@@ -129,7 +129,7 @@ const SectionHeader = ({
                 {main}
 
                 {highlight ? (
-                    <span className="text-[#E01E31]"> {highlight}</span>
+                    <span className="text-brand"> {highlight}</span>
                 ) : null}
             </h2>
 
