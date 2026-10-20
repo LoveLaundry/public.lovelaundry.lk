@@ -28,6 +28,7 @@ const ChatWidget = () => {
     const [input, setInput] = useState("");
     const [isTyping, setIsTyping] = useState(false);
     const [assignedAdmin, setAssignedAdmin] = useState<string | null>(null);
+    const [sendError, setSendError] = useState("");
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -78,10 +79,19 @@ const ChatWidget = () => {
         if (isOpen) setTimeout(() => inputRef.current?.focus(), 300);
     }, [isOpen]);
 
+    useEffect(() => {
+        if (!isOpen) return;
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") setIsOpen(false);
+        };
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [isOpen]);
+
     const sendMessage = useCallback(
-        async (text: string) => {
+        async (text: string, draft = text) => {
             const trimmed = text.trim();
-            if (!trimmed) return;
+            if (!trimmed || isTyping) return;
 
             const { conversationId, guestId } = getChatIds();
             const optimistic: LocalMessage = {
@@ -91,6 +101,7 @@ const ChatWidget = () => {
             };
             setMessages((prev) => [...prev, optimistic]);
             setInput("");
+            setSendError("");
             setIsTyping(true);
 
             try {
@@ -98,7 +109,7 @@ const ChatWidget = () => {
                     conversationId,
                     guestId,
                     trimmed,
-                    lang as "en" | "sin",
+                    lang,
                 );
                 setMessages(
                     state.messages.map((m: ServerMessage) => ({
@@ -110,30 +121,19 @@ const ChatWidget = () => {
                 );
                 setAssignedAdmin(state.assigned_admin_name);
             } catch {
-                // Backend unreachable — show a friendly local fallback.
-                const fallback: LocalMessage = {
-                    id: crypto.randomUUID(),
-                    text: "Thanks for reaching out! Our team will get back to you shortly. If it's urgent, WhatsApp us at +94 77 4200 919.",
-                    sender: "bot",
-                };
-                setMessages((prev) => [...prev, fallback]);
+                setMessages((prev) => prev.filter((message) => message.id !== optimistic.id));
+                setInput(draft);
+                setSendError(t("chatSendFailed"));
             } finally {
                 setIsTyping(false);
             }
         },
-        [lang],
+        [isTyping, lang, t],
     );
-
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === "Enter" && !e.shiftKey) {
-            e.preventDefault();
-            sendMessage(input);
-        }
-    };
 
     const handleQuickReply = (label: string, value: string) => {
         setInput(label);
-        setTimeout(() => sendMessage(value), 50);
+        sendMessage(value, label);
     };
 
     const renderMessage = (msg: LocalMessage) => {
@@ -168,6 +168,8 @@ const ChatWidget = () => {
                 type="button"
                 onClick={() => setIsOpen((prev) => !prev)}
                 aria-label={isOpen ? t("chatClose") : t("chatOpen")}
+                aria-expanded={isOpen}
+                aria-controls="love-laundry-chat"
                 className="
                     fixed
                     bottom-6
@@ -212,6 +214,9 @@ const ChatWidget = () => {
 
             {isOpen && (
                 <div
+                    id="love-laundry-chat"
+                    role="dialog"
+                    aria-labelledby="love-laundry-chat-title"
                     className="
                         fixed
                         bottom-24
@@ -232,7 +237,10 @@ const ChatWidget = () => {
                         md:bottom-32
                         md:right-10
                     "
-                    style={{ height: "min(520px, calc(100vh - 160px))" }}
+                    style={{
+                        height: "min(520px, calc(100vh - 160px))",
+                        maxHeight: "calc(100dvh - 160px)",
+                    }}
                 >
                     <div className="flex items-center gap-3 bg-[#E01E31] px-5 py-4">
                         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20">
@@ -243,7 +251,12 @@ const ChatWidget = () => {
                             )}
                         </div>
                         <div className="flex-1">
-                            <div className="text-sm font-bold text-white">{t("chatTitle")}</div>
+                            <div
+                                id="love-laundry-chat-title"
+                                className="text-sm font-bold text-white"
+                            >
+                                {t("chatTitle")}
+                            </div>
                             <div className="flex items-center gap-1.5 text-[11px] text-white/80">
                                 <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
                                 {assignedAdmin
@@ -254,6 +267,7 @@ const ChatWidget = () => {
                         <button
                             type="button"
                             onClick={() => setIsOpen(false)}
+                            aria-label={t("chatClose")}
                             className="flex h-8 w-8 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/15 hover:text-white"
                         >
                             <RiCloseLine className="h-5 w-5" />
@@ -266,7 +280,11 @@ const ChatWidget = () => {
                         </div>
                     )}
 
-                    <div className="flex-1 space-y-4 overflow-y-auto px-4 py-4">
+                    <div
+                        className="flex-1 space-y-4 overflow-y-auto px-4 py-4"
+                        role="log"
+                        aria-label={t("chatConversation")}
+                    >
                         {messages.length === 0 ? (
                             <div className="flex justify-start">
                                 <div className="mr-2 mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#FEF2F2] text-[#E01E31]">
@@ -295,6 +313,12 @@ const ChatWidget = () => {
                         <div ref={messagesEndRef} />
                     </div>
 
+                    {sendError && (
+                        <p role="alert" className="border-t border-[#E5E5E5] px-4 py-2 text-xs text-[#C11324]">
+                            {sendError}
+                        </p>
+                    )}
+
                     <div className="flex gap-2 overflow-x-auto border-t border-[#E5E5E5] px-4 py-2.5">
                         {[
                             { value: "Services", label: t("chatQuickServices") },
@@ -306,6 +330,7 @@ const ChatWidget = () => {
                                 key={value}
                                 type="button"
                                 onClick={() => handleQuickReply(label, value)}
+                                disabled={isTyping}
                                 className="
                                     shrink-0
                                     rounded-full
@@ -322,6 +347,8 @@ const ChatWidget = () => {
                                     hover:border-[#E01E31]/30
                                     hover:bg-[#FEF2F2]
                                     hover:text-[#E01E31]
+                                    disabled:cursor-not-allowed
+                                    disabled:opacity-50
                                 "
                             >
                                 {label}
@@ -329,13 +356,23 @@ const ChatWidget = () => {
                         ))}
                     </div>
 
-                    <div className="flex items-center gap-2 border-t border-[#E5E5E5] px-4 py-3">
+                    <form
+                        className="flex items-center gap-2 border-t border-[#E5E5E5] px-4 py-3"
+                        onSubmit={(event) => {
+                            event.preventDefault();
+                            sendMessage(input);
+                        }}
+                    >
                         <input
                             ref={inputRef}
+                            aria-label={t("chatPlaceholder")}
                             type="text"
+                            disabled={isTyping}
                             value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            onKeyDown={handleKeyDown}
+                            onChange={(e) => {
+                                setInput(e.target.value);
+                                setSendError("");
+                            }}
                             placeholder={t("chatPlaceholder")}
                             className="
                                 flex-1
@@ -356,9 +393,9 @@ const ChatWidget = () => {
                             "
                         />
                         <button
-                            type="button"
-                            onClick={() => sendMessage(input)}
-                            disabled={!input.trim()}
+                            type="submit"
+                            aria-label={t("chatSend")}
+                            disabled={!input.trim() || isTyping}
                             className="
                                 flex
                                 h-10
@@ -379,7 +416,7 @@ const ChatWidget = () => {
                         >
                             <RiSendPlaneFill className="h-4 w-4" />
                         </button>
-                    </div>
+                    </form>
 
                     <div className="border-t border-[#E5E5E5] px-4 py-2 text-center text-[10px] text-[#A3A3A3]">
                         {t("chatPowered")}
