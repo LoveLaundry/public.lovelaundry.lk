@@ -21,8 +21,8 @@ const Process = () => {
             className="
                 relative
                 overflow-hidden
-                bg-[#0C0708]
-                bg-[radial-gradient(circle_at_80%_50%,rgba(224,30,49,0.14),transparent_50%)]
+                bg-surface-dark
+                bg-[radial-gradient(circle_at_80%_50%,rgba(var(--brand-rgb),0.14),transparent_50%)]
                 px-4
                 py-12
                 sm:px-6
@@ -66,15 +66,15 @@ const Process = () => {
                                     overflow-hidden
                                     rounded-3xl
                                     border
-                                    border-white/10
-                                    bg-white/5
+                                    border-on-dark/10
+                                    bg-on-dark/5
                                     p-7
-                                    shadow-[0_2px_12px_rgba(0,0,0,0.2)]
+                                    shadow-[0_2px_12px_rgba(var(--shadow-rgb),0.2)]
                                     transition-all
                                     duration-300
                                     hover:-translate-y-1.5
-                                    hover:border-[#E01E31]/40
-                                    hover:shadow-[0_12px_32px_rgba(0,0,0,0.4)]
+                                    hover:border-brand/40
+                                    hover:shadow-[0_12px_32px_rgba(var(--shadow-rgb),0.4)]
                                 "
                             >
                                 <div
@@ -89,10 +89,10 @@ const Process = () => {
                                         font-bold
                                         leading-none
                                         tracking-tight
-                                        text-white/10
+                                        text-on-dark/10
                                         transition-colors
                                         duration-300
-                                        group-hover:text-[#E01E31]/20
+                                        group-hover:text-brand/20
                                     "
                                 >
                                     {step.number}
@@ -107,9 +107,9 @@ const Process = () => {
                                             items-center
                                             justify-center
                                             rounded-2xl
-                                            bg-[#E01E31]
-                                            text-white
-                                            shadow-[0_4px_12px_rgba(224,30,49,0.2)]
+                                            bg-brand
+                                            text-on-dark
+                                            shadow-[0_4px_12px_rgba(var(--brand-rgb),0.2)]
                                         "
                                     >
                                         <Icon className="h-6 w-6" />
@@ -120,7 +120,7 @@ const Process = () => {
                                             font-display
                                             text-lg
                                             font-bold
-                                            text-[#E01E31]
+                                            text-brand
                                         "
                                     >
                                         {step.number}
@@ -134,7 +134,7 @@ const Process = () => {
                                         text-xl
                                         font-semibold
                                         tracking-tight
-                                        text-white
+                                        text-on-dark
                                     "
                                 >
                                     {t(stepKeys[index].titleKey)}
@@ -145,7 +145,7 @@ const Process = () => {
                                         mt-2
                                         text-sm
                                         leading-6
-                                        text-white/65
+                                        text-on-dark/65
                                     "
                                 >
                                     {t(stepKeys[index].textKey)}
@@ -165,7 +165,7 @@ const Process = () => {
                                         lg:flex
                                     "
                                 >
-                                    <div className="h-0 w-full border-t-2 border-dashed border-[#E01E31]/20" />
+                                    <div className="h-0 w-full border-t-2 border-dashed border-brand/20" />
                                 </div>
                             );
                             return [card, separator];
@@ -184,12 +184,12 @@ const Process = () => {
                         gap-4
                         rounded-2xl
                         border
-                        border-white/10
-                        bg-white/5
+                        border-on-dark/10
+                        bg-on-dark/5
                         px-6
                         py-8
                         text-center
-                        shadow-[0_4px_20px_rgba(0,0,0,0.2)]
+                        shadow-[0_4px_20px_rgba(var(--shadow-rgb),0.2)]
                         sm:flex-row
                         sm:justify-between
                         sm:text-left
@@ -197,10 +197,10 @@ const Process = () => {
                     "
                 >
                     <div>
-                        <h3 className="font-display text-lg font-semibold text-white">
+                        <h3 className="font-display text-lg font-semibold text-on-dark">
                             {t("processCtaTitle")}
                         </h3>
-                        <p className="mt-1 text-sm text-white/65">
+                        <p className="mt-1 text-sm text-on-dark/65">
                             {t("processCtaSub")}
                         </p>
                     </div>
@@ -218,18 +218,18 @@ const Process = () => {
                             items-center
                             gap-2.5
                             rounded-full
-                            bg-[#E01E31]
+                            bg-brand
                             px-7
                             py-3.5
                             text-sm
                             font-bold
-                            text-white
-                            shadow-[0_8px_24px_rgba(224,30,49,0.3)]
+                            text-on-dark
+                            shadow-[0_8px_24px_rgba(var(--brand-rgb),0.3)]
                             transition-all
                             duration-200
                             hover:-translate-y-0.5
-                            hover:bg-[#C11324]
-                            hover:shadow-[0_12px_32px_rgba(224,30,49,0.4)]
+                            hover:bg-brand-dark
+                            hover:shadow-[0_12px_32px_rgba(var(--brand-rgb),0.4)]
                         "
                     >
                         {t("processGetStarted")}

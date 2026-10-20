@@ -21,7 +21,7 @@ interface WaterBlobProps {
 
 const WaterBlob = ({
     size = 300,
-    color = "#E01E31",
+    color = "var(--color-brand)",
     opacity = 0.15,
     blur = 0,
     duration = 7,
@@ -96,7 +96,7 @@ const WaterBlob = ({
                     >
                         <stop
                             offset="0%"
-                            stopColor="#FFFFFF"
+                            stopColor="var(--color-surface)"
                             stopOpacity="0.42"
                         />
 
@@ -137,25 +137,25 @@ const WaterBlob = ({
                     >
                         <stop
                             offset="0%"
-                            stopColor="#FFFFFF"
+                            stopColor="var(--color-surface)"
                             stopOpacity="0.65"
                         />
 
                         <stop
                             offset="35%"
-                            stopColor="#FFFFFF"
+                            stopColor="var(--color-surface)"
                             stopOpacity="0.18"
                         />
 
                         <stop
                             offset="65%"
-                            stopColor="#FFFFFF"
+                            stopColor="var(--color-surface)"
                             stopOpacity="0"
                         />
 
                         <stop
                             offset="100%"
-                            stopColor="#FFFFFF"
+                            stopColor="var(--color-surface)"
                             stopOpacity="0"
                         />
                     </linearGradient>
@@ -406,7 +406,7 @@ const WaterBlob = ({
                         cy="280"
                         rx="115"
                         ry="38"
-                        fill="#FFFFFF"
+                        fill="var(--color-surface)"
                         opacity="0.045"
                         animate={{
                             x: [-15, 15, -5, -15],
@@ -428,7 +428,7 @@ const WaterBlob = ({
                             C 270 173 318 167 355 143
                         "
                         fill="none"
-                        stroke="#FFFFFF"
+                        stroke="var(--color-surface)"
                         strokeWidth="3"
                         strokeLinecap="round"
                         opacity="0.16"
@@ -450,7 +450,7 @@ const WaterBlob = ({
                         cy="215"
                         rx="30"
                         ry="10"
-                        fill="#FFFFFF"
+                        fill="var(--color-surface)"
                         opacity="0.12"
                         animate={{
                             x: [0, 20, -5, 0],
@@ -483,7 +483,7 @@ const WaterBlob = ({
                         Z
                     "
                     fill="none"
-                    stroke="#FFFFFF"
+                    stroke="var(--color-surface)"
                     strokeWidth="1.5"
                     opacity="0.13"
                     filter={`url(#${filterId})`}
@@ -497,7 +497,7 @@ const WaterBlob = ({
                     cy="92"
                     rx="18"
                     ry="7"
-                    fill="#FFFFFF"
+                    fill="var(--color-surface)"
                     opacity="0.28"
                     animate={{
                         x: [0, 35, 60, 25, 0],

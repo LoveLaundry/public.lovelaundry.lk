@@ -18,7 +18,7 @@ const WhyLoveLaundry = () => {
             id="about"
             className="
                 relative
-                bg-[#FAFAFA]
+                bg-surface-muted
                 px-4
                 py-12
                 sm:px-6
@@ -46,13 +46,13 @@ const WhyLoveLaundry = () => {
                         className="
                             rounded-[28px]
                             border
-                            border-[#E5E5E5]
-                            bg-[#FFFFFF]
+                            border-line
+                            bg-surface
                             p-8
-                            shadow-[0_8px_40px_rgba(0,0,0,0.08)]
+                            shadow-[0_8px_40px_rgba(var(--shadow-rgb),0.08)]
                             transition-shadow
                             duration-300
-                            hover:shadow-[0_12px_48px_rgba(0,0,0,0.12)]
+                            hover:shadow-[0_12px_48px_rgba(var(--shadow-rgb),0.12)]
                             sm:p-10
                         "
                     >
@@ -65,9 +65,9 @@ const WhyLoveLaundry = () => {
                                     items-center
                                     justify-center
                                     rounded-2xl
-                                    bg-[#E01E31]
-                                    text-white
-                                    shadow-[0_8px_20px_rgba(224,30,49,0.28)]
+                                    bg-brand
+                                    text-on-dark
+                                    shadow-[0_8px_20px_rgba(var(--brand-rgb),0.28)]
                                 "
                             >
                                 <RiHeart3Fill className="h-6 w-6" />
@@ -76,14 +76,14 @@ const WhyLoveLaundry = () => {
                             <span
                                 className="
                                     rounded-full
-                                    bg-[#F5F5F5]
+                                    bg-surface-muted
                                     px-3
                                     py-1.5
                                     text-[10px]
                                     font-bold
                                     uppercase
                                     tracking-[0.15em]
-                                    text-[#404040]
+                                    text-muted
                                 "
                             >
                                 {companyInfo.name}
@@ -99,7 +99,7 @@ const WhyLoveLaundry = () => {
                                 font-semibold
                                 leading-[1.08]
                                 tracking-[-0.02em]
-                                text-[#000000]
+                                text-ink
                                 sm:text-4xl
                             "
                         >
@@ -112,7 +112,7 @@ const WhyLoveLaundry = () => {
                                 max-w-md
                                 text-sm
                                 leading-7
-                                text-[#404040]
+                                text-muted
                                 sm:text-base
                             "
                         >
@@ -123,7 +123,7 @@ const WhyLoveLaundry = () => {
                             {benefits.map((_, index) => (
                                 <div
                                     key={index}
-                                    className="flex items-center gap-3 text-sm font-semibold text-[#000000]"
+                                    className="flex items-center gap-3 text-sm font-semibold text-ink"
                                 >
                                     <span
                                         className="
@@ -134,8 +134,8 @@ const WhyLoveLaundry = () => {
                                             items-center
                                             justify-center
                                             rounded-full
-                                            bg-[#FEF2F2]
-                                            text-[#E01E31]
+                                            bg-brand-soft
+                                            text-brand
                                         "
                                     >
                                         <RiCheckLine className="h-3.5 w-3.5" />
@@ -158,13 +158,13 @@ const WhyLoveLaundry = () => {
                             font-bold
                             uppercase
                             tracking-[0.22em]
-                            text-[#E01E31]
+                            text-brand
                             sm:text-xs
                         "
                     >
                         <span
                             aria-hidden="true"
-                            className="h-[3px] w-8 rounded-full bg-[#E01E31]"
+                            className="h-[3px] w-8 rounded-full bg-brand"
                         />
 
                         {t("whyBadge")}
@@ -178,13 +178,13 @@ const WhyLoveLaundry = () => {
                             font-semibold
                             leading-[1.05]
                             tracking-[-0.02em]
-                            text-[#000000]
+                            text-ink
                             sm:text-5xl
                             lg:text-6xl
                         "
                     >
                         {t("whyTitleMain")}{" "}
-                        <span className="text-[#E01E31]">
+                        <span className="text-brand">
                             {t("whyTitleHighlight")}
                         </span>
                     </h2>
@@ -195,7 +195,7 @@ const WhyLoveLaundry = () => {
                             max-w-xl
                             text-sm
                             leading-7
-                            text-[#404040]
+                            text-muted
                             sm:text-base
                         "
                     >
@@ -222,15 +222,15 @@ const WhyLoveLaundry = () => {
                                     className="
                                         rounded-3xl
                                         border
-                                        border-[#E5E5E5]
-                                        bg-[#FFFFFF]
+                                        border-line
+                                        bg-surface
                                         p-5
-                                        shadow-[0_2px_12px_rgba(0,0,0,0.04)]
+                                        shadow-[0_2px_12px_rgba(var(--shadow-rgb),0.04)]
                                         transition-all
                                         duration-300
                                         hover:-translate-y-1.5
-                                        hover:border-[#E01E31]/40
-                                        hover:shadow-[0_8px_24px_rgba(0,0,0,0.1)]
+                                        hover:border-brand/40
+                                        hover:shadow-[0_8px_24px_rgba(var(--shadow-rgb),0.1)]
                                     "
                                 >
                                     <div
@@ -241,8 +241,8 @@ const WhyLoveLaundry = () => {
                                             items-center
                                             justify-center
                                             rounded-2xl
-                                            bg-[#FEF2F2]
-                                            text-[#E01E31]
+                                            bg-brand-soft
+                                            text-brand
                                         "
                                     >
                                         <Icon className="h-5 w-5" />
@@ -253,7 +253,7 @@ const WhyLoveLaundry = () => {
                                             mt-4
                                             text-sm
                                             font-bold
-                                            text-[#000000]
+                                            text-ink
                                             sm:text-base
                                         "
                                     >
@@ -265,7 +265,7 @@ const WhyLoveLaundry = () => {
                                             mt-2
                                             text-xs
                                             leading-6
-                                            text-[#404040]
+                                            text-muted
                                             sm:text-sm
                                         "
                                     >
@@ -287,29 +287,29 @@ const WhyLoveLaundry = () => {
                             sm:gap-4
                         "
                     >
-                        <div className="rounded-2xl bg-white px-6 py-4 text-center shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
-                            <div className="font-display text-3xl font-bold text-[#E01E31] sm:text-4xl">
+                        <div className="rounded-2xl bg-surface px-6 py-4 text-center shadow-[0_2px_12px_rgba(var(--shadow-rgb),0.06)]">
+                            <div className="font-display text-3xl font-bold text-brand sm:text-4xl">
                                 {companyInfo.customerCount}
                             </div>
-                            <div className="mt-1 text-[10px] font-bold uppercase tracking-wider text-[#404040] sm:text-[11px]">
+                            <div className="mt-1 text-[10px] font-bold uppercase tracking-wider text-muted sm:text-[11px]">
                                 {t("whyStatCustomers")}
                             </div>
                         </div>
 
-                        <div className="rounded-2xl bg-white px-6 py-4 text-center shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
-                            <div className="font-display text-3xl font-bold text-[#E01E31] sm:text-4xl">
+                        <div className="rounded-2xl bg-surface px-6 py-4 text-center shadow-[0_2px_12px_rgba(var(--shadow-rgb),0.06)]">
+                            <div className="font-display text-3xl font-bold text-brand sm:text-4xl">
                                 {companyInfo.rating}
                             </div>
-                            <div className="mt-1 text-[10px] font-bold uppercase tracking-wider text-[#404040] sm:text-[11px]">
+                            <div className="mt-1 text-[10px] font-bold uppercase tracking-wider text-muted sm:text-[11px]">
                                 {t("whyStatRating")}
                             </div>
                         </div>
 
-                        <div className="rounded-2xl bg-white px-6 py-4 text-center shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
-                            <div className="font-display text-3xl font-bold text-[#E01E31] sm:text-4xl">
+                        <div className="rounded-2xl bg-surface px-6 py-4 text-center shadow-[0_2px_12px_rgba(var(--shadow-rgb),0.06)]">
+                            <div className="font-display text-3xl font-bold text-brand sm:text-4xl">
                                 {companyInfo.serviceCount}
                             </div>
-                            <div className="mt-1 text-[10px] font-bold uppercase tracking-wider text-[#404040] sm:text-[11px]">
+                            <div className="mt-1 text-[10px] font-bold uppercase tracking-wider text-muted sm:text-[11px]">
                                 {t("whyStatServices")}
                             </div>
                         </div>

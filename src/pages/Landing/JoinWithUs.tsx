@@ -17,8 +17,8 @@ const JoinWithUs = () => {
             className="
                 relative
                 overflow-hidden
-                bg-[#000000]
-                bg-[radial-gradient(ellipse_60%_50%_at_50%_100%,rgba(224,30,49,0.12),transparent_70%)]
+                bg-ink
+                bg-[radial-gradient(ellipse_60%_50%_at_50%_100%,rgba(var(--brand-rgb),0.12),transparent_70%)]
                 px-4
                 py-12
                 sm:px-6
@@ -38,7 +38,7 @@ const JoinWithUs = () => {
                     h-96
                     w-96
                     rounded-full
-                    bg-[#E01E31]/8
+                    bg-brand/8
                 "
             />
 
@@ -53,7 +53,7 @@ const JoinWithUs = () => {
                     w-72
                     rounded-full
                     border-[20px]
-                    border-white/5
+                    border-on-dark/5
                 "
             />
 
@@ -73,7 +73,7 @@ const JoinWithUs = () => {
                 {Array.from({ length: 9 }).map((_, i) => (
                     <div
                         key={i}
-                        className="h-1 w-1 rounded-full bg-[#E01E31]"
+                        className="h-1 w-1 rounded-full bg-brand"
                     />
                 ))}
             </div>
@@ -90,13 +90,13 @@ const JoinWithUs = () => {
                             font-bold
                             uppercase
                             tracking-[0.22em]
-                            text-[#E01E31]
+                            text-brand
                             sm:text-xs
                         "
                     >
                         <span
                             aria-hidden="true"
-                            className="h-[3px] w-8 rounded-full bg-[#E01E31]"
+                            className="h-[3px] w-8 rounded-full bg-brand"
                         />
                         {t("joinBadge")}
                     </span>
@@ -109,13 +109,13 @@ const JoinWithUs = () => {
                             font-semibold
                             leading-[1.05]
                             tracking-[-0.02em]
-                            text-white
+                            text-on-dark
                             sm:text-5xl
                             lg:text-6xl
                         "
                     >
                         {t("joinTitleMain")}
-                        <span className="text-[#E01E31]">
+                        <span className="text-brand">
                             {" "}
                             {t("joinTitleHighlight")}
                         </span>
@@ -127,7 +127,7 @@ const JoinWithUs = () => {
                             max-w-xl
                             text-sm
                             leading-7
-                            text-[#D4D4D4]
+                            text-line-strong
                             sm:text-base
                         "
                     >
@@ -155,17 +155,17 @@ const JoinWithUs = () => {
                                 overflow-hidden
                                 rounded-2xl
                                 border
-                                border-white/10
-                                bg-white/5
+                                border-on-dark/10
+                                bg-on-dark/5
                                 p-6
                                 backdrop-blur-sm
-                                shadow-[0_4px_20px_rgba(0,0,0,0.3)]
+                                shadow-[0_4px_20px_rgba(var(--shadow-rgb),0.3)]
                                 transition-all
                                 duration-300
                                 hover:-translate-y-1
-                                hover:border-[#E01E31]/30
-                                hover:bg-white/8
-                                hover:shadow-[0_8px_32px_rgba(0,0,0,0.4)]
+                                hover:border-brand/30
+                                hover:bg-on-dark/8
+                                hover:shadow-[0_8px_32px_rgba(var(--shadow-rgb),0.4)]
                             "
                         >
                             {/* Top accent */}
@@ -178,8 +178,8 @@ const JoinWithUs = () => {
                                     right-0
                                     h-[2px]
                                     bg-gradient-to-r
-                                    from-[#E01E31]
-                                    to-[#E01E31]/30
+                                    from-brand
+                                    to-brand/30
                                     opacity-0
                                     transition-opacity
                                     duration-300
@@ -187,21 +187,21 @@ const JoinWithUs = () => {
                                 "
                             />
 
-                            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#E01E31]/15 text-[#E01E31] transition-colors duration-300 group-hover:bg-[#E01E31]/25">
+                            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-brand/15 text-brand transition-colors duration-300 group-hover:bg-brand/25">
                                 <job.icon className="h-6 w-6" />
                             </div>
 
                             <span className="
                                 inline-block
                                 rounded-full
-                                bg-white/10
+                                bg-on-dark/10
                                 px-3
                                 py-1
                                 text-[10px]
                                 font-bold
                                 uppercase
                                 tracking-wider
-                                text-[#D4D4D4]
+                                text-line-strong
                             ">
                                 {t(`joinJob${index + 1}Type`)}
                             </span>
@@ -211,7 +211,7 @@ const JoinWithUs = () => {
                                 mt-3
                                 text-lg
                                 font-semibold
-                                text-white
+                                text-on-dark
                             ">
                                 {t(`joinJob${index + 1}Title`)}
                             </h3>
@@ -220,7 +220,7 @@ const JoinWithUs = () => {
                                 mt-2
                                 text-sm
                                 leading-6
-                                text-[#A3A3A3]
+                                text-subtle
                             ">
                                 {t(`joinJob${index + 1}Desc`)}
                             </p>
@@ -237,8 +237,8 @@ const JoinWithUs = () => {
                         gap-8
                         rounded-2xl
                         border
-                        border-white/10
-                        bg-white/5
+                        border-on-dark/10
+                        bg-on-dark/5
                         p-6
                         sm:p-8
                         lg:mt-14
@@ -256,12 +256,12 @@ const JoinWithUs = () => {
                             <div
                                 key={index}
                                 data-reveal
-                                className="flex items-center gap-3 rounded-xl bg-white/5 px-4 py-3"
+                                className="flex items-center gap-3 rounded-xl bg-on-dark/5 px-4 py-3"
                             >
-                                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#E01E31]/15 text-[#E01E31]">
+                                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand/15 text-brand">
                                     <perk.icon className="h-4 w-4" />
                                 </div>
-                                <span className="text-sm font-semibold text-[#D4D4D4]">
+                                <span className="text-sm font-semibold text-line-strong">
                                     {t(`joinPerk${index + 1}`)}
                                 </span>
                             </div>
@@ -280,18 +280,18 @@ const JoinWithUs = () => {
                             justify-center
                             gap-3
                             rounded-full
-                            bg-[#E01E31]
+                            bg-brand
                             px-8
                             py-4
                             text-sm
                             font-bold
-                            text-white
-                            shadow-[0_0_20px_rgba(224,30,49,0.4)]
+                            text-on-dark
+                            shadow-[0_0_20px_rgba(var(--brand-rgb),0.4)]
                             transition-all
                             duration-200
                             hover:-translate-y-0.5
-                            hover:bg-[#C11324]
-                            hover:shadow-[0_0_28px_rgba(224,30,49,0.55)]
+                            hover:bg-brand-dark
+                            hover:shadow-[0_0_28px_rgba(var(--brand-rgb),0.55)]
                         "
                     >
                         <RiWhatsappLine className="h-5 w-5" />

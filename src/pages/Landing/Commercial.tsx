@@ -20,7 +20,7 @@ const Commercial = () => {
             className="
                 relative
                 overflow-hidden
-                bg-[#0C0708]
+                bg-surface-dark
                 px-4
                 py-12
                 sm:px-6
@@ -36,7 +36,7 @@ const Commercial = () => {
                     pointer-events-none
                     absolute
                     inset-0
-                    bg-[radial-gradient(70%_60%_at_100%_0%,rgba(224,30,49,0.18),transparent_60%)]
+                    bg-[radial-gradient(70%_60%_at_100%_0%,rgba(var(--brand-rgb),0.18),transparent_60%)]
                 "
             />
 
@@ -74,15 +74,15 @@ const Commercial = () => {
                                     overflow-hidden
                                     rounded-3xl
                                     border
-                                    border-white/10
-                                    bg-white/5
+                                    border-on-dark/10
+                                    bg-on-dark/5
                                     p-8
                                     transition-all
                                     duration-300
-                                    shadow-[0_2px_16px_rgba(0,0,0,0.2)]
+                                    shadow-[0_2px_16px_rgba(var(--shadow-rgb),0.2)]
                                     hover:-translate-y-1.5
-                                    hover:border-[#E01E31]/40
-                                    hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)]
+                                    hover:border-brand/40
+                                    hover:shadow-[0_20px_40px_rgba(var(--shadow-rgb),0.4)]
                                 "
                             >
                                 <div
@@ -93,7 +93,7 @@ const Commercial = () => {
                                         top-0
                                         z-10
                                         h-1
-                                        bg-[#E01E31]
+                                        bg-brand
                                         opacity-0
                                         transition-opacity
                                         duration-300
@@ -110,9 +110,9 @@ const Commercial = () => {
                                             items-center
                                             justify-center
                                             rounded-2xl
-                                            bg-[#E01E31]
-                                            text-white
-                                            shadow-[0_8px_20px_rgba(224,30,49,0.3)]
+                                            bg-brand
+                                            text-on-dark
+                                            shadow-[0_8px_20px_rgba(var(--brand-rgb),0.3)]
                                             transition-transform
                                             duration-300
                                             group-hover:-rotate-6
@@ -128,7 +128,7 @@ const Commercial = () => {
                                             text-2xl
                                             font-bold
                                             tracking-tight
-                                            text-white/10
+                                            text-on-dark/10
                                         "
                                     >
                                         0{index + 1}
@@ -142,7 +142,7 @@ const Commercial = () => {
                                         font-bold
                                         uppercase
                                         tracking-[0.16em]
-                                        text-[#E01E31]
+                                        text-brand
                                     "
                                 >
                                     {t(commercialKeys[index].subtitleKey)}
@@ -155,7 +155,7 @@ const Commercial = () => {
                                         text-xl
                                         font-semibold
                                         tracking-tight
-                                        text-white
+                                        text-on-dark
                                         sm:text-2xl
                                     "
                                 >
@@ -167,7 +167,7 @@ const Commercial = () => {
                                         mt-3
                                         text-sm
                                         leading-6
-                                        text-white/65
+                                        text-on-dark/65
                                     "
                                 >
                                     {t(commercialKeys[index].descKey)}
@@ -188,16 +188,16 @@ const Commercial = () => {
                                         items-center
                                         gap-2
                                         rounded-full
-                                        bg-white
+                                        bg-surface
                                         px-5
                                         py-2.5
                                         text-xs
                                         font-bold
-                                        text-[#E01E31]
+                                        text-brand
                                         transition-all
                                         duration-200
                                         group-hover:gap-3
-                                        group-hover:bg-[#FFF4F4]
+                                        group-hover:bg-brand-soft
                                     "
                                 >
                                     {t("commercialGetQuote")}

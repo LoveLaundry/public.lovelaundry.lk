@@ -48,8 +48,8 @@ const Action = ({
                             w-[56px]
                             rounded-[15px]
                             bg-brand
-                            text-white
-                            shadow-[0_7px_20px_rgba(237,28,36,0.3)]
+                            text-on-dark
+                            shadow-[0_7px_20px_rgba(var(--brand-rgb),0.3)]
                         `
                     : `
                             h-[52px]
@@ -57,8 +57,8 @@ const Action = ({
                             ${isSelected
                         ? `
                                         bg-brand
-                                        text-white
-                                        shadow-[0_6px_18px_rgba(237,28,36,0.28)]
+                                        text-on-dark
+                                        shadow-[0_6px_18px_rgba(var(--brand-rgb),0.28)]
                                     `
                         : `
                                         text-faint
@@ -95,13 +95,13 @@ const Action = ({
                     -translate-x-1/2
                     whitespace-nowrap
                     rounded-md
-                    bg-[#111111]
+                    bg-ink
                     px-2.5
                     py-1.5
                     text-[10px]
                     font-semibold
                     tracking-wide
-                    text-white
+                    text-on-dark
                     opacity-0
                     shadow-lg
                     transition-opacity

@@ -20,7 +20,7 @@ const Services = () => {
             id="services"
             className="
                 relative
-                bg-[#FAFAFA]
+                bg-surface-muted
                 px-4
                 py-12
                 sm:px-6
@@ -37,7 +37,7 @@ const Services = () => {
                     absolute
                     inset-0
                     opacity-[0.06]
-                    bg-[radial-gradient(circle,#000000_1px,transparent_1px)]
+                    bg-[radial-gradient(circle,var(--color-ink)_1px,transparent_1px)]
                     bg-[length:24px_24px]
                 "
             />
@@ -71,14 +71,14 @@ const Services = () => {
                                 overflow-hidden
                                 rounded-3xl
                                 border
-                                border-[#E5E5E5]
-                                bg-[#FFFFFF]
+                                border-line
+                                bg-surface
                                 transition-all
                                 duration-300
-                                shadow-[0_2px_12px_rgba(0,0,0,0.06)]
+                                shadow-[0_2px_12px_rgba(var(--shadow-rgb),0.06)]
                                 hover:-translate-y-1.5
-                                hover:border-[#E01E31]/40
-                                hover:shadow-[0_24px_50px_rgba(0,0,0,0.16)]
+                                hover:border-brand/40
+                                hover:shadow-[0_24px_50px_rgba(var(--shadow-rgb),0.16)]
                             "
                         >
                             <div
@@ -89,7 +89,7 @@ const Services = () => {
                                     top-0
                                     z-10
                                     h-1
-                                    bg-[#E01E31]
+                                    bg-brand
                                     opacity-0
                                     transition-opacity
                                     duration-300
@@ -102,7 +102,7 @@ const Services = () => {
                                     relative
                                     aspect-[1.35/1]
                                     overflow-hidden
-                                    bg-[#F5F5F5]
+                                    bg-surface-muted
                                 "
                             >
                                 <img
@@ -131,7 +131,7 @@ const Services = () => {
                                         bottom-0
                                         h-16
                                         bg-gradient-to-t
-                                        from-black/20
+                                        from-ink/20
                                         to-transparent
                                         pointer-events-none
                                     "
@@ -145,7 +145,7 @@ const Services = () => {
                                         font-bold
                                         uppercase
                                         tracking-[0.16em]
-                                        text-[#E01E31]
+                                        text-brand
                                     "
                                 >
                                     {t(serviceKeys[index].subtitleKey)}
@@ -158,7 +158,7 @@ const Services = () => {
                                         text-xl
                                         font-semibold
                                         tracking-tight
-                                        text-[#000000]
+                                        text-ink
                                     "
                                 >
                                     {t(serviceKeys[index].titleKey)}
@@ -169,7 +169,7 @@ const Services = () => {
                                         mt-2.5
                                         text-sm
                                         leading-6
-                                        text-[#404040]
+                                        text-muted
                                     "
                                 >
                                     {t(serviceKeys[index].descKey)}
@@ -191,7 +191,7 @@ const Services = () => {
                                         gap-2
                                         text-xs
                                         font-bold
-                                        text-[#E01E31]
+                                        text-brand
                                         transition-all
                                         duration-200
                                         group-hover:gap-3
@@ -216,8 +216,8 @@ const Services = () => {
                         gap-4
                         rounded-2xl
                         border
-                        border-[#E01E31]/10
-                        bg-gradient-to-r from-[#E01E31]/5 via-white to-[#E01E31]/5
+                        border-brand/10
+                        bg-gradient-to-r from-brand/5 via-surface to-brand/5
                         px-6
                         py-8
                         text-center
@@ -228,10 +228,10 @@ const Services = () => {
                     "
                 >
                     <div>
-                        <h3 className="font-display text-lg font-semibold text-[#000000]">
+                        <h3 className="font-display text-lg font-semibold text-ink">
                             {t("servicesCtaTitle")}
                         </h3>
-                        <p className="mt-1 text-sm text-[#404040]">
+                        <p className="mt-1 text-sm text-muted">
                             {t("servicesCtaSub")}
                         </p>
                     </div>
@@ -244,18 +244,18 @@ const Services = () => {
                             items-center
                             gap-2.5
                             rounded-full
-                            bg-[#E01E31]
+                            bg-brand
                             px-7
                             py-3.5
                             text-sm
                             font-bold
-                            text-white
-                            shadow-[0_8px_24px_rgba(224,30,49,0.3)]
+                            text-on-dark
+                            shadow-[0_8px_24px_rgba(var(--brand-rgb),0.3)]
                             transition-all
                             duration-200
                             hover:-translate-y-0.5
-                            hover:bg-[#C11324]
-                            hover:shadow-[0_12px_32px_rgba(224,30,49,0.4)]
+                            hover:bg-brand-dark
+                            hover:shadow-[0_12px_32px_rgba(var(--brand-rgb),0.4)]
                         "
                     >
                         <RiPhoneLine className="h-4 w-4" />
