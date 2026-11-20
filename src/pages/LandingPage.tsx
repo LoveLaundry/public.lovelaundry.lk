@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
     RiHome5Line,
     RiServiceLine,
@@ -75,6 +75,13 @@ const LandingPage = () => {
     const [selectedItem, setSelectedItem] =
         useState<ActionType | null>(actions[0]);
 
+    const handleActionSelect = useCallback((item: ActionType) => {
+        document.getElementById(item.id)?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+        });
+    }, []);
+
     useEffect(() => {
         const handleScroll = () => {
             const sections = actions
@@ -122,6 +129,7 @@ const LandingPage = () => {
                 items={actions}
                 selectedItem={selectedItem}
                 setSelectedItem={setSelectedItem}
+                onSelect={handleActionSelect}
             />
             <ChatWidget />
         </main>

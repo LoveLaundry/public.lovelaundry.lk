@@ -120,10 +120,10 @@ const ChatWidget = () => {
                     })),
                 );
                 setAssignedAdmin(state.assigned_admin_name);
-            } catch {
+            } catch (err) {
                 setMessages((prev) => prev.filter((message) => message.id !== optimistic.id));
                 setInput(draft);
-                setSendError(t("chatSendFailed"));
+                setSendError(err instanceof Error ? err.message : t("chatSendFailed"));
             } finally {
                 setIsTyping(false);
             }

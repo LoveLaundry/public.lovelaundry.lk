@@ -5,12 +5,14 @@ interface ActionProps {
     item: ActionType;
     isSelected: boolean;
     setSelected: (item: ActionType) => void;
+    onSelect: (item: ActionType) => void;
 }
 
 const Action = ({
     item,
     isSelected,
     setSelected,
+    onSelect,
 }: ActionProps) => {
     const Icon = item.icon;
     const isPrimary = item.id === "add";
@@ -18,7 +20,10 @@ const Action = ({
     return (
         <motion.button
             type="button"
-            onClick={() => setSelected(item)}
+            onClick={() => {
+                setSelected(item);
+                onSelect(item);
+            }}
             aria-label={item.label}
             aria-pressed={isSelected}
             whileHover={{ y: -3 }}

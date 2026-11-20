@@ -5,17 +5,20 @@ interface ActionBarProps {
     items: ActionType[];
     selectedItem: ActionType | null;
     setSelectedItem: (item: ActionType) => void;
+    onSelect: (item: ActionType) => void;
 }
 
 const ActionBar = ({
     items,
     selectedItem,
     setSelectedItem,
+    onSelect,
 }: ActionBarProps) => {
     return (
         <nav
             className="
                 hidden
+                sm:flex
                 fixed
                 bottom-5
                 left-1/2
@@ -50,6 +53,7 @@ const ActionBar = ({
                         item={item}
                         isSelected={selectedItem?.id === item.id}
                         setSelected={setSelectedItem}
+                        onSelect={onSelect}
                     />
                 ))}
             </div>
