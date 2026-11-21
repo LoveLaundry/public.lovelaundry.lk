@@ -1,330 +1,222 @@
-import { useEffect, useState, useCallback } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
-    RiMapPin2Line,
+    RiMapPinLine,
     RiNavigationLine,
     RiLoader4Line,
-    RiMapPinLine,
-    RiShoppingBag3Line,
     RiSearchLine,
     RiCloseLine,
     RiArrowRightLine,
-    RiMapPinAddLine,
-    RiStore2Line,
     RiAppsLine,
+    RiStore2Line,
+    RiMapPin2Line,
+    RiExternalLinkLine,
+    RiGlobalLine,
+    RiInformationLine,
 } from "react-icons/ri";
 import { useReveal } from "../../hooks/useReveal";
 import { useLanguage } from "../../i18n";
-import {
-    allLocations,
-    mainLaundry,
-    shopLocations,
-    type Location,
-} from "../../data/locations";
+import { allLocations, mainLaundry, type Location } from "../../data/locations";
+
+type MapSource = "google" | "osm";
+
+interface NearestResult {
+    location: Location;
+    distanceKm: number;
+}
+
+/** Haversine distance in kilometres between two WGS84 coordinates. */
+const distanceKm = (
+    lat1: number,
+    lng1: number,
+    lat2: number,
+    lng2: number
+) => {
+    const toRad = (value: number) => (value * Math.PI) / 180;
+    const earthRadiusKm = 6371;
+
+    const dLat = toRad(lat2 - lat1);
+    const dLng = toRad(lng2 - lng1);
+    const a =
+        Math.sin(dLat / 2) ** 2 +
+        Math.cos(toRad(lat1)) *
+            Math.cos(toRad(lat2)) *
+            Math.sin(dLng / 2) ** 2;
+
+    return earthRadiusKm * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+};
+
+/**
+ * Free embedded maps — no API key, billing account or token required.
+ * Google Maps is the default because it is the most widely available; the
+ * OpenStreetMap embed is a one-click fallback if Google is blocked.
+ */
+const embedUrl = (loc: Location, source: MapSource, lang: "en" | "sin") => {
+    const zoom = loc.precision === "town" ? "13" : "15";
+
+    if (source === "google") {
+        const params = new URLSearchParams({
+            q: `${loc.lat},${loc.lng}`,
+            z: zoom,
+            output: "embed",
+            hl: lang === "sin" ? "si" : "en",
+        });
+        return `https://www.google.com/maps?${params.toString()}`;
+    }
+
+    const latSpan = loc.precision === "town" ? 0.06 : 0.035;
+    const lngSpan = loc.precision === "town" ? 0.09 : 0.055;
+    const bbox = [
+        loc.lng - lngSpan,
+        loc.lat - latSpan,
+        loc.lng + lngSpan,
+        loc.lat + latSpan,
+    ]
+        .map((value) => value.toFixed(6))
+        .join(",");
+
+    const params = new URLSearchParams({
+        bbox,
+        layer: "mapnik",
+        marker: `${loc.lat},${loc.lng}`,
+    });
+    return `https://www.openstreetmap.org/export/embed.html?${params.toString()}`;
+};
+
+const directionsUrl = (loc: Location) =>
+    `https://www.google.com/maps/dir/?api=1&destination=${loc.lat},${loc.lng}`;
+
+const fullMapUrl = (loc: Location, source: MapSource) => {
+    const zoom = loc.precision === "town" ? "13" : "15";
+
+    return source === "google"
+        ? `https://www.google.com/maps/search/?api=1&query=${loc.lat},${loc.lng}`
+        : `https://www.openstreetmap.org/?mlat=${loc.lat}&mlon=${loc.lng}#map=${zoom}/${loc.lat}/${loc.lng}`;
+};
 
 const MapContent = () => {
-    const { t } = useLanguage();
-    const [map, setMap] = useState<L.Map | null>(null);
-    const [L, setL] = useState<typeof import("leaflet") | null>(null);
-    const [nearest, setNearest] = useState<Location | null>(null);
-    const [routeLine, setRouteLine] = useState<L.Polyline | null>(null);
-    const [loadingGeo, setLoadingGeo] = useState(false);
-    const [selectedLocation, setSelectedLocation] = useState<Location | null>(
-        null
-    );
+    const { t, lang } = useLanguage();
+
+    const [source, setSource] = useState<MapSource>("google");
+    const [selected, setSelected] = useState<Location>(mainLaundry);
     const [searchQuery, setSearchQuery] = useState("");
     const [activeFilter, setActiveFilter] = useState<"all" | "main" | "shops">(
         "all"
     );
+    const [nearest, setNearest] = useState<NearestResult | null>(null);
+    const [loadingGeo, setLoadingGeo] = useState(false);
+    const [geoError, setGeoError] = useState("");
 
-    const filteredLocations = allLocations.filter((loc) => {
-        const matchesSearch =
-            searchQuery.trim() === "" ||
-            loc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            loc.address.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesFilter =
-            activeFilter === "all" ||
-            (activeFilter === "main" && loc.id === mainLaundry.id) ||
-            (activeFilter === "shops" && loc.id !== mainLaundry.id);
-        return matchesSearch && matchesFilter;
-    });
+    const filteredLocations = useMemo(
+        () =>
+            allLocations.filter((loc) => {
+                const query = searchQuery.trim().toLowerCase();
+                const matchesSearch =
+                    query === "" ||
+                    loc.name.toLowerCase().includes(query) ||
+                    loc.address.toLowerCase().includes(query);
+                const matchesFilter =
+                    activeFilter === "all" ||
+                    (activeFilter === "main" && loc.id === mainLaundry.id) ||
+                    (activeFilter === "shops" && loc.id !== mainLaundry.id);
 
-    const mainCentreLabel = t("mapMainCentre");
-    const collectionPointLabel = t("mapCollectionPoint");
-    const yourLocationLabel = t("mapYourLocation");
+                return matchesSearch && matchesFilter;
+            }),
+        [searchQuery, activeFilter]
+    );
 
-    // Initialize map
+    // Keep the map focused on a location that is still visible in the list.
     useEffect(() => {
-        let cancelled = false;
+        if (
+            filteredLocations.length > 0 &&
+            !filteredLocations.some((loc) => loc.id === selected.id)
+        ) {
+            setSelected(filteredLocations[0]);
+            setNearest(null);
+        }
+    }, [filteredLocations, selected.id]);
 
-        const init = async () => {
-            const leaflet = await import("leaflet");
-            if (cancelled) return;
-            setL(leaflet);
-
-            const mapInstance = leaflet
-                .map("love-laundry-map", {
-                    center: [7.955, 79.835],
-                    zoom: 12,
-                    zoomControl: false,
-                    scrollWheelZoom: true,
-                })
-                .setView([7.955, 79.835], 12);
-
-            leaflet
-                .tileLayer(
-                    "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-                    {
-                        attribution:
-                            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
-                        maxZoom: 19,
-                    }
-                )
-                .addTo(mapInstance);
-
-            // Add zoom control to bottom-right
-            leaflet.control.zoom({ position: "bottomright" }).addTo(mapInstance);
-
-            // Custom marker icons
-            const mainIcon = leaflet.divIcon({
-                className: "custom-marker",
-                html: `<div class="marker-main">
-                    <div class="marker-pin-main">
-                        <img src="./assets/icon.png" alt="Love Laundry" class="marker-icon-img" />
-                    </div>
-                    <div class="marker-pulse"></div>
-                </div>`,
-                iconSize: [52, 68],
-                iconAnchor: [26, 68],
-                popupAnchor: [0, -72],
-            });
-
-            const shopIcon = leaflet.divIcon({
-                className: "custom-marker",
-                html: `<div class="marker-shop">
-                    <div class="marker-pin-shop">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-on-dark)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-                            <line x1="3" y1="6" x2="21" y2="6"/>
-                            <path d="M16 10a4 4 0 01-8 0"/>
-                        </svg>
-                    </div>
-                </div>`,
-                iconSize: [32, 40],
-                iconAnchor: [16, 40],
-                popupAnchor: [0, -42],
-            });
-
-            // Add main laundry marker
-            const mainMarker = leaflet
-                .marker([mainLaundry.lat, mainLaundry.lng], { icon: mainIcon })
-                .addTo(mapInstance);
-
-            const mainPopup = `
-                <div class="popup-content">
-                    <div class="popup-badge popup-badge-main">${mainCentreLabel}</div>
-                    <h3 class="popup-title">${mainLaundry.name}</h3>
-                    <p class="popup-address">${mainLaundry.address}</p>
-                    ${mainLaundry.phone ? `<a href="tel:${mainLaundry.phone}" class="popup-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg> ${mainLaundry.phone}</a>` : ""}
-                    ${mainLaundry.hours ? `<div class="popup-hours"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${mainLaundry.hours}</div>` : ""}
-                </div>
-            `;
-            mainMarker.bindPopup(mainPopup, {
-                maxWidth: 280,
-                className: "custom-popup",
-            });
-
-            // Add shop markers
-            shopLocations.forEach((shop) => {
-                const marker = leaflet
-                    .marker([shop.lat, shop.lng], { icon: shopIcon })
-                    .addTo(mapInstance);
-
-                const popup = `
-                    <div class="popup-content">
-                        <div class="popup-badge popup-badge-shop">${collectionPointLabel}</div>
-                        <h3 class="popup-title">${shop.name}</h3>
-                        <p class="popup-address">${shop.address}</p>
-                    </div>
-                `;
-                marker.bindPopup(popup, {
-                    maxWidth: 280,
-                    className: "custom-popup",
-                });
-
-                marker.on("click", () => {
-                    setSelectedLocation(shop);
-                });
-            });
-
-            mainMarker.on("click", () => {
-                setSelectedLocation(mainLaundry);
-            });
-
-            setMap(mapInstance);
-        };
-
-        init();
-
-        return () => {
-            cancelled = true;
-            if (map) {
-                map.remove();
-            }
-        };
+    const selectLocation = useCallback((loc: Location) => {
+        setSelected(loc);
+        setSearchQuery("");
+        setActiveFilter("all");
+        setNearest(null);
     }, []);
 
-    // Find nearest location
-    const findNearest = useCallback(() => {
-        if (!map || !L) return;
-
-        setLoadingGeo(true);
+    const findNearest = () => {
+        setGeoError("");
 
         if (!navigator.geolocation) {
-            alert("Geolocation is not supported by your browser.");
-            setLoadingGeo(false);
+            setGeoError(t("mapGeoUnsupported"));
             return;
         }
 
+        setLoadingGeo(true);
         navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const userLatLng = L.latLng(
-                    position.coords.latitude,
-                    position.coords.longitude
+            ({ coords }) => {
+                let closest = allLocations[0];
+                let shortest = distanceKm(
+                    coords.latitude,
+                    coords.longitude,
+                    closest.lat,
+                    closest.lng
                 );
 
-                // Find nearest location
-                let minDist = Infinity;
-                let nearestLoc: Location = mainLaundry;
-
                 allLocations.forEach((loc) => {
-                    const dist = userLatLng.distanceTo(
-                        L.latLng(loc.lat, loc.lng)
+                    const distance = distanceKm(
+                        coords.latitude,
+                        coords.longitude,
+                        loc.lat,
+                        loc.lng
                     );
-                    if (dist < minDist) {
-                        minDist = dist;
-                        nearestLoc = loc;
+                    if (distance < shortest) {
+                        shortest = distance;
+                        closest = loc;
                     }
                 });
 
-                setNearest(nearestLoc);
-                setSelectedLocation(nearestLoc);
-
-                // Remove old route
-                if (routeLine) {
-                    map.removeLayer(routeLine);
-                }
-
-                // Draw user marker
-                const userIcon = L.divIcon({
-                    className: "custom-marker",
-                    html: `<div class="marker-user">
-                        <div class="marker-user-dot"></div>
-                        <div class="marker-user-ring"></div>
-                    </div>`,
-                    iconSize: [24, 24],
-                    iconAnchor: [12, 12],
-                });
-
-                L.marker(userLatLng, { icon: userIcon })
-                    .addTo(map)
-                    .bindPopup(
-                        `<div class="popup-content"><div class="popup-badge popup-badge-user">${yourLocationLabel}</div></div>`,
-                        { className: "custom-popup" }
-                    )
-                    .openPopup();
-
-                // Fetch route from OSRM
-                const url = `https://router.project-osrm.org/route/v1/driving/${userLatLng.lng},${userLatLng.lat};${nearestLoc.lng},${nearestLoc.lat}?overview=full&geometries=geojson`;
-
-                fetch(url)
-                    .then((res) => res.json())
-                    .then((data) => {
-                        if (data.routes && data.routes.length > 0) {
-                            const coords = data.routes[0].geometry.coordinates.map(
-                                (c: number[]) => [c[1], c[0]] as L.LatLngExpression
-                            );
-
-                            const polyline = L.polyline(coords, {
-                                color: "var(--color-brand)",
-                                weight: 4,
-                                opacity: 0.85,
-                                dashArray: "10, 12",
-                                lineCap: "round",
-                                lineJoin: "round",
-                            }).addTo(map);
-
-                            setRouteLine(polyline);
-
-                            // Fit map to show route
-                            const bounds = L.latLngBounds([
-                                userLatLng,
-                                L.latLng(nearestLoc.lat, nearestLoc.lng),
-                            ]);
-                            map.fitBounds(bounds, { padding: [60, 60] });
-                        }
-                    })
-                    .catch(() => {
-                        // Route failed, just show markers
-                        map.setView(userLatLng, 13);
-                    })
-                    .finally(() => {
-                        setLoadingGeo(false);
-                    });
-            },
-            () => {
-                alert(
-                    "Unable to retrieve your location. Please allow location access."
-                );
+                setNearest({ location: closest, distanceKm: shortest });
+                setSelected(closest);
+                setSearchQuery("");
+                setActiveFilter("all");
                 setLoadingGeo(false);
             },
-            { enableHighAccuracy: true, timeout: 10000 }
+            () => {
+                setGeoError(t("mapGeoDenied"));
+                setLoadingGeo(false);
+            },
+            { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
         );
-    }, [map, L, routeLine, yourLocationLabel]);
+    };
 
-    // Center on a location
-    const centerOn = useCallback(
-        (loc: Location) => {
-            if (!map) return;
-            map.flyTo([loc.lat, loc.lng], 14, { duration: 1.2 });
-            setSelectedLocation(loc);
-        },
-        [map]
-    );
+    const distanceLabel = nearest
+        ? nearest.distanceKm < 1
+            ? `${Math.round(nearest.distanceKm * 1000)} m`
+            : `${nearest.distanceKm.toFixed(1)} km`
+        : "";
 
-    const openDirections = (loc: Location) => {
-        const url = `https://www.google.com/maps/dir/?api=1&destination=${loc.lat},${loc.lng}`;
-        window.open(url, "_blank", "noopener,noreferrer");
+    const subtitleFor = (loc: Location) => {
+        if (loc.id === mainLaundry.id) return t("mapMainCentre");
+        if (loc.precision === "town") {
+            return `${loc.address} · ${t("mapTownLocation")}`;
+        }
+        return loc.address;
     };
 
     return (
         <>
-            {/* Location List Sidebar */}
+            {/* Location list */}
             <div className="flex flex-col gap-3 lg:w-[340px] lg:shrink-0">
-                {/* Find Nearest Button */}
                 <button
                     type="button"
                     onClick={findNearest}
                     disabled={loadingGeo}
                     className="
-                        flex
-                        h-12
-                        items-center
-                        justify-center
-                        gap-2.5
-                        rounded-xl
-                        bg-brand
-                        px-5
-                        text-sm
-                        font-bold
-                        text-on-dark
+                        flex h-12 items-center justify-center gap-2.5 rounded-xl
+                        bg-brand px-5 text-sm font-bold text-on-dark
                         shadow-[0_8px_24px_rgba(var(--brand-rgb),0.35)]
-                        transition-all
-                        duration-200
-                        hover:-translate-y-0.5
-                        hover:bg-brand-dark
-                        hover:shadow-[0_12px_32px_rgba(var(--brand-rgb),0.45)]
-                        disabled:cursor-not-allowed
-                        disabled:opacity-60
+                        transition-all duration-200
+                        hover:-translate-y-0.5 hover:bg-brand-dark
+                        disabled:cursor-not-allowed disabled:opacity-60
                     "
                 >
                     {loadingGeo ? (
@@ -335,7 +227,13 @@ const MapContent = () => {
                     {loadingGeo ? t("mapFinding") : t("mapFindNearest")}
                 </button>
 
-                {/* Nearest Result - Gradient Card */}
+                {geoError && (
+                    <div className="flex gap-2 rounded-xl border border-brand/20 bg-brand-soft px-3 py-2.5 text-xs leading-relaxed text-brand">
+                        <RiInformationLine className="mt-0.5 h-4 w-4 shrink-0" />
+                        <span>{geoError}</span>
+                    </div>
+                )}
+
                 {nearest && (
                     <div className="nearest-result-card group relative overflow-hidden rounded-xl border border-brand/20 p-4">
                         <div className="absolute inset-0 bg-gradient-to-br from-brand via-brand-dark to-brand-deep opacity-[0.08] transition-opacity duration-300 group-hover:opacity-[0.12]" />
@@ -345,99 +243,59 @@ const MapContent = () => {
                             </div>
                             <div className="min-w-0 flex-1">
                                 <div className="text-[10px] font-bold uppercase tracking-widest text-brand">
-                                    {t("mapNearestLocation")}
+                                    {t("mapNearestLocation")} · {distanceLabel}
                                 </div>
                                 <div className="mt-0.5 truncate font-display text-sm font-semibold text-ink">
-                                    {nearest.name}
+                                    {nearest.location.name}
                                 </div>
                                 <div className="mt-0.5 truncate text-xs text-faint">
-                                    {nearest.address}
+                                    {subtitleFor(nearest.location)}
                                 </div>
                             </div>
                         </div>
-                        <button
-                            type="button"
-                            onClick={() => openDirections(nearest)}
+                        <a
+                            href={directionsUrl(nearest.location)}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="
-                                relative
-                                mt-3
-                                flex
-                                w-full
-                                items-center
-                                justify-center
-                                gap-1.5
-                                rounded-lg
-                                border
-                                border-brand/20
-                                bg-surface/80
-                                py-2
-                                text-xs
-                                font-semibold
-                                text-brand
-                                backdrop-blur-sm
-                                transition-all
-                                duration-200
-                                hover:border-brand/40
-                                hover:bg-brand-soft
+                                relative mt-3 flex w-full items-center justify-center
+                                gap-1.5 rounded-lg border border-brand/20
+                                bg-surface/80 py-2 text-xs font-semibold text-brand
+                                transition-all duration-200 hover:border-brand/40 hover:bg-brand-soft
                             "
                         >
                             <RiArrowRightLine className="h-3.5 w-3.5" />
                             {t("mapGetDirections")}
-                        </button>
+                        </a>
                     </div>
                 )}
 
-                {/* Search Bar */}
                 <div className="relative">
                     <RiSearchLine className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-subtle" />
                     <input
                         type="text"
                         value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onChange={(event) => setSearchQuery(event.target.value)}
                         placeholder={t("mapSearchPlaceholder")}
                         className="
-                            w-full
-                            rounded-xl
-                            border
-                            border-line
-                            bg-surface
-                            py-2.5
-                            pl-10
-                            pr-10
-                            text-sm
-                            text-ink
-                            placeholder-[var(--color-subtle)]
-                            outline-none
-                            transition-all
-                            duration-200
-                            focus:border-brand/40
-                            focus:bg-surface
-                            focus:shadow-[0_0_0_3px_rgba(var(--brand-rgb),0.08)]
+                            w-full rounded-xl border border-line bg-surface py-2.5
+                            pl-10 pr-10 text-sm text-ink outline-none
+                            transition-all duration-200
+                            focus:border-brand/40 focus:shadow-[0_0_0_3px_rgba(var(--brand-rgb),0.08)]
                         "
                     />
                     {searchQuery && (
                         <button
                             type="button"
                             onClick={() => setSearchQuery("")}
-                            className="
-                                absolute
-                                right-3
-                                top-1/2
-                                -translate-y-1/2
-                                rounded-full
-                                p-0.5
-                                text-subtle
-                                transition-colors
-                                hover:bg-line
-                                hover:text-muted
-                            "
+                            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-0.5 text-subtle transition-colors hover:bg-line hover:text-muted"
+                            aria-label={t("mapClearFilters")}
                         >
                             <RiCloseLine className="h-4 w-4" />
                         </button>
                     )}
                 </div>
 
-                {/* Filter Tabs */}
                 <div className="flex gap-1 rounded-xl bg-surface-muted p-1">
                     {(
                         [
@@ -453,11 +311,9 @@ const MapContent = () => {
                             className={`
                                 flex flex-1 items-center justify-center gap-1.5 rounded-lg px-3 py-2
                                 text-xs font-semibold transition-all duration-200
-                                ${
-                                    activeFilter === tab.key
-                                        ? "bg-surface text-brand shadow-sm"
-                                        : "text-faint hover:text-ink"
-                                }
+                                ${activeFilter === tab.key
+                                    ? "bg-surface text-brand shadow-sm"
+                                    : "text-faint hover:text-ink"}
                             `}
                         >
                             <tab.icon className="h-3.5 w-3.5" />
@@ -466,7 +322,6 @@ const MapContent = () => {
                     ))}
                 </div>
 
-                {/* Location Count */}
                 <div className="flex items-center justify-between px-1">
                     <span className="text-xs font-medium text-faint">
                         {filteredLocations.length === allLocations.length
@@ -487,15 +342,10 @@ const MapContent = () => {
                     )}
                 </div>
 
-                {/* Location List */}
-                <div className="location-list flex flex-col gap-1.5 overflow-y-auto lg:max-h-[340px]">
+                <div className="location-list flex max-h-[300px] flex-col gap-2 overflow-y-auto pr-1 lg:max-h-[420px]">
                     {filteredLocations.length === 0 ? (
-                        /* Empty State */
-                        <div className="flex flex-col items-center justify-center py-10 text-center">
-                            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-surface-muted">
-                                <RiMapPinAddLine className="h-7 w-7 text-subtle" />
-                            </div>
-                            <div className="mt-3 text-sm font-semibold text-ink">
+                        <div className="rounded-xl border border-dashed border-line px-4 py-8 text-center">
+                            <div className="text-sm font-semibold text-ink">
                                 {t("mapNoResults")}
                             </div>
                             <div className="mt-1 text-xs text-faint">
@@ -505,25 +355,25 @@ const MapContent = () => {
                     ) : (
                         filteredLocations.map((loc) => {
                             const isMain = loc.id === mainLaundry.id;
-                            const isSelected = selectedLocation?.id === loc.id;
+                            const isSelected = selected.id === loc.id;
 
                             return (
-                                <div key={loc.id} className="relative">
+                                <div
+                                    key={loc.id}
+                                    className={`
+                                        flex items-center gap-3 rounded-xl border px-4 py-3
+                                        transition-all duration-200
+                                        ${isSelected
+                                            ? "border-brand/50 bg-brand-soft shadow-sm"
+                                            : "border-line bg-surface hover:border-brand/30"}
+                                    `}
+                                >
                                     <button
                                         type="button"
-                                        onClick={() => centerOn(loc)}
-                                        className={`
-                                            flex w-full items-center gap-3 rounded-xl border px-4 py-3 text-left transition-all duration-200
-                                            ${
-                                                isSelected
-                                                    ? "border-brand/50 bg-brand-soft shadow-sm"
-                                                    : "border-line bg-surface hover:border-brand/30 hover:bg-surface"
-                                            }
-                                        `}
+                                        onClick={() => selectLocation(loc)}
+                                        aria-pressed={isSelected}
+                                        className="flex min-w-0 flex-1 items-center gap-3 text-left"
                                     >
-                                        {isSelected && (
-                                            <div className="absolute left-1.5 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-brand shadow-[0_0_4px_rgba(var(--brand-rgb),0.5)]" />
-                                        )}
                                         <div
                                             className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
                                                 isMain
@@ -534,7 +384,7 @@ const MapContent = () => {
                                             {isMain ? (
                                                 <RiMapPin2Line className="h-5 w-5" />
                                             ) : (
-                                                <RiShoppingBag3Line className="h-5 w-5" />
+                                                <RiStore2Line className="h-5 w-5" />
                                             )}
                                         </div>
                                         <div className="min-w-0 flex-1">
@@ -542,39 +392,109 @@ const MapContent = () => {
                                                 {loc.name}
                                             </div>
                                             <div className="truncate text-xs text-faint">
-                                                {isMain ? t("mapMainCentre") : loc.address}
+                                                {subtitleFor(loc)}
                                             </div>
                                         </div>
-                                        {isSelected && (
-                                            <button
-                                                type="button"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    openDirections(loc);
-                                                }}
-                                                className="
-                                                    shrink-0
-                                                    rounded-lg
-                                                    border
-                                                    border-brand/20
-                                                    bg-surface
-                                                    p-2
-                                                    text-brand
-                                                    transition-all
-                                                    duration-200
-                                                    hover:border-brand/40
-                                                    hover:bg-brand-soft
-                                                "
-                                                title={t("mapGetDirections")}
-                                            >
-                                                <RiArrowRightLine className="h-4 w-4" />
-                                            </button>
-                                        )}
                                     </button>
+                                    <a
+                                        href={directionsUrl(loc)}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="shrink-0 rounded-lg border border-brand/20 bg-surface p-2 text-brand transition-all duration-200 hover:border-brand/40 hover:bg-brand-soft"
+                                        title={t("mapGetDirections")}
+                                        aria-label={`${t("mapGetDirections")} — ${loc.name}`}
+                                    >
+                                        <RiArrowRightLine className="h-4 w-4" />
+                                    </a>
                                 </div>
                             );
                         })
                     )}
+                </div>
+            </div>
+
+            {/* Free embedded map — Google by default, OpenStreetMap fallback */}
+            <div className="relative min-h-[420px] flex-1 overflow-hidden bg-surface-muted lg:min-h-[520px] lg:rounded-r-3xl">
+                <iframe
+                    key={`${source}-${selected.id}`}
+                    title={`${selected.name} — ${t("mapTitle")}`}
+                    src={embedUrl(selected, source, lang)}
+                    className="h-full min-h-[420px] w-full border-0 lg:min-h-[520px]"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    allow="geolocation; fullscreen"
+                />
+
+                <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-x-0 top-0 z-10 h-10 bg-gradient-to-b from-surface/90 to-transparent"
+                />
+
+                <div className="pointer-events-none absolute inset-x-3 top-3 z-20 flex flex-wrap items-center justify-between gap-2">
+                    <div className="pointer-events-auto flex items-center rounded-full border border-line bg-surface/95 p-1 shadow-sm backdrop-blur">
+                        <button
+                            type="button"
+                            onClick={() => setSource("google")}
+                            className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-bold transition-all ${
+                                source === "google"
+                                    ? "bg-brand text-on-dark shadow-sm"
+                                    : "text-faint hover:text-ink"
+                            }`}
+                        >
+                            <RiMapPinLine className="h-3.5 w-3.5" />
+                            {t("mapSourceGoogle")}
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => setSource("osm")}
+                            className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-bold transition-all ${
+                                source === "osm"
+                                    ? "bg-brand text-on-dark shadow-sm"
+                                    : "text-faint hover:text-ink"
+                            }`}
+                        >
+                            <RiGlobalLine className="h-3.5 w-3.5" />
+                            {t("mapSourceOSM")}
+                        </button>
+                    </div>
+
+                    <a
+                        href={fullMapUrl(selected, source)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-line bg-surface/95 px-3 py-1.5 text-[11px] font-bold text-ink shadow-sm backdrop-blur transition-colors hover:border-brand/30 hover:text-brand"
+                    >
+                        <RiExternalLinkLine className="h-3.5 w-3.5" />
+                        {t("mapOpenFull")}
+                    </a>
+                </div>
+
+                <div className="pointer-events-none absolute inset-x-3 bottom-3 z-20">
+                    <div className="pointer-events-auto flex flex-wrap items-center justify-between gap-3 rounded-xl border border-line bg-surface/95 p-3 shadow-[0_8px_28px_rgba(var(--shadow-rgb),0.12)] backdrop-blur">
+                        <div className="min-w-0">
+                            <div className="text-[10px] font-bold uppercase tracking-widest text-brand">
+                                {t("mapSelected")}
+                            </div>
+                            <div className="truncate text-sm font-semibold text-ink">
+                                {selected.name}
+                            </div>
+                            <div className="truncate text-xs text-faint">
+                                {subtitleFor(selected)}
+                            </div>
+                        </div>
+                        <a
+                            href={directionsUrl(selected)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex shrink-0 items-center gap-1.5 rounded-lg bg-brand px-3 py-2 text-xs font-bold text-on-dark transition-colors hover:bg-brand-dark"
+                        >
+                            {t("mapGetDirections")}
+                            <RiArrowRightLine className="h-3.5 w-3.5" />
+                        </a>
+                    </div>
+                    <p className="mt-2 text-center text-[10px] text-faint">
+                        {t("mapFallbackHint")}
+                    </p>
                 </div>
             </div>
         </>
@@ -588,60 +508,19 @@ const LocationMap = () => {
     return (
         <section
             id="locations"
-            className="
-                relative
-                overflow-hidden
-                bg-surface-dark
-                px-4
-                py-12
-                sm:px-6
-                sm:py-16
-                lg:px-8
-                lg:py-20
-            "
+            className="relative overflow-hidden bg-surface-dark px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20"
         >
-            {/* Warm brand glow */}
             <div
                 aria-hidden="true"
-                className="
-                    pointer-events-none
-                    absolute
-                    inset-0
-                    bg-[radial-gradient(70%_60%_at_0%_0%,rgba(var(--brand-rgb),0.16),transparent_60%)]
-                "
+                className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_60%_at_0%_0%,rgba(var(--brand-rgb),0.16),transparent_60%)]"
             />
             <div ref={sectionRef} className="relative mx-auto w-full max-w-[1440px]">
-                {/* Section Header */}
                 <div data-reveal className="mb-10 sm:mb-14">
-                    <span
-                        className="
-                            inline-flex
-                            items-center
-                            gap-2
-                            text-[11px]
-                            font-bold
-                            uppercase
-                            tracking-[0.22em]
-                            text-brand
-                            sm:text-xs
-                        "
-                    >
+                    <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-brand sm:text-xs">
                         <RiMapPinLine className="h-4 w-4" />
                         {t("mapBadge")}
                     </span>
-                    <h2
-                        className="
-                            font-display
-                            mt-3
-                            text-3xl
-                            font-semibold
-                            leading-[1.1]
-                            tracking-[-0.02em]
-                            text-on-dark
-                            sm:text-4xl
-                            lg:text-5xl
-                        "
-                    >
+                    <h2 className="font-display mt-3 text-3xl font-semibold leading-[1.1] tracking-[-0.02em] text-on-dark sm:text-4xl lg:text-5xl">
                         {t("mapTitle")}
                         <span className="text-brand"> {t("mapTitleHighlight")}</span>
                     </h2>
@@ -650,325 +529,12 @@ const LocationMap = () => {
                     </p>
                 </div>
 
-                {/* Map + Sidebar */}
                 <div
                     data-reveal
-                    className="
-                        flex
-                        flex-col
-                        gap-5
-                        overflow-hidden
-                        rounded-3xl
-                        border
-                        border-on-dark/10
-                        bg-surface
-                        p-2
-                        shadow-[0_16px_48px_rgba(var(--shadow-rgb),0.3)]
-                        sm:p-3
-                        lg:flex-row
-                    "
+                    className="flex flex-col gap-5 overflow-hidden rounded-3xl border border-on-dark/10 bg-surface p-2 shadow-[0_16px_48px_rgba(var(--shadow-rgb),0.3)] sm:p-3 lg:flex-row"
                 >
-                    {/* Sidebar */}
                     <MapContent />
-
-                    {/* Map Container */}
-                    <div className="relative min-h-[400px] flex-1 lg:min-h-[520px]">
-                        <div id="love-laundry-map" className="h-full w-full" />
-
-                        {/* Map overlay gradient (top) */}
-                        <div
-                            aria-hidden="true"
-                            className="
-                                pointer-events-none
-                                absolute
-                                left-0
-                                right-0
-                                top-0
-                                z-[400]
-                                h-8
-                                bg-gradient-to-b
-                                from-surface
-                                to-transparent
-                            "
-                        />
-                    </div>
                 </div>
-
-                {/* Map Styles */}
-                <style>{`
-                    /* Leaflet overrides */
-                    .love-laundry-map,
-                    #love-laundry-map {
-                        font-family: inherit;
-                    }
-
-                    .leaflet-container {
-                        border-radius: 0 24px 24px 0;
-                        background: var(--color-surface);
-                    }
-
-                    @media (max-width: 1023px) {
-                        .leaflet-container {
-                            border-radius: 0 0 24px 24px;
-                        }
-                    }
-
-                    .leaflet-control-zoom {
-                        border: none !important;
-                        box-shadow: 0 4px 16px rgba(var(--shadow-rgb),0.1) !important;
-                        border-radius: 12px !important;
-                        overflow: hidden;
-                    }
-
-                    .leaflet-control-zoom a {
-                        width: 36px !important;
-                        height: 36px !important;
-                        line-height: 36px !important;
-                        font-size: 18px !important;
-                        color: var(--color-ink) !important;
-                        border-bottom: 1px solid var(--color-line) !important;
-                    }
-
-                    .leaflet-control-zoom a:last-child {
-                        border-bottom: none !important;
-                    }
-
-                    .leaflet-control-zoom a:hover {
-                        background: var(--color-brand-soft) !important;
-                        color: var(--color-brand) !important;
-                    }
-
-                    .leaflet-control-attribution {
-                        background: rgba(var(--surface-rgb),0.85) !important;
-                        backdrop-filter: blur(4px);
-                        font-size: 10px !important;
-                        padding: 2px 8px !important;
-                        border-radius: 8px 0 0 0 !important;
-                    }
-
-                    .leaflet-control-attribution a {
-                        color: var(--color-faint) !important;
-                    }
-
-                    /* Custom Main Marker */
-                    .marker-main {
-                        position: relative;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                    }
-
-                    .marker-pin-main {
-                        width: 48px;
-                        height: 48px;
-                        background: var(--color-brand);
-                        border-radius: 50% 50% 50% 0;
-                        transform: rotate(-45deg);
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        box-shadow: 0 4px 16px rgba(var(--brand-rgb),0.45);
-                        border: 3px solid var(--color-on-dark);
-                    }
-
-                    .marker-icon-img {
-                        transform: rotate(45deg);
-                        width: 26px;
-                        height: 26px;
-                        object-fit: contain;
-                        border-radius: 4px;
-                    }
-
-                    .marker-pulse {
-                        position: absolute;
-                        top: 0;
-                        left: 50%;
-                        transform: translateX(-50%);
-                        width: 48px;
-                        height: 48px;
-                        border-radius: 50%;
-                        background: rgba(var(--brand-rgb),0.2);
-                        animation: pulse 2s ease-out infinite;
-                    }
-
-                    @keyframes pulse {
-                        0% { transform: translateX(-50%) scale(1); opacity: 0.6; }
-                        100% { transform: translateX(-50%) scale(2.5); opacity: 0; }
-                    }
-
-                    /* Custom Shop Marker */
-                    .marker-shop {
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                    }
-
-                    .marker-pin-shop {
-                        width: 28px;
-                        height: 28px;
-                        background: var(--color-brand);
-                        border-radius: 50% 50% 50% 0;
-                        transform: rotate(-45deg);
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        box-shadow: 0 3px 12px rgba(var(--brand-rgb),0.35);
-                        border: 2px solid var(--color-on-dark);
-                    }
-
-                    .marker-pin-shop svg {
-                        transform: rotate(45deg);
-                    }
-
-                    /* User Location Marker */
-                    .marker-user {
-                        position: relative;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                    }
-
-                    .marker-user-dot {
-                        width: 16px;
-                        height: 16px;
-                        background: var(--color-info);
-                        border-radius: 50%;
-                        border: 3px solid var(--color-on-dark);
-                        box-shadow: 0 2px 8px rgba(var(--info-rgb),0.5);
-                        z-index: 2;
-                    }
-
-                    .marker-user-ring {
-                        position: absolute;
-                        width: 40px;
-                        height: 40px;
-                        background: rgba(var(--info-rgb),0.15);
-                        border-radius: 50%;
-                        animation: userPulse 2s ease-out infinite;
-                    }
-
-                    @keyframes userPulse {
-                        0% { transform: scale(0.8); opacity: 0.8; }
-                        100% { transform: scale(2); opacity: 0; }
-                    }
-
-                    /* Custom Popup */
-                    .custom-popup .leaflet-popup-content-wrapper {
-                        border-radius: 16px !important;
-                        box-shadow: 0 12px 36px rgba(var(--shadow-rgb),0.15) !important;
-                        border: 1px solid var(--color-line);
-                        padding: 0;
-                    }
-
-                    .custom-popup .leaflet-popup-content {
-                        margin: 0 !important;
-                        padding: 0 !important;
-                    }
-
-                    .custom-popup .leaflet-popup-tip {
-                        border-top-color: var(--color-on-dark) !important;
-                        box-shadow: none !important;
-                    }
-
-                    .popup-content {
-                        padding: 16px 18px;
-                    }
-
-                    .popup-badge {
-                        display: inline-block;
-                        font-size: 10px;
-                        font-weight: 700;
-                        text-transform: uppercase;
-                        letter-spacing: 0.1em;
-                        padding: 3px 8px;
-                        border-radius: 6px;
-                        margin-bottom: 8px;
-                    }
-
-                    .popup-badge-main {
-                        background: var(--color-brand);
-                        color: var(--color-on-dark);
-                    }
-
-                    .popup-badge-shop {
-                        background: var(--color-brand-soft);
-                        color: var(--color-brand);
-                    }
-
-                    .popup-badge-user {
-                        background: var(--color-info-soft);
-                        color: var(--color-info);
-                    }
-
-                    .popup-title {
-                        font-family: 'Fraunces', serif;
-                        font-weight: 700;
-                        font-size: 15px;
-                        color: var(--color-ink);
-                        margin: 0 0 4px;
-                        line-height: 1.3;
-                    }
-
-                    .popup-address {
-                        font-size: 12px;
-                        color: var(--color-faint);
-                        margin: 0 0 8px;
-                        line-height: 1.4;
-                    }
-
-                    .popup-link {
-                        display: inline-flex;
-                        align-items: center;
-                        gap: 6px;
-                        font-size: 12px;
-                        font-weight: 600;
-                        color: var(--color-brand);
-                        text-decoration: none;
-                        margin-bottom: 4px;
-                    }
-
-                    .popup-link:hover {
-                        text-decoration: underline;
-                    }
-
-                    .popup-hours {
-                        display: flex;
-                        align-items: center;
-                        gap: 6px;
-                        font-size: 11px;
-                        color: var(--color-muted);
-                        margin-top: 4px;
-                    }
-
-                    /* Scrollbar for location list */
-                    .location-list::-webkit-scrollbar {
-                        width: 4px;
-                    }
-
-                    .location-list::-webkit-scrollbar-track {
-                        background: transparent;
-                    }
-
-                    .location-list::-webkit-scrollbar-thumb {
-                        background: var(--color-line);
-                        border-radius: 4px;
-                    }
-
-                    /* Nearest result card */
-                    .nearest-result-card {
-                        background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-brand-soft) 100%);
-                        transition: all 0.3s ease;
-                    }
-
-                    .nearest-result-card:hover {
-                        box-shadow: 0 4px 16px rgba(var(--brand-rgb),0.12);
-                    }
-
-                    /* Search input focus animation */
-                    .search-input:focus {
-                        outline: none;
-                    }
-                `}</style>
             </div>
         </section>
     );

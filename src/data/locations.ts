@@ -1,5 +1,9 @@
-// Location data for Love Laundry map
-// Update coordinates with exact shop addresses when available
+// Location data for the Love Laundry map.
+// `main` is the laundry itself (public drop-off & hand-over counter).
+// Other entries are partner collection points: customers hand clothes in
+// there, we collect from the point, clean, and deliver back to the same point.
+// `precision: "town"` means the coordinates are the town centre, not an exact
+// shop/address — the UI labels these as approximate.
 
 export interface Location {
     id: string;
@@ -10,17 +14,19 @@ export interface Location {
     address: string;
     phone?: string;
     hours?: string;
+    precision?: "exact" | "town";
 }
 
 export const mainLaundry: Location = {
     id: "main",
     name: "Love Laundry - Main Centre",
     type: "laundry",
-    lat: 7.5758,
-    lng: 79.7953,
-    address: "Chilaw, Puttalam District, Sri Lanka",
+    lat: 7.530726899987307,
+    lng: 79.88488349451244,
+    address: "Kuda Bingiriya, Panirendawa, Madagama, Chilaw",
     phone: "+94774200919",
     hours: "Mon - Sat: 8:00 AM - 6:00 PM",
+    precision: "exact",
 };
 
 export const shopLocations: Location[] = [
@@ -28,33 +34,37 @@ export const shopLocations: Location[] = [
         id: "shop-madampe",
         name: "Love Laundry - Madampe",
         type: "shop",
-        lat: 7.4979,
-        lng: 79.8381,
+        lat: 7.495754231527253,
+        lng: 79.84219091237887,
         address: "Madampe, Puttalam District",
+        precision: "exact",
     },
     {
         id: "shop-mahawewa",
         name: "Love Laundry - Mahawewa",
         type: "shop",
-        lat: 7.5139,
-        lng: 79.9207,
+        lat: 7.459222497703205,
+        lng: 79.82596756992497,
         address: "Mahawewa, Puttalam District",
+        precision: "exact",
     },
     {
-        id: "shop-kottaramulla",
-        name: "Love Laundry - Kottaramulla",
+        id: "shop-kottaralumma",
+        name: "Love Laundry - Kottaralumma",
         type: "shop",
-        lat: 7.382,
-        lng: 79.8749,
-        address: "Kottaramulla, Puttalam District",
+        lat: 7.3799,
+        lng: 79.8665,
+        address: "Kottaralumma, Puttalam District",
+        precision: "town",
     },
     {
         id: "shop-dunakadeniya",
         name: "Love Laundry - Dunakadeniya",
         type: "shop",
-        lat: 7.365,
-        lng: 79.855,
+        lat: 7.4349,
+        lng: 79.9372,
         address: "Dunakadeniya, Puttalam District",
+        precision: "town",
     },
     {
         id: "shop-bibiladeniya",
@@ -68,9 +78,10 @@ export const shopLocations: Location[] = [
         id: "shop-wennappuwa",
         name: "Love Laundry - Wennappuwa",
         type: "shop",
-        lat: 7.3467,
-        lng: 79.8367,
+        lat: 7.342864473141506,
+        lng: 79.84148426752375,
         address: "Wennappuwa, Puttalam District",
+        precision: "exact",
     },
 ];
 

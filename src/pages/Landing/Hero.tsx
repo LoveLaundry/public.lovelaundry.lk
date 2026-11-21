@@ -39,7 +39,7 @@ const Hero = () => {
         },
         {
             icon: RiTimeFill,
-            value: "24/7",
+            value: "3+",
             label: t("heroStatConvenience"),
         },
     ];
@@ -222,7 +222,7 @@ const Hero = () => {
                     >
                         <button
                             type="button"
-                            onClick={() => scrollTo("contact")}
+                            onClick={() => scrollTo("locations")}
                             className="
                                 flex
                                 h-14

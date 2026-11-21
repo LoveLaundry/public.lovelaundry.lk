@@ -25,6 +25,11 @@ export const companyInfo = {
     name: COMPANY.name,
     tagline: COMPANY.tagline,
     description: COMPANY.description,
+    // How the business actually operates — use this copy everywhere:
+    // hotels: collect soiled linen, deliver it back clean;
+    // public: hand over / collect at the laundry counter or a partner shop;
+    // partner shops: collect clothes from the shop, clean, return to the shop.
+    // No home pickup or home delivery for the public.
     phone: COMPANY.phoneFull,
     whatsapp: COMPANY.whatsappFull,
     email: COMPANY.email,
@@ -39,18 +44,18 @@ export const companyInfo = {
 export const heroData = {
     badge: {
         icon: RiHeart3Fill,
-        text: "Professional Laundry Service",
+        text: "Hotel Linen Specialists",
     },
     title: {
-        main: "Fresh clothes.",
-        highlight: "More free time.",
+        main: "Fresh linens.",
+        highlight: "Trusted by hotels.",
     },
     description:
-        "Professional laundry care with doorstep pickup & delivery.",
+        "Hotel linen collection and delivery for years. For the public, hand over and collect at our laundry counter or a partner shop.",
     buttons: {
         primary: {
-            text: "Book a Pickup",
-            scrollTo: "contact",
+            text: "Find a drop-off point",
+            scrollTo: "locations",
         },
         secondary: {
             text: "Explore Services",
@@ -76,7 +81,7 @@ export const heroData = {
     ],
     image: {
         src: "./assets/images/love-laundry-hero.png",
-        alt: "Love Laundry pickup and laundry service",
+        alt: "Love Laundry hotel linen and counter service",
     },
     badge_text: {
         primary: "Love Laundry",
@@ -115,10 +120,10 @@ export const services: Service[] = [
         image: "./assets/images/services/dry-cleaning.jpg",
     },
     {
-        title: "Pickup & Delivery",
-        subtitle: "At Your Door",
+        title: "Shop Drop-off & Collection",
+        subtitle: "Partner Shops",
         description:
-            "We collect your laundry and return it fresh and ready to wear.",
+            "Hand clothes in at a partner shop. We collect from the shop, clean, and deliver back to the same shop.",
         image: "./assets/images/services/pickup-delivery.jpg",
     },
 ];
@@ -150,9 +155,9 @@ export const commercialServices: CommercialService[] = [
     {
         icon: RiHotelLine,
         title: "Hotel Linen Service",
-        subtitle: "Luxury Standards",
+        subtitle: "Years of Experience",
         description:
-            "Professional bulk linen washing for hotels, guest houses, and resorts. We maintain the highest hygiene standards.",
+            "We collect soiled linen from hotels, wash it to hotel standards and deliver it back clean, pressed and guest-ready.",
         features: [
             "Bed sheets & pillowcases",
             "Towels & bathrobes",
@@ -175,14 +180,14 @@ export const commercialServices: CommercialService[] = [
     },
     {
         icon: RiScales3Line,
-        title: "Bulk Processing",
+        title: "Scheduled Collection",
         subtitle: "High Volume Care",
         description:
-            "Large-scale laundry processing with quick turnaround times. Perfect for businesses with regular high-volume needs.",
+            "Regular collection from hotels and partner shops, with delivery back on a fixed schedule. No home collections.",
         features: [
-            "Daily/weekly pickup",
-            "Fast turnaround time",
-            "Dedicated account manager",
+            "Daily/weekly hotel collection",
+            "Delivery back to your premises",
+            "Dedicated account contact",
             "Competitive bulk pricing",
         ],
     },
@@ -307,26 +312,26 @@ export interface ProcessStep {
 export const processSteps: ProcessStep[] = [
     {
         number: "01",
-        title: "Book a pickup",
-        text: "Tell us what needs cleaning.",
+        title: "Tell us what you need",
+        text: "Hotel, partner shop, or counter drop-off.",
         icon: RiCalendarCheckLine,
     },
     {
         number: "02",
         title: "We collect",
-        text: "Picked up right from your door.",
+        text: "Linen from hotels, clothes from partner shops.",
         icon: RiTruckLine,
     },
     {
         number: "03",
         title: "We clean",
-        text: "Washed, ironed, perfected.",
+        text: "Washed, dried, pressed and checked.",
         icon: RiSparklingLine,
     },
     {
         number: "04",
-        title: "We deliver",
-        text: "Back to you, fresh & ready.",
+        title: "We return",
+        text: "Hotels & shops get delivery; public collects at the counter.",
         icon: RiHomeSmileLine,
     },
 ];
@@ -354,9 +359,9 @@ export interface Feature {
 export const features: Feature[] = [
     {
         icon: RiTruckLine,
-        title: "Doorstep Service",
+        title: "Hotel & Shop Collection",
         description:
-            "We collect and deliver your laundry right to your doorstep.",
+            "We collect soiled linen from hotels and partner shops, then deliver it back clean.",
     },
     {
         icon: RiSparklingLine,
@@ -380,8 +385,8 @@ export const features: Feature[] = [
 
 export const benefits: string[] = [
     "Professional cleaning",
-    "Careful garment handling",
-    "Convenient pickup & delivery",
+    "Careful linen handling",
+    "Hotel & shop collection and return",
     "Reliable customer service",
 ];
 
@@ -415,23 +420,23 @@ export interface Testimonial {
 export const testimonials: Testimonial[] = [
     {
         quote:
-            "Our hotel linen has never looked better — always on time, always spotless.",
+            "Our hotel linen has never looked better — always collected and delivered on time, always spotless.",
         name: "Nadil Fernando",
-        location: "Colombo",
+        location: "Chilaw",
         service: "Hotel Linen Service",
     },
     {
         quote:
-            "Perfectly pressed shirts every week. My laundry day is completely gone.",
+            "I drop my shirts at the shop round the corner and collect them there. Simple and reliable.",
         name: "Dinuka Perera",
-        location: "Dehiwala",
-        service: "Wash & Fold",
+        location: "Madampe",
+        service: "Shop Drop-off",
     },
     {
         quote:
             "They handled my delicate dress with such care, it looked brand new.",
         name: "Amaya Wickramasinghe",
-        location: "Nugegoda",
+        location: "Wennappuwa",
         service: "Dry Cleaning",
     },
 ];
@@ -451,12 +456,13 @@ export const contactSection = {
         icon: RiSparklingLine,
         text: "Ready when you are",
     },
-    title: "Give your laundry day back to yourself.",
-    description: "Book a pickup and we'll handle the rest.",
+    title: "Need linen care or a drop-off point?",
+    description:
+        "Call or message us for hotel & shop collection, or to find your nearest counter. We do not deliver to homes.",
     features: [
         "Professional care",
-        "Doorstep pickup",
-        "Easy delivery",
+        "Hotel & shop collection",
+        "Counter hand-over & collection",
     ],
     buttons: {
         phone: {
@@ -480,10 +486,10 @@ export interface JobOpening {
 
 export const jobOpenings: JobOpening[] = [
     {
-        title: "Delivery Driver",
+        title: "Collection Driver",
         type: "Full-Time",
         description:
-            "Pick up and deliver laundry to customers across the district. Must have a valid license and reliable vehicle.",
+            "Collect soiled linen from hotels and partner shops, and deliver clean linen back. Valid licence required.",
         icon: RiTruckLine,
     },
     {
@@ -504,7 +510,7 @@ export const jobOpenings: JobOpening[] = [
         title: "Collection Agent",
         type: "Part-Time",
         description:
-            "Visit homes and hotels to collect laundry orders. Great communication skills needed.",
+            "Handle hand-overs at our counter and partner shops, and coordinate hotel collections.",
         icon: RiUserStarLine,
     },
 ];

@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Fraunces:opsz,wght@9..144,500..800&family=Noto+Sans+Sinhala:wght@400;500;600;700&display=swap');
 @import 'tailwindcss';
-@import 'leaflet/dist/leaflet.css';
 
 @theme {
   --color-brand: #E01E31;
@@ -130,9 +129,35 @@ main.site-page > footer > div > div[class~="mx-auto"] {
 ::-webkit-scrollbar-thumb { background: var(--color-line); border-radius: 99px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-faint); }
 
+/* Scroll reveals: applied by useReveal, removed once the transition ends so
+   component hover transforms (Tailwind translate/scale) stay untouched. */
+.reveal {
+  opacity: 0;
+  translate: var(--reveal-x, 0) var(--reveal-y, 24px);
+  scale: var(--reveal-scale, 0.985);
+  transition:
+    opacity var(--reveal-duration, 0.55s) cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
+    translate var(--reveal-duration, 0.55s) cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
+    scale var(--reveal-duration, 0.55s) cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s);
+}
+
+.reveal-visible {
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .reveal,
+  .reveal-visible {
+    opacity: 1 !important;
+    translate: none !important;
+    scale: 1 !important;
+    transition: none !important;
   }
 
   *, *::before, *::after {

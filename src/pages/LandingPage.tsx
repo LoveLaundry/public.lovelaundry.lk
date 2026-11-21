@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import {
     RiHome5Line,
     RiServiceLine,
@@ -24,7 +24,6 @@ import LocationMap from "./Landing/LocationMap";
 import Contact from "./Landing/Contact";
 import Footer from "./Landing/Footer";
 import BookingBanner from "./Landing/BookingBanner";
-import ActionBar from "../components/ActionBar";
 import ChatWidget from "../components/ChatWidget";
 
 
@@ -72,42 +71,6 @@ const LandingPage = () => {
         [t]
     );
 
-    const [selectedItem, setSelectedItem] =
-        useState<ActionType | null>(actions[0]);
-
-    const handleActionSelect = useCallback((item: ActionType) => {
-        document.getElementById(item.id)?.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-        });
-    }, []);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            const sections = actions
-                .map((action) => document.getElementById(action.id))
-                .filter(Boolean);
-
-            let current = actions[0];
-
-            sections.forEach((section, index) => {
-                if (!section) return;
-
-                if (section.getBoundingClientRect().top <= 180) {
-                    current = actions[index];
-                }
-            });
-
-            setSelectedItem(current);
-        };
-
-        window.addEventListener("scroll", handleScroll);
-
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, [actions]);
-
     return (
         <main className="site-page min-h-screen overflow-x-hidden bg-surface text-ink">
 
@@ -125,12 +88,6 @@ const LandingPage = () => {
             <LocationMap />
             <Contact />
             <Footer />
-            <ActionBar
-                items={actions}
-                selectedItem={selectedItem}
-                setSelectedItem={setSelectedItem}
-                onSelect={handleActionSelect}
-            />
             <ChatWidget />
         </main>
     );
