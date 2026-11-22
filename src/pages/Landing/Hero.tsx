@@ -1,6 +1,5 @@
 import { useLanguage } from "../../i18n";
 import { useReveal } from "../../hooks/useReveal";
-import HeroCanvas from "../../components/three/HeroCanvas";
 import heroVideo from "../../assets/videos/web.mp4";
 import { useReducedMotion } from "framer-motion";
 import {
@@ -120,8 +119,10 @@ const Hero = () => {
                 "
             />
 
-            {/* Lazy WebGL fabric sculpture with a CSS aurora fallback */}
-            <HeroCanvas />
+            {/* CSS aurora backdrop (3D sculpture removed) */}
+            <div aria-hidden="true" className="hero-3d">
+                <div className="hero-3d__fallback" />
+            </div>
 
             <div className="relative mx-auto w-full max-w-[1440px]">
                 <div

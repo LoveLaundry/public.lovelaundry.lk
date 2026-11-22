@@ -126,11 +126,11 @@ const Shirt = () => {
     const fabric = useMemo(
         () =>
             new MeshPhysicalMaterial({
-                color: "var(--ll-white)",
+                color: "#fff9f3",
                 roughness: 0.84,
                 metalness: 0,
                 sheen: 0.75,
-                sheenColor: new Color("var(--ll-white)"),
+                sheenColor: new Color("#fff0e4"),
                 sheenRoughness: 0.9,
                 side: DoubleSide,
             }),
@@ -140,11 +140,11 @@ const Shirt = () => {
     const trim = useMemo(
         () =>
             new MeshPhysicalMaterial({
-                color: "var(--ll-red)",
+                color: "#E01E31",
                 roughness: 0.72,
                 metalness: 0,
                 sheen: 0.4,
-                sheenColor: new Color("var(--ll-red)"),
+                sheenColor: new Color("#ff8b96"),
             }),
         []
     );
@@ -152,10 +152,10 @@ const Shirt = () => {
     const emblem = useMemo(
         () =>
             new MeshPhysicalMaterial({
-                color: "var(--ll-blue)",
+                color: "#E3A13C",
                 roughness: 0.45,
                 metalness: 0.35,
-                emissive: new Color("var(--ll-blue)"),
+                emissive: new Color("#E3A13C"),
                 emissiveIntensity: 0.18,
             }),
         []
@@ -299,7 +299,7 @@ const Bubbles = () => {
                         0.32 + Math.sin(angle * 2) * 0.42,
                     ] as [number, number, number],
                     scale: 0.07 + (i % 4) * 0.028,
-                    tint: i % 3 === 0 ? "var(--ll-white)" : i % 3 === 1 ? "var(--brand-soft)" : "var(--danger-soft)",
+                    tint: i % 3 === 0 ? "#ffe8c8" : i % 3 === 1 ? "#dff4ff" : "#ffdde4",
                     speed: 0.45 + (i % 5) * 0.11,
                     phase: i * 0.9,
                 };
@@ -354,7 +354,7 @@ const Bubbles = () => {
                         scale={bubble.scale * 0.16}
                     >
                         <sphereGeometry args={[1, 12, 12]} />
-                        <meshBasicMaterial color="var(--ll-white)" transparent opacity={0.9} />
+                        <meshBasicMaterial color="#ffffff" transparent opacity={0.9} />
                     </mesh>
                 </group>
             ))}
@@ -390,8 +390,8 @@ const HeroScene = () => (
     >
         <ambientLight intensity={1.05} />
         <directionalLight position={[3.5, 4.5, 4]} intensity={2.3} castShadow />
-        <pointLight position={[-3.5, -2, 2.5]} color="var(--ll-red)" intensity={3} distance={9} />
-        <pointLight position={[2.5, -1.5, 3]} color="var(--ll-blue)" intensity={2.2} distance={8} />
+        <pointLight position={[-3.5, -2, 2.5]} color="#E01E31" intensity={3} distance={9} />
+        <pointLight position={[2.5, -1.5, 3]} color="#E3A13C" intensity={2.2} distance={8} />
         <Sculpture />
         <ContactShadows position={[0, -1.85, 0]} opacity={0.2} scale={7} blur={2.6} far={4} />
     </Canvas>
