@@ -66,8 +66,7 @@
     display: block;
 }
 
-.hero-3d__fallback,
-.hero-3d__halo {
+.hero-3d__fallback {
     position: absolute;
     border-radius: 50%;
     pointer-events: none;
@@ -84,13 +83,6 @@
     );
     filter: blur(18px);
     animation: aurora-drift 12s ease-in-out infinite;
-}
-
-.hero-3d__halo {
-    inset: 5%;
-    border: 1px solid rgba(var(--accent-rgb), 0.22);
-    box-shadow: inset 0 0 70px rgba(var(--brand-rgb), 0.12);
-    animation: halo-breathe 7s ease-in-out infinite;
 }
 
 /* --- Pointer-driven 3D tilt ---------------------------------------------- */
@@ -252,11 +244,6 @@
     50% { transform: translate3d(4%, -4%, 0) scale(1.09); }
 }
 
-@keyframes halo-breathe {
-    0%, 100% { transform: scale(1); opacity: 0.55; }
-    50% { transform: scale(1.05); opacity: 0.9; }
-}
-
 @keyframes float-y {
     0%, 100% { transform: translateY(0) rotate(0deg); }
     50% { transform: translateY(-14px) rotate(4deg); }
@@ -317,7 +304,6 @@
     .scroll-progress,
     .cursor-spotlight,
     .hero-3d__fallback,
-    .hero-3d__halo,
     .anim-float,
     .anim-spin-slow,
     .anim-pulse,

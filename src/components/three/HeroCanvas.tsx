@@ -42,7 +42,6 @@ const HeroCanvas = () => {
     return (
         <div ref={host} aria-hidden="true" className="hero-3d">
             <div className="hero-3d__fallback" />
-            <div className="hero-3d__halo" />
             {showScene ? (
                 <Suspense fallback={null}>
                     <HeroScene />
