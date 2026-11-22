@@ -59,7 +59,8 @@ const Process = () => {
                             <div
                                 key={step.number}
                                 data-reveal
-                                className="
+                                data-tilt
+                                className="tilt-card
                                     group
                                     relative
                                     flex-1
@@ -79,7 +80,7 @@ const Process = () => {
                             >
                                 <div
                                     aria-hidden="true"
-                                    className="
+                                    className="anim-float
                                         pointer-events-none
                                         absolute
                                         -right-3
@@ -176,6 +177,7 @@ const Process = () => {
 
                 {/* Bottom CTA */}
                 <div
+                    data-scale-in
                     className="
                         mt-10
                         flex
@@ -207,6 +209,7 @@ const Process = () => {
 
                     <button
                         type="button"
+                        data-magnetic
                         onClick={() => {
                             document
                                 .getElementById("contact")

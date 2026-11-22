@@ -30,6 +30,7 @@ const JoinWithUs = () => {
             {/* Decorative elements */}
             <div
                 aria-hidden="true"
+                data-parallax="0.12"
                 className="
                     pointer-events-none
                     absolute
@@ -44,7 +45,7 @@ const JoinWithUs = () => {
 
             <div
                 aria-hidden="true"
-                className="
+                className="anim-float
                     pointer-events-none
                     absolute
                     -bottom-24
@@ -115,7 +116,7 @@ const JoinWithUs = () => {
                         "
                     >
                         {t("joinTitleMain")}
-                        <span className="text-brand">
+                        <span className="anim-gradient-text">
                             {" "}
                             {t("joinTitleHighlight")}
                         </span>
@@ -149,7 +150,8 @@ const JoinWithUs = () => {
                         <article
                             key={index}
                             data-reveal
-                            className="
+                            data-tilt
+                            className="tilt-card
                                 group
                                 relative
                                 overflow-hidden
@@ -230,6 +232,7 @@ const JoinWithUs = () => {
 
                 {/* Perks + CTA */}
                 <div
+                    data-scale-in
                     className="
                         mt-12
                         flex
@@ -271,6 +274,7 @@ const JoinWithUs = () => {
                     {/* CTA Button */}
                     <a
                         href={hiringSection.cta.href}
+                        data-magnetic
                         target="_blank"
                         rel="noreferrer"
                         className="

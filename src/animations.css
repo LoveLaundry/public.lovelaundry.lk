@@ -1,0 +1,348 @@
+/* ==========================================================================
+   MOTION SYSTEM — layered on top of index.css
+   Scroll depth, pointer-driven 3D, scroll progress, cursor light and keyframes.
+   Every effect is decorative: content stays fully usable without motion.
+   ========================================================================== */
+
+.fx-root {
+    isolation: isolate;
+}
+
+/* --- Scroll progress ------------------------------------------------------ */
+.scroll-progress {
+    position: fixed;
+    inset: 0 0 auto;
+    height: 3px;
+    z-index: 80;
+    transform-origin: 0 50%;
+    background: linear-gradient(
+        90deg,
+        var(--color-brand) 0%,
+        var(--color-accent) 50%,
+        var(--color-brand) 100%
+    );
+    background-size: 200% 100%;
+    box-shadow: 0 0 14px rgba(var(--brand-rgb), 0.55);
+    animation: gradient-pan 4s linear infinite;
+    pointer-events: none;
+}
+
+/* --- Cursor spotlight ----------------------------------------------------- */
+.cursor-spotlight {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 420px;
+    height: 420px;
+    margin: -210px 0 0 -210px;
+    border-radius: 50%;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.5;
+    mix-blend-mode: soft-light;
+    background: radial-gradient(
+        circle,
+        rgba(var(--brand-rgb), 0.24) 0%,
+        rgba(var(--accent-rgb), 0.14) 38%,
+        transparent 68%
+    );
+}
+
+/* --- WebGL hero layer ----------------------------------------------------- */
+.hero-3d {
+    position: absolute;
+    z-index: 2;
+    right: -3%;
+    top: 51%;
+    width: min(48vw, 640px);
+    aspect-ratio: 1;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.hero-3d canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+}
+
+.hero-3d__fallback,
+.hero-3d__halo {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.hero-3d__fallback {
+    inset: 16%;
+    background: radial-gradient(
+        circle at 34% 28%,
+        rgba(255, 255, 255, 0.5) 0%,
+        rgba(var(--brand-rgb), 0.3) 38%,
+        rgba(var(--accent-rgb), 0.22) 60%,
+        transparent 72%
+    );
+    filter: blur(18px);
+    animation: aurora-drift 12s ease-in-out infinite;
+}
+
+.hero-3d__halo {
+    inset: 5%;
+    border: 1px solid rgba(var(--accent-rgb), 0.22);
+    box-shadow: inset 0 0 70px rgba(var(--brand-rgb), 0.12);
+    animation: halo-breathe 7s ease-in-out infinite;
+}
+
+/* --- Pointer-driven 3D tilt ---------------------------------------------- */
+.tilt-card {
+    transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+    transform-style: preserve-3d;
+    transition:
+        transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+        translate 300ms ease,
+        box-shadow 300ms ease;
+    will-change: transform;
+}
+
+.tilt-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 280ms ease;
+    background: radial-gradient(
+        340px circle at var(--glow-x, 50%) var(--glow-y, 50%),
+        rgba(var(--brand-rgb), 0.16),
+        transparent 62%
+    );
+}
+
+.tilt-card:hover::after,
+.tilt-card:focus-visible::after {
+    opacity: 1;
+}
+
+/* Anything marked magnetic drifts a few pixels toward the pointer. */
+[data-magnetic] {
+    transform: translate3d(var(--mag-x, 0), var(--mag-y, 0), 0);
+    transition:
+        transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1),
+        background-color 200ms ease,
+        box-shadow 200ms ease,
+        color 200ms ease;
+    will-change: transform;
+}
+
+/* --- Image hover choreography -------------------------------------------- */
+.image-shine {
+    position: relative;
+    overflow: hidden;
+}
+
+.image-shine::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        110deg,
+        transparent 28%,
+        rgba(255, 255, 255, 0.3) 47%,
+        transparent 64%
+    );
+    transform: translateX(-110%);
+    transition: transform 850ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.image-shine:hover::after,
+.group:hover .image-shine::after {
+    transform: translateX(110%);
+}
+
+/* --- Reveal upgrade: a touch of depth and blur on entry ------------------- */
+.reveal {
+    filter: blur(5px);
+    rotate: -1.2deg;
+    transition:
+        opacity var(--reveal-duration, 0.55s) cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
+        translate var(--reveal-duration, 0.55s) cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
+        scale var(--reveal-duration, 0.55s) cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
+        rotate var(--reveal-duration, 0.55s) cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s),
+        filter var(--reveal-duration, 0.55s) cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s);
+}
+
+.reveal-visible {
+    filter: blur(0);
+    rotate: 0deg;
+}
+
+/* --- Reusable keyframe utilities ----------------------------------------- */
+.anim-float {
+    animation: float-y 6s ease-in-out infinite;
+}
+
+.anim-spin-slow {
+    animation: spin-slow 22s linear infinite;
+}
+
+.anim-pulse {
+    animation: pulse-ring 2.8s ease-out infinite;
+}
+
+.anim-aurora {
+    animation: aurora-drift 14s ease-in-out infinite;
+}
+
+.anim-gradient-text {
+    background: linear-gradient(
+        100deg,
+        var(--color-brand) 0%,
+        var(--color-accent) 45%,
+        var(--color-brand) 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradient-pan 6s linear infinite;
+}
+
+.anim-shimmer {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.anim-shimmer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        100deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.32) 48%,
+        transparent 66%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 3.2s linear infinite;
+}
+
+.anim-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 34s linear infinite;
+}
+
+.anim-modal-in {
+    animation: modal-in 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* --- Keyframes ------------------------------------------------------------ */
+@keyframes gradient-pan {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+@keyframes aurora-drift {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(4%, -4%, 0) scale(1.09); }
+}
+
+@keyframes halo-breathe {
+    0%, 100% { transform: scale(1); opacity: 0.55; }
+    50% { transform: scale(1.05); opacity: 0.9; }
+}
+
+@keyframes float-y {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-14px) rotate(4deg); }
+}
+
+@keyframes spin-slow {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 rgba(var(--brand-rgb), 0.4); }
+    70% { box-shadow: 0 0 0 18px rgba(var(--brand-rgb), 0); }
+    100% { box-shadow: 0 0 0 0 rgba(var(--brand-rgb), 0); }
+}
+
+@keyframes shimmer {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+}
+
+@keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+@keyframes modal-in {
+    from { opacity: 0; transform: translateY(18px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* --- Responsive / capability guards -------------------------------------- */
+@media (max-width: 1023px) {
+    .hero-3d {
+        right: -16%;
+        width: min(72vw, 460px);
+        opacity: 0.62;
+    }
+}
+
+@media (max-width: 640px) {
+    .cursor-spotlight { display: none; }
+
+    .hero-3d {
+        right: -24%;
+        top: 62%;
+        width: 86vw;
+        opacity: 0.34;
+    }
+
+    .tilt-card {
+        transform: none;
+    }
+
+    .tilt-card::after { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scroll-progress,
+    .cursor-spotlight,
+    .hero-3d__fallback,
+    .hero-3d__halo,
+    .anim-float,
+    .anim-spin-slow,
+    .anim-pulse,
+    .anim-aurora,
+    .anim-gradient-text,
+    .anim-shimmer::before,
+    .anim-marquee-track {
+        animation: none !important;
+    }
+
+    .cursor-spotlight { display: none; }
+
+    .tilt-card,
+    [data-magnetic] {
+        transform: none !important;
+        transition: none !important;
+    }
+
+    .anim-modal-in {
+        animation: none !important;
+    }
+
+    .reveal,
+    .reveal-visible {
+        filter: none !important;
+        rotate: none !important;
+    }
+}

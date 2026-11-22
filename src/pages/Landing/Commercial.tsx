@@ -32,6 +32,7 @@ const Commercial = () => {
             {/* Warm brand glow */}
             <div
                 aria-hidden="true"
+                data-parallax="0.08"
                 className="
                     pointer-events-none
                     absolute
@@ -68,7 +69,8 @@ const Commercial = () => {
                             <article
                                 key={service.title}
                                 data-reveal
-                                className="
+                                data-tilt
+                                className="tilt-card
                                     group
                                     relative
                                     overflow-hidden
@@ -175,6 +177,7 @@ const Commercial = () => {
 
                                 <button
                                     type="button"
+                                    data-magnetic
                                     onClick={() => {
                                         document
                                             .getElementById("contact")

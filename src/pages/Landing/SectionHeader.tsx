@@ -31,7 +31,7 @@ const SectionHeader = ({
                 className="mx-auto max-w-3xl text-center"
             >
                 <span
-                    className={`
+                    className={`anim-shimmer
                         inline-flex
                         items-center
                         gap-2.5
@@ -67,7 +67,7 @@ const SectionHeader = ({
                 >
                     {main}
                     {highlight ? (
-                        <span className="text-brand"> {highlight}</span>
+                        <span className="anim-gradient-text"> {highlight}</span>
                     ) : null}
                 </h2>
 
@@ -93,7 +93,7 @@ const SectionHeader = ({
     return (
         <div ref={headerRef} data-reveal className="max-w-3xl">
             <span
-                className="
+                className="anim-shimmer
                     inline-flex
                     items-center
                     gap-2.5
@@ -129,7 +129,7 @@ const SectionHeader = ({
                 {main}
 
                 {highlight ? (
-                    <span className="text-brand"> {highlight}</span>
+                    <span className="anim-gradient-text"> {highlight}</span>
                 ) : null}
             </h2>
 

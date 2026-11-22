@@ -43,7 +43,12 @@ const WhyLoveLaundry = () => {
             >
                 <div ref={leftRef} data-reveal className="relative">
                     <div
-                        className="
+                        aria-hidden="true"
+                        className="anim-spin-slow pointer-events-none absolute -left-8 -top-8 h-28 w-28 rounded-full border-2 border-dashed border-brand/20"
+                    />
+                    <div
+                        data-tilt
+                        className="tilt-card
                             rounded-[28px]
                             border
                             border-line
@@ -70,7 +75,7 @@ const WhyLoveLaundry = () => {
                                     shadow-[0_8px_20px_rgba(var(--brand-rgb),0.28)]
                                 "
                             >
-                                <RiHeart3Fill className="h-6 w-6" />
+                                <RiHeart3Fill className="anim-float h-6 w-6" />
                             </div>
 
                             <span
@@ -184,7 +189,7 @@ const WhyLoveLaundry = () => {
                         "
                     >
                         {t("whyTitleMain")}{" "}
-                        <span className="text-brand">
+                        <span className="anim-gradient-text">
                             {t("whyTitleHighlight")}
                         </span>
                     </h2>
@@ -219,7 +224,8 @@ const WhyLoveLaundry = () => {
                                 <div
                                     key={index}
                                     data-reveal
-                                    className="
+                                    data-tilt
+                                    className="tilt-card
                                         rounded-3xl
                                         border
                                         border-line
@@ -278,6 +284,7 @@ const WhyLoveLaundry = () => {
 
                     {/* Trust Stats */}
                     <div
+                        data-scale-in
                         className="
                             mt-8
                             grid

@@ -1,5 +1,6 @@
 import { useLanguage } from "../../i18n";
 import { useReveal } from "../../hooks/useReveal";
+import HeroCanvas from "../../components/three/HeroCanvas";
 import heroVideo from "../../assets/videos/web.mp4";
 import { useReducedMotion } from "framer-motion";
 import {
@@ -68,6 +69,7 @@ const Hero = () => {
             {/* Full-bleed background video */}
             <video
                 aria-hidden="true"
+                data-parallax="0.06"
                 autoPlay={!prefersReducedMotion}
                 muted
                 loop
@@ -89,6 +91,7 @@ const Hero = () => {
             {/* Brand-red wash to keep theme + boost text contrast */}
             <div
                 aria-hidden="true"
+                data-parallax="0.1"
                 className="
                     pointer-events-none
                     absolute
@@ -116,6 +119,9 @@ const Hero = () => {
                     bg-[linear-gradient(180deg,rgba(var(--night-rgb),0.55),rgba(var(--night-rgb),0.35)_30%,rgba(var(--night-rgb),0.45)_65%,rgba(var(--night-rgb),0.92))]
                 "
             />
+
+            {/* Lazy WebGL fabric sculpture with a CSS aurora fallback */}
+            <HeroCanvas />
 
             <div className="relative mx-auto w-full max-w-[1440px]">
                 <div
@@ -167,7 +173,7 @@ const Hero = () => {
                         </span>
                         <span
                             data-reveal
-                            className="relative inline-block text-brand"
+                            className="anim-gradient-text relative inline-block"
                         >
                             {t("heroTitleHighlight")}
                             <svg
@@ -222,6 +228,7 @@ const Hero = () => {
                     >
                         <button
                             type="button"
+                            data-magnetic
                             onClick={() => scrollTo("locations")}
                             className="
                                 flex
@@ -251,6 +258,7 @@ const Hero = () => {
 
                         <button
                             type="button"
+                            data-magnetic
                             onClick={() => scrollTo("services")}
                             className="
                                 flex
@@ -296,7 +304,8 @@ const Hero = () => {
                         {stats.map((stat, index) => (
                             <div
                                 key={index}
-                                className="
+                                data-tilt
+                                className="tilt-card
                                     flex
                                     flex-col
                                     items-start
@@ -351,7 +360,7 @@ const Hero = () => {
                 <span className="text-[10px] font-bold uppercase tracking-[0.2em]">
                     {t("heroScroll")}
                 </span>
-                <RiArrowDownLine className="h-4 w-4 animate-bounce" />
+                <RiArrowDownLine className="anim-float h-4 w-4" />
             </button>
         </section>
     );

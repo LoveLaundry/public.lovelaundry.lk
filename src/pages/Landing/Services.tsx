@@ -32,6 +32,7 @@ const Services = () => {
             {/* Subtle dot pattern */}
             <div
                 aria-hidden="true"
+                data-parallax="0.04"
                 className="
                     pointer-events-none
                     absolute
@@ -65,7 +66,8 @@ const Services = () => {
                         <article
                             key={service.title}
                             data-reveal
-                            className="
+                            data-tilt
+                            className="tilt-card
                                 group
                                 relative
                                 overflow-hidden
@@ -98,7 +100,7 @@ const Services = () => {
                             />
 
                             <div
-                                className="
+                                className="image-shine
                                     relative
                                     aspect-[1.35/1]
                                     overflow-hidden
@@ -177,6 +179,7 @@ const Services = () => {
 
                                 <button
                                     type="button"
+                                    data-magnetic
                                     onClick={() => {
                                         document
                                             .getElementById("contact")
@@ -208,6 +211,7 @@ const Services = () => {
 
                 {/* Bottom CTA */}
                 <div
+                    data-scale-in
                     className="
                         mt-12
                         flex
@@ -238,6 +242,7 @@ const Services = () => {
 
                     <a
                         href={`tel:${companyInfo.phone}`}
+                        data-magnetic
                         className="
                             flex
                             shrink-0

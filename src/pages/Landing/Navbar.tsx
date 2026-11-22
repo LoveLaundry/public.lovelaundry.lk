@@ -156,6 +156,7 @@ const Navbar = ({ actions }: NavbarProps) => {
 
                         <button
                             type="button"
+                            data-magnetic
                             onClick={() => scrollTo("contact")}
                             className="
                                 ml-2

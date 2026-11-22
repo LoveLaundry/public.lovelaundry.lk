@@ -29,6 +29,7 @@ const Footer = () => {
             {/* WhatsApp CTA strip */}
             <div className="border-b border-on-dark/10">
                 <div
+                    data-scale-in
                     className="
                         mx-auto
                         flex
@@ -56,6 +57,7 @@ const Footer = () => {
 
                     <a
                         href={COMPANY.whatsappLink}
+                        data-magnetic
                         target="_blank"
                         rel="noreferrer"
                         className="
@@ -230,6 +232,7 @@ const Footer = () => {
                                     <a
                                         key={social.label}
                                         href={social.href}
+                                        data-magnetic
                                         target="_blank"
                                         rel="noreferrer"
                                         aria-label={social.label}
@@ -270,7 +273,8 @@ const Footer = () => {
                         {partnersSection.partners.slice(0, 6).map((partner) => (
                             <div
                                 key={partner.name}
-                                className="
+                                data-tilt
+                                className="tilt-card
                                     flex
                                     h-12
                                     w-12

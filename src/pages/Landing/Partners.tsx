@@ -55,9 +55,10 @@ const Partners = () => {
                         <button
                             key={partner.name}
                             data-reveal
+                            data-tilt
                             type="button"
                             onClick={() => setSelected(partner)}
-                            className="
+                            className="tilt-card
                                 group
                                 flex
                                 flex-col
@@ -76,7 +77,7 @@ const Partners = () => {
                             "
                         >
                             {partner.image ? (
-                                <div className="relative h-44 overflow-hidden sm:h-52">
+                                <div className="image-shine relative h-44 overflow-hidden sm:h-52">
                                     <img
                                         src={partner.image}
                                         alt={partner.name}
@@ -176,7 +177,7 @@ const Partners = () => {
 
                     {/* Modal */}
                     <div
-                        className="
+                        className="anim-modal-in
                             relative
                             z-10
                             w-full

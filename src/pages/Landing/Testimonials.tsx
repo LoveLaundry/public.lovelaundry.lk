@@ -24,6 +24,7 @@ const Testimonials = () => {
             {/* Warm gradient accent */}
             <div
                 aria-hidden="true"
+                data-parallax="0.1"
                 className="
                     pointer-events-none
                     absolute
@@ -63,7 +64,8 @@ const Testimonials = () => {
                         <article
                             key={num}
                             data-reveal
-                            className="
+                            data-tilt
+                            className="tilt-card
                                 flex
                                 flex-col
                                 rounded-3xl
